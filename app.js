@@ -14,11 +14,11 @@
   };
   const status=document.querySelector('#capture-status');
   try {
-    const response=await fetch('runtimes/manifest.json',{cache:'no-cache'});if(!response.ok)throw Error('Cannot load experiment manifest');
+    const response=await fetch('runtimes/manifest.json',{cache:'no-cache'});if(!response.ok)throw Error(`Manifest request failed (HTTP ${response.status}).`);
     const manifest=await response.json(),source=manifest[config.version];
     document.querySelector('#mode-note').textContent=source.note;
     const css=document.createElement('link');css.rel='stylesheet';
-    await new Promise((resolve,reject)=>{css.onload=resolve;css.onerror=()=>reject(Error('Cannot load experiment styles'));css.href='runtimes/'+config.version+'.css?v='+source.cssSHA256;document.head.append(css);});
+    await new Promise((resolve,reject)=>{css.onload=resolve;css.onerror=()=>reject(Error('Styles failed to load.'));css.href='runtimes/'+config.version+'.css?v='+source.cssSHA256;document.head.append(css);});
     const root=document.createElement('section');root.className='md-carousel';root.dataset.variant=config.variant;root.dataset.size=config.size;root.dir=config.direction;root.style.inlineSize=config.width+'px';root.setAttribute('aria-label',source.label+' carousel');root.setAttribute('aria-roledescription','carousel');
     const snaps=Array.from({length:6},()=>'<span class="md-carousel-snap"></span>').join('');
     const items=Array.from({length:6},(_,i)=>`<li class="md-carousel-slot"><button type="button" class="md-carousel-item" data-carousel-index="${i}" aria-label="Item ${i+1} of 6"><span class="md-carousel-art" aria-hidden="true"><svg viewBox="0 0 240 192" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="240" height="192"></rect><circle cx="${60+i*20}" cy="58" r="35"></circle><path d="M0 192V142L76 62 142 142 190 95 240 145V192Z"></path><path d="M0 192V155L85 112 160 174 240 115V192Z"></path></svg></span><span class="md-carousel-number" aria-hidden="true">${i+1}</span></button></li>`).join('');
@@ -32,7 +32,9 @@
       start.disabled=active;stop.disabled=!active;download.disabled=active||!n;clear.disabled=active||!n;
       for(const control of form.elements)control.disabled=active;
       status.toggleAttribute('data-recording',active);
-      status.textContent=active?'Recording. Interact with the carousel, then press Stop.':n?`${n} recording${n===1?'':'s'} ready. ${reason==='recording limit reached'?'Recording limit reached. ':reason==='page hidden'?'Recording stopped when the page was hidden. ':''}Download before changing settings.`:'Ready. Press Start to record.';
+      const count=`${n} recording${n===1?'':'s'} ready.`;
+      const stopped={'recording limit reached':'limit reached','page hidden':'page hidden'}[reason];
+      status.textContent=active?'Recording.':stopped?`Recording stopped: ${stopped}. ${count}`:n?count:reason==='recordings cleared'?'Recordings cleared.':'Ready.';
     }});
     start.onclick=()=>recorder.start({version:config.version,commit:source.baseRevision,runtimeSHA256:source.jsSHA256,cssSHA256:source.cssSHA256,config,
       environment:{ua:navigator.userAgent,dpr:devicePixelRatio,visualViewportScale:window.visualViewport?.scale,innerWidth,innerHeight,viewportWidth:viewport.clientWidth,scrollWidth:viewport.scrollWidth,reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches}});
@@ -52,12 +54,14 @@
     root.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key))recorder.event('key',{key:e.key});},true);
     document.addEventListener('visibilitychange',()=>{if(document.hidden)recorder.stop('page hidden');});
     const script=document.createElement('script');script.src='runtimes/'+config.version+'.js?v='+source.jsSHA256;
-    await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=()=>reject(Error('Cannot load experiment runtime'));document.body.append(script);});
+    await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=()=>reject(Error('Script failed to load.'));document.body.append(script);});
     document.querySelector('#test-area').setAttribute('aria-busy','false');
-    document.querySelector('#version-info').textContent=`${source.label} · Runtime ${source.jsSHA256.slice(0,12)} · Reduced motion ${matchMedia('(prefers-reduced-motion: reduce)').matches?'on':'off'}`;
+    document.querySelector('#version-info').textContent=`Runtime ${source.jsSHA256.slice(0,12)} · Reduced motion ${matchMedia('(prefers-reduced-motion: reduce)').matches?'on':'off'}`;
     recorder.onChange();
   } catch(error) {
-    document.querySelector('#mode-note').textContent='The experiment could not load. Reload this page or try a local HTTP server.';
+    document.querySelector('#test-area').setAttribute('aria-busy','false');
+    document.querySelector('#mode-note').textContent='Experiment failed to load.';
+    const reload=document.querySelector('#reload');reload.hidden=false;reload.onclick=()=>location.reload();
     status.textContent=error.message;console.error(error);
   }
 })();
