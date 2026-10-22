@@ -56,7 +56,7 @@ Open `http://localhost:8083/`. For another device on the same network, bind the 
 - `tests/`: checks for touch-handoff direction/gesture guards and explicit recording behavior.
 - `FINDINGS.md`: observations, interpretation, and unresolved questions.
 
-Generated runtimes are committed so GitHub Pages can publish `site/` without installing dependencies. Run the build after editing `src/`. The build checks that each injection point occurs exactly once instead of silently patching the wrong code.
+Generated runtimes are committed so GitHub Pages can publish `site/` without installing dependencies. Run the build after editing `src/` or the page assets. The build adds content hashes to page asset URLs to avoid mixing old scripts with a new version selector. The build checks that each injection point occurs exactly once instead of silently patching the wrong code.
 
 ## Hosting
 

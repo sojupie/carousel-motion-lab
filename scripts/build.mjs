@@ -29,4 +29,10 @@ for(const [key,{js,css,...info}] of Object.entries(entries)){
  await writeFile(new URL('site/runtimes/'+key+'.css',root),css);
 }
 await writeFile(new URL('site/runtimes/manifest.json',root),JSON.stringify(manifest,null,2)+'\n');
+// Version the page assets too: an old app must not drive a new version selector.
+const pageAssets={};
+for(const file of ['app.js','recorder.js','styles.css','fixture.css'])
+ pageAssets[file]=createHash('sha256').update(await read('site/'+file)).digest('hex').slice(0,12);
+const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+await writeFile(new URL('site/index.html',root),html);
 console.log('Built nine static implementation and diagnostic runtimes.');
