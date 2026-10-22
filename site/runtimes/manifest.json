@@ -1,7 +1,7 @@
 {
   "baseline": {
-    "label": "Baseline",
-    "note": "Native touch scrolling drives a sticky layer of masked cards. Release can settle in visible steps on iOS.",
+    "label": "Current baseline",
+    "note": "Plain sticky track with overscroll clamping. Earlier changes improved desktop motion, but slow dragging and settling still need comparison across devices and inputs.",
     "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
@@ -26,5 +26,40 @@
     "jsSHA256": "defc75da3880b3c75e47ab21f746fd247efb8f0343c761e5205649e2ae742a9d",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
+  },
+  "original": {
+    "label": "Original · native smooth scrolling",
+    "baseRevision": "96600ee",
+    "note": "Original implementation: native smooth scrolling for controls, scroll-driven mask geometry, and queued frame updates. Stuttering was reported on desktop and iOS. Compare slow dragging, release and arrow buttons.",
+    "jsSHA256": "5034a7b506cdb1d8a087ba5acb45c8d200d1c99743aab607378a4820b56c891c",
+    "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
+  },
+  "first-token": {
+    "label": "Token clock · first implementation",
+    "baseRevision": "eab1d19",
+    "note": "Introduces MD3-timed custom settling and translateX positioning. Native offsets are still written during each custom animation frame. Touch release remains native.",
+    "jsSHA256": "ab1f42b3094fb2a2b7abf380f5fad88dbf8cde32887a3727a55032dc4bbff8c4",
+    "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
+  },
+  "handoff": {
+    "label": "One visual clock · explicit artwork positioning",
+    "baseRevision": "4263d47",
+    "note": "Removes per-frame native scroll writes from custom settling and positions artwork with explicit fractional coordinates. Desktop behavior improved, while touch jitter and settling problems remained.",
+    "jsSHA256": "f05d471f12fe22f2a8e09cbd095a2704b17d7310107d5312e0ac76f3ef9ca679",
+    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255"
+  },
+  "isolation": {
+    "label": "Overscroll clamp · layout hints",
+    "baseRevision": "890dc78",
+    "note": "Clamps native offsets at the boundaries and adds layout containment/compositing hints. This addressed reported directional jitter, not the remaining settling stutter.",
+    "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
+    "cssSHA256": "de60457214248d75a6714ef93e6bba5588d33735f7f74f19f576b822df41bae1"
+  },
+  "diagnostic": {
+    "label": "Fixed masks · diagnostic",
+    "baseRevision": "512e9f1",
+    "note": "Freezes mask widths and artwork offsets while keeping positional updates. Gaps and overlaps are expected. It did not resolve the reported stutter; this is a confounded diagnostic, not a finished layout.",
+    "jsSHA256": "fd9d056ce5258770c59eebcc9ae3d04da30ee3d084bcdbb0fac88a1793eb203d",
+    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255"
   }
 }
