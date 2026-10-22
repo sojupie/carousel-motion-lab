@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Compare native scrolling and masked carousel experiments to investigate iOS settling steps and overscroll.">
+  <meta name="description" content="Compare nine carousel implementations to investigate stuttering during dragging and settling on desktop and touch devices.">
   <title>Carousel Motion Lab</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css">
@@ -19,17 +19,32 @@
 </header>
 <main>
   <section class="intro" aria-labelledby="title">
-    <p class="eyebrow">Browser motion experiment · Work in progress</p>
-    <h1 id="title">Investigating carousel settling on iOS</h1>
-    <p class="lead">Dragging feels smooth. The final part of the release can hold, step forward, or jump. This page isolates the scrolling and animation paths behind that behavior.</p>
-    <p>The goal is a carousel with crisp, changing card masks and smooth motion through drag, release, and interruption. Vertical page scrolling, keyboard controls, right-to-left layout, and reduced motion must keep working.</p>
+    <p class="eyebrow">Interactive reproduction · Implementation history</p>
+    <h1 id="title">Tracking down carousel stutter</h1>
+    <p class="lead">This carousel changes the visible width of each card as it scrolls. The image inside keeps its size. The effect should move continuously, even during a slow drag or the last part of a release.</p>
+    <p>Several implementations instead pause, move in small steps, or shift again after reaching a resting position. Stuttering was observed on desktop as well as on iPhone and iPad. Later versions improved some interactions, but the result still depends on the implementation, device, and input.</p>
+    <p>The earlier versions and diagnostic experiments are preserved here for direct comparison. The goal is to keep the changing card widths while making slow dragging and settling look continuous.</p>
   </section>
 
   <section id="playground" aria-labelledby="experiment-title">
     <div class="section-heading"><p class="eyebrow">Compare on the same device</p><h2 id="experiment-title">Try the experiments</h2></div>
-    <p>Start with Baseline. Swipe and release, then try Native scrolling and Touch handoff with the same settings. For Rounded clock, compare the arrow buttons with Baseline’s arrow buttons.</p>
+    <p>Start with Original, drag slowly, then release and watch the card edges and image as they stop. Compare the arrow buttons separately. Keep the settings and input the same when switching versions; the list below explains what changed.</p>
     <form id="controls">
-      <label class="version-field">Implementation<select name="version" id="version"><option value="baseline">Baseline</option><option value="native">1 · Native scrolling</option><option value="rounded">2 · Rounded clock</option><option value="touch-handoff">3 · Touch handoff</option></select></label>
+      <label class="version-field">Implementation<select name="version" id="version">
+        <optgroup label="Implementation history">
+          <option value="original">Original · native smooth scrolling</option>
+          <option value="first-token">Token clock · first implementation</option>
+          <option value="handoff">One visual clock · explicit artwork positioning</option>
+          <option value="isolation">Overscroll clamp · layout hints</option>
+          <option value="baseline">Current baseline</option>
+        </optgroup>
+        <optgroup label="Diagnostic experiments">
+          <option value="diagnostic">Fixed masks · diagnostic</option>
+          <option value="native">1 · Native scrolling</option>
+          <option value="rounded">2 · Rounded clock</option>
+          <option value="touch-handoff">3 · Touch handoff</option>
+        </optgroup>
+      </select></label>
       <label>Layout<select name="variant"><option value="uncontained">Uncontained</option><option value="hero">Hero</option><option value="multi-browse">Multi-browse</option><option value="full-screen">Full-screen</option></select></label>
       <label>Card size<select name="size"><option value="large">Large</option><option value="default">Medium</option><option value="small">Small</option></select></label>
       <label>Maximum width<select name="width"><option>640</option><option>384</option><option>280</option><option>900</option></select></label>
@@ -49,15 +64,32 @@
     </section>
   </section>
 
+  <section id="versions" aria-labelledby="versions-title">
+    <p class="eyebrow">What changed, and what remains</p><h2 id="versions-title">Implementation history</h2>
+    <p>Each selection loads one complete implementation. The diagnostics isolate one behavior or deliberately remove part of the effect. Compare them using the same settings and input; a smoother diagnostic may omit behavior that the final carousel still needs.</p>
+    <div class="table-scroll"><table><thead><tr><th>Version</th><th>Change being tested</th><th>Observed result or limit</th></tr></thead><tbody>
+      <tr><td>Original</td><td>Native smooth scrolling; scroll events update card positions and widths through queued animation frames.</td><td>Stuttering reported on desktop and iOS, especially as movement slows.</td></tr>
+      <tr><td>Token clock</td><td>Adds MD3-timed custom settling and transform positioning; still writes native scroll offsets during custom frames.</td><td>An early attempt to improve settling. Remaining roughness led to the next version.</td></tr>
+      <tr><td>One visual clock</td><td>Custom settling updates geometry from fractional progress and synchronizes native scrolling at completion. Artwork gets an explicit position.</td><td>Desktop motion improved. Touch jitter and stuttering remained.</td></tr>
+      <tr><td>Overscroll clamp + hints</td><td>Clamps out-of-range native offsets and adds layout containment/compositing hints.</td><td>Reported directional jitter improved; the settling stutter was not resolved.</td></tr>
+      <tr><td>Current baseline</td><td>Removes those layout hints, retaining the sticky track and overscroll clamp.</td><td>Desktop was reported smoother in later tests. Native touch settling still showed steps.</td></tr>
+      <tr><td>Fixed masks</td><td>Freezes card widths and artwork offsets; positional updates still follow scrolling.</td><td>Did not fix the reported stutter. Gaps and overlaps make it an imperfect isolation test.</td></tr>
+      <tr><td>1 · Native scrolling</td><td>Uses fixed-width cards in normal flow. No changing masks or sticky visual projection.</td><td>Felt smoother in phone tests. It removes the width-changing effect rather than completing it.</td></tr>
+      <tr><td>2 · Rounded clock</td><td>Rounds the custom animation’s paint input to whole CSS pixels.</td><td>A deliberately degraded control. Test arrow buttons; touch release is unchanged.</td></tr>
+      <tr><td>3 · Touch handoff</td><td>Keeps native dragging, then uses the fractional custom clock after release.</td><td>Initially felt smoother, but flicks exposed late corrections and a large boundary overscroll.</td></tr>
+    </tbody></table></div>
+  </section>
+
   <section id="evidence" aria-labelledby="evidence-title">
-    <p class="eyebrow">What has been observed</p><h2 id="evidence-title">Two related failures</h2>
-    <div class="findings">
-      <article><h3>Stepping near the snap target</h3><p>iPhone and iPad traces report whole-CSS-pixel native offsets during settling. Near the endpoint, one-pixel changes can arrive 50–116 ms apart while JavaScript frame callbacks continue. Rebuilding card geometry from that signal produces repeated positions followed by small advances.</p></article>
-      <article><h3>Competing motion after release</h3><p>Touch handoff replaces the visual settle with fractional animation, but native scrolling can continue underneath it. Some captures show a 6–7 px reversal after the custom animation finishes. At the first item, a recording shows a much larger rubber-band displacement.</p></article>
-    </div>
-    <figure class="evidence-figure"><a href="assets/overscroll-annotated.webp"><img src="assets/overscroll-annotated.webp" width="1860" height="492" alt="Three frames: item 2 before the return gesture, cards shifted far right leaving a blank area, and item 1 restored. Teal lines mark the expected left edge; a red arrow marks the displacement." loading="lazy"></a><figcaption>Experiment 3, iPhone recording. The teal line marks the normal left edge. The middle frame shows the card layer displaced to the right. Times are positions in the video, not synchronized trace timestamps. Tap the image to inspect it at full size.</figcaption></figure>
+    <p class="eyebrow">The core symptom</p><h2 id="evidence-title">Stepping as motion slows</h2>
+    <p>The last part of a release can hold at one position across several frames, then advance by a small amount. Similar roughness was reported in earlier desktop implementations as well as on touch devices. The recording below is one iOS example of the original settling symptom, separate from the newer handoff failure.</p>
+    <div class="video-evidence"><video controls muted playsinline preload="none" poster="assets/settling-poster.webp" aria-label="Cropped iPhone recording of small steps near the end of a carousel release"><source src="assets/settling.mp4" type="video/mp4"></video><p>Watch the right edge of the expanding card. Near the end it holds, then advances in small steps. In native-touch traces, the final one-CSS-pixel offset updates were 50–116 ms apart while JavaScript frame callbacks continued. That is evidence for one motion path, not a diagnosis of every implementation’s stutter.</p></div>
+    <figure class="evidence-figure"><a href="assets/settling-edge.webp"><img src="assets/settling-edge.webp" width="1080" height="612" alt="Magnified right edge of the card at 0.450, 0.500 and 0.550 seconds. The edge holds its position in the first two frames, then advances by about three pixels in the original recording. A teal line marks its earlier position." loading="lazy"></a><figcaption>Magnified edge from the settling recording. The edge holds between the first two frames, then advances. The stated delta is in original recording pixels; it is not a measurement of CSS geometry or proof that every version has the same cause.</figcaption></figure>
+    <h3 class="subsection-title">A separate failure in Touch handoff</h3>
+    <p>Experiment 3 tries to smooth release with a fractional clock. It can also compete with native scrolling: some traces show a 6–7 px correction after the custom animation finishes. At the first item, the recording below shows the whole card layer displaced far to the right. This regression is distinct from the small settling steps above.</p>
+    <figure class="evidence-figure"><a href="assets/overscroll-annotated.webp"><img src="assets/overscroll-annotated.webp" width="1860" height="492" alt="Three frames: item 2 before the large displacement, cards shifted far right leaving a blank area, and item 1 restored. Teal lines mark the expected left edge; a red arrow marks the displacement." loading="lazy"></a><figcaption>Experiment 3, iPhone recording. The teal line marks the normal left edge. The middle frame shows the card layer displaced to the right. Times are positions in the video, not synchronized trace timestamps. Tap the image to inspect it at full size.</figcaption></figure>
     <div class="video-evidence"><video controls muted playsinline preload="none" poster="assets/video-poster.webp" aria-label="Cropped iPhone recording of the touch-handoff overscroll failure"><source src="assets/overscroll.mp4" type="video/mp4"></video><p>The cropped clip shows the return from item 2 to item 1. The paired trace reports native overscroll reaching −275 CSS px, even though the first card’s assigned translation remains zero. Smooth style values alone do not establish smooth rendered motion.</p></div>
-    <details><summary>Device results and limits</summary><p>The issue has been reported on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation), across iOS Safari, Chrome, Firefox, and Brave tests. It was not observed on a MacBook Air M4. These are user observations, not a controlled browser benchmark.</p><p>Native scrolling and Touch handoff felt smoother in initial phone tests. Touch handoff also produced the overscroll failure shown above. Desktop mouse releases use a custom animation clock, while Baseline touch releases use native inertia and snapping; those paths are not a like-for-like platform comparison.</p><p>The evidence supports a sampled-offset and motion-ownership problem. It does not establish a universal browser defect, exact compositor timing, or a finished fix.</p></details>
+    <details><summary>Device results and limits</summary><p>Earlier implementations also stuttered on desktop. Later desktop behavior improved, while touch settling remained rough in tests on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation), across iOS Safari, Chrome, Firefox, and Brave tests. A MacBook Air M4 did not show the problem in the reported later test. These observations refer to different versions and input paths, not a controlled benchmark or a claim that desktop is unaffected.</p><p>Native scrolling and Touch handoff felt smoother in initial phone tests. Touch handoff also produced the overscroll failure shown above. Desktop mouse releases use a custom animation clock, while Baseline touch releases use native inertia and snapping; those paths are not a like-for-like platform comparison.</p><p>The touch traces support investigating sampled scroll offsets and competing motion owners. Earlier desktop stutter remains part of the scope; it has not been shown to share that exact cause. Neither passing desktop tests nor fractional style values establish smooth rendered motion.</p></details>
   </section>
   <section aria-labelledby="method-title"><p class="eyebrow">How the comparison works</p><h2 id="method-title">One variable at a time</h2><p>The masked versions use a sticky visual track and update card masks from logical scroll positions. Native scrolling puts fixed-width cards in normal flow. Rounded clock deliberately removes fractional precision from custom settling. Touch handoff keeps native dragging and starts a custom settle at release.</p><p>The fixture uses static colors, an 8 px gap, 28 px corners, and a 300 ms MD3 standard easing curve. The artwork is inline SVG. There are no external fonts, frameworks, analytics, or required accounts.</p></section>
 </main>
