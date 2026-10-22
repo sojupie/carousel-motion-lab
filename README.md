@@ -51,6 +51,14 @@ Default settings: Original, Uncontained, Large, 640 px maximum width, LTR. Query
 ?version=touch-handoff&variant=uncontained&size=large&width=640&direction=ltr
 ```
 
+## Release traces
+
+The page includes a scrubber for four iOS touch captures: Native, Rounded, a custom release that stays at its target, and a custom release followed by a correction. The traces plot recorded scroll offsets and assigned CSS positions after finger release. Repeated sampled positions appear as bars beneath each trace.
+
+Native and Rounded both have a final 100 ms sampled hold. Rounded’s custom clock does not run on finger release. The stable custom-release capture updates every sampled CSS position; the failing flick adds a second stepped settle after reaching the target.
+
+`site/assets/settling-traces.json` contains only relative timestamps and positions derived from those captures. Raw recordings and browser metadata remain local.
+
 ## Recording
 
 1. Load the implementation and settings.

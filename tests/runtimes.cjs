@@ -25,3 +25,21 @@ test('page ships a self-contained Material subset and three deferred 16:9 record
  execFileSync(process.execPath,['--check',path.join(root,'site/fields.js')]);
  assert.match(read('site/app.js').toString(),/form.requestSubmit/);
 });
+test('release data retains native holds, continuous custom positions and the late correction',()=>{
+ const {duration,traces}=JSON.parse(read('site/assets/settling-traces.json'));
+ assert.equal(duration,800);assert.equal(traces.length,4);
+ for(const t of traces){
+  assert.deepEqual(Object.keys(t).sort(),['id','note','samples','target','title']);
+  t.samples.forEach((s,i)=>{assert.ok(!i||s[0]>t.samples[i-1][0]);assert.ok(Number.isFinite(s[1]));assert.ok(s[2]===null||Number.isFinite(s[2]));});
+ }
+ for(const id of ['native','rounded']){
+  const t=traces.find(t=>t.id===id),lastOne=t.samples.find(s=>s[1]===t.target-1),finish=t.samples.find(s=>s[0]>lastOne[0]&&s[1]===t.target);
+  assert.equal(finish[0]-lastOne[0],100,id+' final recorded hold');
+ }
+ const good=traces.find(t=>t.id==='handoff'),end=good.samples.findIndex(s=>s[2]===good.target);
+ for(let i=1;i<=end;i++)assert.notEqual(good.samples[i][2],good.samples[i-1][2]);
+ assert.ok(good.samples.slice(end).every(s=>s[2]===good.target));
+ const bad=traces.find(t=>t.id==='correction'),land=bad.samples.findIndex(s=>s[2]===bad.target);
+ assert.equal(bad.samples[land+1][1]-bad.target,6);
+ execFileSync(process.execPath,['--check',path.join(root,'site/timeline.js')]);
+});

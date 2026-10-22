@@ -55,6 +55,14 @@ The desktop target is Rounded, which looks comparable to the current baseline in
 
 All six retained annotated recordings share a 16:9 frame and a persistent hold history. The iOS settling clip shows three-pixel advances in recording coordinates, with 67–117 ms holds. Hold durations use source timestamps; frame counts use captured frames.
 
+## iOS experiment comparison
+
+The Native capture reaches its target 586 ms after finger release. Its last 1 CSS px advance follows a 100 ms hold across six recorded samples. Rounded’s touch capture reaches the target after 578 ms and has the same final 100 ms hold. Rounded changes the custom clock used by mouse release and buttons; this finger release follows the native path.
+
+The stable Touch handoff capture supplies 21 distinct CSS positions over 322 ms, with a median sampling interval of 17 ms. It remains at the target afterward. The failing flick also supplies a different CSS position at each sample during the custom release, then jumps 6 CSS px away and returns with holds reaching 100 ms.
+
+The page’s release timeline uses these four captures. Native is shown through scroll offsets; scripted geometry is shown through assigned CSS positions.
+
 ## Boundary overscroll
 
 The [annotated frames](site/assets/overscroll-annotated.webp) and [video](site/assets/overscroll.mp4) show item 2 returning to item 1. The card layer shifts right and leaves most of the viewport blank.
