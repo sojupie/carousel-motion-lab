@@ -1,8 +1,33 @@
 # Carousel Motion Lab
 
-Carousel implementations for reproducing stutter during slow dragging and settling on desktop and touch devices. Card masks change width as they scroll; the artwork retains its size. The goal is continuous motion through dragging, release, and interruption.
+The carousel in [Token Catalog](https://tokencatalog.dev/md3/components/carousel) stutters as it slows down after a drag. Dragging itself usually feels smooth. The last part of the release can pause, advance in small steps, or jump.
 
-**[Experiments](https://sojupie.github.io/carousel-motion-lab/)** · [Findings](FINDINGS.md)
+**[Try it](https://sojupie.github.io/carousel-motion-lab/)** · [Measurements and findings](FINDINGS.md) · [Open a pull request](https://github.com/sojupie/carousel-motion-lab/compare)
+
+![The card’s right edge at 0.450, 0.500 and 0.550 seconds. It stays in place in the first two frames, then advances three recording pixels.](site/assets/settling-edge.webp)
+
+The edge holds for 50 ms, then advances three recording pixels. The annotated videos on the test page slow this down and keep a history of the holds beside the recording.
+
+## How it got here
+
+This started while building a Material Design 3 carousel for Token Catalog. Its cards change visible width as they move through the layout. The artwork stays at its original size inside each mask.
+
+The first version followed native scroll events. Later attempts used an MD3 animation clock, explicit artwork offsets, and a single scroll synchronization at the end of the animation. These improved desktop motion. Touch release still stepped on several iPhones and an iPad.
+
+The experiments then tried fixed mask widths, fixed-width cards with entirely native scrolling, rounded animation positions, and a handoff from native touch dragging to a custom animation. Touch handoff initially felt smoother. Further testing exposed a large jump at the boundary:
+
+![Three iOS frames showing the cards before release, displaced to the right with blank space on the left, and back at their resting edge.](site/assets/overscroll-annotated.webp)
+
+The latest desktop comparison found stutter in Original and Native. Rounded felt smooth. The recordings and traces are in [FINDINGS.md](FINDINGS.md); all nine versions remain available on the test page.
+
+## What a fix needs to preserve
+
+- Smooth dragging, release, and interruption.
+- Changing card masks with stable artwork proportions.
+- Native vertical scrolling and pinch zoom.
+- Keyboard navigation, RTL, and reduced motion.
+
+A fix or a smaller reproduction is welcome. [Open a pull request](https://github.com/sojupie/carousel-motion-lab/compare) with the implementation tested, browser, device, input method, and a before-and-after recording. [Open an issue](https://github.com/sojupie/carousel-motion-lab/issues/new) for measurements or reproduction steps.
 
 ## Versions
 
@@ -70,17 +95,11 @@ git push origin main
 
 The publish script builds, tests, and pushes the static site to `gh-pages`. GitHub Pages serves that branch’s root directory.
 
-## Evidence
+## Page styles and recordings
 
-The page includes six annotated desktop and iOS recordings. Each uses a 1280 × 720 frame, with the component on the left and a persistent hold history on the right. Regular settling plays at ¼ speed; the handoff jump plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw videos and device reports remain local. Runtime hashes identify the files used in each report.
+The page uses a small snapshot of the Material light/default tokens and the button, filter-chip, and menu rules it needs. The filter pills and selection runtime come from the component previews. Selections apply immediately. Roboto is self-hosted; Material Symbols use inline SVG paths. The full theme stylesheet is not loaded.
 
-The fixture uses inline SVG, static colors, an 8 px gap, and 28 px corners. Custom settling uses Material Design 3 (MD3) standard easing over 300 ms.
-
-## Material styles
-
-`site/material.css` contains only the light/default tokens and component rules used by the page’s filled, tonal, outlined, and icon buttons. The snapshot is 54 KB uncompressed (5.2 KB gzip). `site/styles.css` handles page layout and applies the extracted color, shape, and typography tokens. Native selects use those tokens for their borders, surfaces, and text. The page self-hosts Roboto and embeds two Material Symbols as SVG paths; no icon font or full theme stylesheet is loaded.
-
-The frozen carousel palette and 300 ms timing remain scoped to each specimen. Page controls use CSS state layers and pressed shapes. The lab does not load a shared interaction runtime into the experiments.
+Regular text is 18 px. Labels and supporting text are 16 px or larger. These reading-size adjustments apply to the page; the frozen carousel palette, geometry, and 300 ms timing remain scoped to each specimen.
 
 To refresh the Material snapshot from the source repository and its generated theme:
 
@@ -89,12 +108,8 @@ node scripts/extract-material.mjs /path/to/tokens /path/to/theme.css
 npm run build
 ```
 
-The refresh script uses the source repository’s installed PostCSS. Serving and building this repository still require no package dependencies. Roboto’s license is in `site/assets/fonts/OFL.txt`. The inline chevrons are Google Material Symbols Outlined (24px), licensed under Apache-2.0; see [the source](https://github.com/google/material-design-icons/tree/master/symbols/web).
+The refresh script uses the source repository’s installed PostCSS. Serving and building this repository require no package dependencies. Roboto’s license is in `site/assets/fonts/OFL.txt`. Material Symbols use Apache-2.0; the license is in `site/assets/material-symbols-LICENSE.txt`.
 
-## Contributing
-
-[Open a pull request](https://github.com/sojupie/carousel-motion-lab/compare) with a fix or a smaller reproduction. Include the implementation tested, browser, device, input method, and a before-and-after recording. Keep changing card masks, vertical page scrolling, keyboard navigation, RTL, and reduced motion working.
-
-[Open an issue](https://github.com/sojupie/carousel-motion-lab/issues/new) for measurements or reproduction steps.
+The six annotated clips use 1280 × 720 frames, with the component on the left and the hold history on the right. Regular settling plays at ¼ speed; the handoff jump plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw recordings and device reports stay local.
 
 Source license: [Business Source License 1.1](LICENSE).

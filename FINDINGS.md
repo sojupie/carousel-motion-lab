@@ -2,9 +2,11 @@
 
 ## Stutter
 
-Earlier implementations stuttered on desktop and iOS, especially during slow dragging and the final settle. Later versions improved desktop behavior. Native touch settling continued to show holds and small jumps.
+The main problem is the last part of the release: the card edge pauses and then moves in small steps. It has appeared on desktop and iOS. Later versions improved desktop behavior. Native touch settling still showed the pauses.
 
-The implementation history preserves those changes: token-timed settling, transform positioning, explicit artwork offsets, scroll synchronization, and overscroll clamping. The newer Touch handoff experiment also introduced late corrections and boundary overscroll.
+The attempts changed the animation clock, artwork positioning, scroll synchronization, and boundary handling. Touch handoff introduced a separate problem: large overscroll and late corrections.
+
+![The edge holds across two frames, then advances.](site/assets/settling-edge.webp)
 
 ## Native offsets
 
