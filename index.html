@@ -8,9 +8,10 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css?v=662d2b80d1b6">
   <link rel="stylesheet" href="material.css?v=709ac7ab76ff">
-  <link rel="stylesheet" href="styles.css?v=7a90536e8e6d">
+  <link rel="stylesheet" href="styles.css?v=b02db3ee40e1">
   <script src="recorder.js?v=d94dd32a1dd4" defer></script>
   <script src="app.js?v=1c1de3950e04" defer></script>
+  <script src="timeline.js?v=aed211053a2b" defer></script>
   <script src="fields.js?v=5b4ad1185ecc" defer></script>
 </head>
 <body>
@@ -83,6 +84,14 @@
     <p>These recordings show pauses during settling, small position corrections, and a large displacement after a slight touch.</p>
 
 
+    <section id="release-timeline" class="md-card md-outlined-card release-timeline" aria-labelledby="timeline-title">
+      <h3 id="timeline-title">iOS release traces</h3>
+      <p>Distance from the target in CSS pixels. Bars below each trace mark repeated sampled positions. These traces use recorded scroll offsets and assigned CSS positions.</p>
+      <label class="trace-zoom"><input id="trace-zoom" type="checkbox" checked>Magnify final 10 CSS px</label>
+      <div class="trace-legend"><span class="legend-css">CSS position</span><span class="legend-native">Scroll offset</span></div>
+      <label for="release-time">Time after release</label><input id="release-time" type="range" min="0" max="800" value="320" step="1" disabled><output for="release-time">Loading traces…</output>
+      <div class="trace-ticks" aria-hidden="true"></div><div class="trace-rows"></div>
+    </section>
     <div class="recording-grid">
       <figure class="recording-card"><h3>Desktop target · Rounded</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/rounded-poster.webp" aria-label="Rounded clock · desktop annotated recording"><source src="assets/recordings/rounded.mp4" type="video/mp4"></video><figcaption>Rounded looks comparable to the current baseline in these desktop tests. The brief two-frame hold is acceptable. This is the settling quality to match on iOS. <a href="assets/recordings/rounded-summary.webp">View hold summary</a></figcaption></figure>
       <figure class="recording-card"><h3>Settling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-release-poster.webp" aria-label="Settling · iOS annotated recording"><source src="assets/recordings/ios-release.mp4" type="video/mp4"></video><figcaption>The edge advances three recording pixels at a time, with holds of up to 117 ms. <a href="assets/recordings/ios-release-summary.webp">View hold summary</a></figcaption></figure>
