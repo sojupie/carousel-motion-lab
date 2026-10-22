@@ -1,4 +1,4 @@
-*{box-sizing:border-box} :root{font:16px/1.5 system-ui,sans-serif;color:#1d1b20;background:#fef7ff;
+.md-carousel{
 --md-sys-measurement-space50:4px;--md-sys-measurement-space100:8px;--md-sys-measurement-space150:12px;
 --md-sys-motion-duration-medium2:300ms;--md-sys-motion-easing-standard:cubic-bezier(.2,0,0,1);
 --md-sys-color-tertiary-container:#f8cce0;--md-sys-color-primary-container:#e7dafa;--md-sys-color-secondary:#4a4458;--md-sys-color-tertiary:#7b5266;
