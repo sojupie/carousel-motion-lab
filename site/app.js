@@ -2,6 +2,16 @@
   const form=document.querySelector('#controls'),q=new URLSearchParams(location.search);
   const allowed={version:['original','baseline','first-token','handoff','isolation','diagnostic','native','rounded','touch-handoff'],variant:['uncontained','hero','multi-browse','full-screen'],size:['large','default','small'],width:['640','384','280','900'],direction:['ltr','rtl']};
   for(const [name,values] of Object.entries(allowed))form.elements[name].value=values.includes(q.get(name))?q.get(name):values[0];
+  // Same filter-pill anatomy and fields runtime as the component previews.
+  for(const select of [...form.querySelectorAll('select')]){
+    const label=select.parentElement.firstChild.textContent.trim(),id=select.name;
+    const wrapper=document.createElement('div');wrapper.className='tokens-preview-filter';wrapper.dataset.fieldExample='';wrapper.dataset.populated='true';
+    const choice=select.selectedOptions[0].textContent;
+    const options=[...select.options].map((o,i)=>`<li role="presentation"><div class="md-menu-item" id="${id}-option-${i}" role="option" aria-selected="${o.selected}" data-field-option="${o.textContent}" data-field-value="${o.value}"><span>${o.textContent}</span><span data-slot="trailing-icon" aria-hidden="true"><svg viewBox="0 -960 960 960" focusable="false"><path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"></path></svg></span></div></li>`).join('');
+    wrapper.innerHTML=`<button type="button" class="md-filter-chip" id="filter-${id}" role="combobox" aria-label="${label}" aria-expanded="false" aria-haspopup="listbox" aria-controls="${id}-options" aria-autocomplete="none" value="${choice}" data-field-combo data-field-select><span>${label}:</span><span data-field-display>${choice}</span><span data-slot="trailing-icon" aria-hidden="true"><svg viewBox="0 -960 960 960" focusable="false"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"></path></svg></span></button><input type="hidden" name="${id}" value="${select.value}" data-field-value><div class="md-field-menu md-menu tokens-catalog-menu" data-variant="standard" data-orientation="vertical" id="${id}-options" role="listbox" aria-label="${label}" popover="auto"><section><ul role="presentation">${options}</ul></section><p class="md-field-empty" role="option" aria-disabled="true" hidden>No matches</p></div>`;
+    select.parentElement.replaceWith(wrapper);
+  }
+  form.addEventListener('change',()=>form.requestSubmit());
   if(form.elements.version.value==='diagnostic'&&q.get('carousel.masks')!=='fixed'){const url=new URL(location.href);url.searchParams.set('carousel.masks','fixed');location.replace(url.href);return;}
   const config=Object.fromEntries(new FormData(form));
   let recorder;
