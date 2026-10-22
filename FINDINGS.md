@@ -51,7 +51,9 @@ Original’s JSON shows final native scroll increments of about 1.12 CSS px with
 
 The annotated desktop videos show 50–67 ms holds followed by one-pixel advances in Original and Native. Rounded finishes sooner. Its smooth appearance suggests that integer positions alone do not explain the reported stutter. The Native video reproduces the symptom without changing card masks or a sticky visual track.
 
-All six annotated recordings share a 16:9 frame and a persistent hold history. The iOS settling clip shows three-pixel advances in recording coordinates, with 67–117 ms holds. Hold durations use source timestamps; frame counts use captured frames.
+The desktop target is Rounded, which looks comparable to the current baseline in these tests. Its two-frame hold is acceptable. The goal is to match that settling quality on iOS. Browser scrolling and DOM rendering may limit further improvement.
+
+All six retained annotated recordings share a 16:9 frame and a persistent hold history. The iOS settling clip shows three-pixel advances in recording coordinates, with 67–117 ms holds. Hold durations use source timestamps; frame counts use captured frames.
 
 ## Boundary overscroll
 

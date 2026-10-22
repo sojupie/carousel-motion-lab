@@ -18,7 +18,7 @@ The experiments then tried fixed mask widths, fixed-width cards with entirely na
 
 ![Three iOS frames showing the cards before release, displaced to the right with blank space on the left, and back at their resting edge.](site/assets/overscroll-annotated.webp)
 
-The latest desktop comparison found stutter in Original and Native. Rounded felt smooth. The recordings and traces are in [FINDINGS.md](FINDINGS.md); all nine versions remain available on the test page.
+The latest desktop comparison found stutter in Original and Native. Rounded looks comparable to the current baseline. Its brief two-frame hold is acceptable and provides the settling target for iOS. The recordings and traces are in [FINDINGS.md](FINDINGS.md); all nine versions remain available on the test page.
 
 ## What a fix needs to preserve
 
@@ -110,6 +110,6 @@ npm run build
 
 The refresh script uses the source repository’s installed PostCSS. Serving and building this repository require no package dependencies. Roboto’s license is in `site/assets/fonts/OFL.txt`. Material Symbols use Apache-2.0; the license is in `site/assets/material-symbols-LICENSE.txt`.
 
-The six annotated clips use 1280 × 720 frames, with the component on the left and the hold history on the right. Regular settling clips play at ¼ speed. The overscroll clip plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw recordings and device reports stay local.
+The page shows Rounded as the desktop target alongside the two iOS examples. All annotated clips use 1280 × 720 frames, with the component on the left and the hold history on the right. Regular settling clips play at ¼ speed. The overscroll clip plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw recordings and device reports stay local.
 
 Source license: [Business Source License 1.1](LICENSE).

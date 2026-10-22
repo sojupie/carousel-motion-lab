@@ -11,13 +11,13 @@ test('all nine versions are published, hashed and syntactically valid',()=>{
  }
  assert.deepEqual(read('site/runtimes/baseline.js'),read('src/baseline.js'));
 });
-test('page ships a self-contained Material subset and six deferred 16:9 recordings',()=>{
+test('page ships a self-contained Material subset and three deferred 16:9 recordings',()=>{
  const css=read('site/material.css').toString(),html=read('site/index.html').toString();
  const declared=new Set([...css.matchAll(/(--[\w-]+)\s*:/g)].map(m=>m[1]));
  for(const source of [css,read('site/styles.css').toString()])
   for(const [,token] of source.matchAll(/var\((--md-[\w-]+)/g))assert.ok(declared.has(token),'Missing Material token '+token);
  assert.ok(require('node:zlib').gzipSync(css).length<12000);
- assert.equal((html.match(/<video controls muted playsinline preload="none" width="1280" height="720"/g)||[]).length,6);
+ assert.equal((html.match(/<video controls muted playsinline preload="none" width="1280" height="720"/g)||[]).length,3);
  assert.match(read('site/app.js').toString(),/viewBox="0 -960 960 960"/);
  assert.ok(!html.includes('theme.css'));
  assert.ok(html.includes('assets/settling-edge.webp'));
