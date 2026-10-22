@@ -1,0 +1,582 @@
+/* Material light/default token and component subset. See docs in README. Refresh with scripts/extract-material.mjs. */
+:root {
+  --_motion-fast-effects-duration: 166.667ms;
+  --_motion-fast-effects-easing: linear(0, 0.274321, 0.608625, 0.812798, 0.91613, 0.963944, 0.984934, 0.993834, 0.997516, 0.999012, 1);
+  --md-comp-button-filled-container-color: #65558f;
+  --md-comp-button-filled-container-elevation: 0;
+  --md-comp-button-filled-container-shadow-color: #000000;
+  --md-comp-button-filled-disabled-container-color: #1d1b20;
+  --md-comp-button-filled-disabled-container-elevation: 0;
+  --md-comp-button-filled-disabled-container-opacity: 0.1;
+  --md-comp-button-filled-disabled-icon-color: #1d1b20;
+  --md-comp-button-filled-disabled-icon-opacity: 0.38;
+  --md-comp-button-filled-disabled-label-text-color: #1d1b20;
+  --md-comp-button-filled-disabled-label-text-opacity: 0.38;
+  --md-comp-button-filled-focused-container-elevation: 0;
+  --md-comp-button-filled-focused-icon-color: #ffffff;
+  --md-comp-button-filled-focused-label-text-color: #ffffff;
+  --md-comp-button-filled-focused-state-layer-color: #ffffff;
+  --md-comp-button-filled-focused-state-layer-opacity: 0.1;
+  --md-comp-button-filled-hovered-container-elevation: 1;
+  --md-comp-button-filled-hovered-icon-color: #ffffff;
+  --md-comp-button-filled-hovered-label-text-color: #ffffff;
+  --md-comp-button-filled-hovered-state-layer-color: #ffffff;
+  --md-comp-button-filled-hovered-state-layer-opacity: 0.08;
+  --md-comp-button-filled-icon-color: #ffffff;
+  --md-comp-button-filled-label-text-color: #ffffff;
+  --md-comp-button-filled-pressed-container-elevation: 0;
+  --md-comp-button-filled-pressed-icon-color: #ffffff;
+  --md-comp-button-filled-pressed-label-text-color: #ffffff;
+  --md-comp-button-filled-pressed-state-layer-color: #ffffff;
+  --md-comp-button-filled-pressed-state-layer-opacity: 0.1;
+  --md-comp-button-filled-selected-container-color: #65558f;
+  --md-comp-button-filled-selected-focused-icon-color: #ffffff;
+  --md-comp-button-filled-selected-focused-label-text-color: #ffffff;
+  --md-comp-button-filled-selected-focused-state-layer-color: #ffffff;
+  --md-comp-button-filled-selected-hovered-icon-color: #ffffff;
+  --md-comp-button-filled-selected-hovered-label-text-color: #ffffff;
+  --md-comp-button-filled-selected-hovered-state-layer-color: #ffffff;
+  --md-comp-button-filled-selected-icon-color: #ffffff;
+  --md-comp-button-filled-selected-label-text-color: #ffffff;
+  --md-comp-button-filled-selected-pressed-icon-color: #ffffff;
+  --md-comp-button-filled-selected-pressed-label-text-color: #ffffff;
+  --md-comp-button-filled-selected-pressed-state-layer-color: #ffffff;
+  --md-comp-button-filled-unselected-container-color: #f2ecf4;
+  --md-comp-button-filled-unselected-focused-icon-color: #49454e;
+  --md-comp-button-filled-unselected-focused-label-text-color: #49454e;
+  --md-comp-button-filled-unselected-focused-state-layer-color: #49454e;
+  --md-comp-button-filled-unselected-hovered-icon-color: #49454e;
+  --md-comp-button-filled-unselected-hovered-label-text-color: #49454e;
+  --md-comp-button-filled-unselected-hovered-state-layer-color: #49454e;
+  --md-comp-button-filled-unselected-icon-color: #49454e;
+  --md-comp-button-filled-unselected-label-text-color: #49454e;
+  --md-comp-button-filled-unselected-pressed-icon-color: #49454e;
+  --md-comp-button-filled-unselected-pressed-label-text-color: #49454e;
+  --md-comp-button-filled-unselected-pressed-state-layer-color: #49454e;
+  --md-comp-button-outlined-disabled-container-opacity: 0.1;
+  --md-comp-button-outlined-disabled-icon-color: #1d1b20;
+  --md-comp-button-outlined-disabled-icon-opacity: 0.38;
+  --md-comp-button-outlined-disabled-label-text-color: #1d1b20;
+  --md-comp-button-outlined-disabled-label-text-opacity: 0.38;
+  --md-comp-button-outlined-disabled-outline-color: #cac4cf;
+  --md-comp-button-outlined-focused-icon-color: #49454e;
+  --md-comp-button-outlined-focused-label-text-color: #49454e;
+  --md-comp-button-outlined-focused-outline-color: #cac4cf;
+  --md-comp-button-outlined-focused-state-layer-color: #49454e;
+  --md-comp-button-outlined-focused-state-layer-opacity: 0.1;
+  --md-comp-button-outlined-hovered-icon-color: #49454e;
+  --md-comp-button-outlined-hovered-label-text-color: #49454e;
+  --md-comp-button-outlined-hovered-outline-color: #cac4cf;
+  --md-comp-button-outlined-hovered-state-layer-color: #49454e;
+  --md-comp-button-outlined-hovered-state-layer-opacity: 0.08;
+  --md-comp-button-outlined-icon-color: #49454e;
+  --md-comp-button-outlined-label-text-color: #49454e;
+  --md-comp-button-outlined-outline-color: #cac4cf;
+  --md-comp-button-outlined-pressed-icon-color: #49454e;
+  --md-comp-button-outlined-pressed-label-text-color: #49454e;
+  --md-comp-button-outlined-pressed-outline-color: #cac4cf;
+  --md-comp-button-outlined-pressed-state-layer-color: #49454e;
+  --md-comp-button-outlined-pressed-state-layer-opacity: 0.1;
+  --md-comp-button-outlined-selected-container-color: #322f35;
+  --md-comp-button-outlined-selected-disabled-container-color: #1d1b20;
+  --md-comp-button-outlined-selected-focused-icon-color: #f5eff7;
+  --md-comp-button-outlined-selected-focused-label-text-color: #f5eff7;
+  --md-comp-button-outlined-selected-focused-state-layer-color: #f5eff7;
+  --md-comp-button-outlined-selected-hovered-icon-color: #f5eff7;
+  --md-comp-button-outlined-selected-hovered-label-text-color: #f5eff7;
+  --md-comp-button-outlined-selected-hovered-state-layer-color: #f5eff7;
+  --md-comp-button-outlined-selected-icon-color: #f5eff7;
+  --md-comp-button-outlined-selected-label-text-color: #f5eff7;
+  --md-comp-button-outlined-selected-pressed-icon-color: #f5eff7;
+  --md-comp-button-outlined-selected-pressed-label-text-color: #f5eff7;
+  --md-comp-button-outlined-selected-pressed-state-layer-color: #f5eff7;
+  --md-comp-button-outlined-unselected-disabled-outline-color: #cac4cf;
+  --md-comp-button-outlined-unselected-focused-icon-color: #49454e;
+  --md-comp-button-outlined-unselected-focused-label-text-color: #49454e;
+  --md-comp-button-outlined-unselected-focused-outline-color: #cac4cf;
+  --md-comp-button-outlined-unselected-focused-state-layer-color: #49454e;
+  --md-comp-button-outlined-unselected-hovered-icon-color: #49454e;
+  --md-comp-button-outlined-unselected-hovered-label-text-color: #49454e;
+  --md-comp-button-outlined-unselected-hovered-outline-color: #cac4cf;
+  --md-comp-button-outlined-unselected-hovered-state-layer-color: #49454e;
+  --md-comp-button-outlined-unselected-icon-color: #49454e;
+  --md-comp-button-outlined-unselected-label-text-color: #49454e;
+  --md-comp-button-outlined-unselected-pressed-icon-color: #49454e;
+  --md-comp-button-outlined-unselected-pressed-label-text-color: #49454e;
+  --md-comp-button-outlined-unselected-pressed-outline-color: #cac4cf;
+  --md-comp-button-outlined-unselected-pressed-state-layer-color: #49454e;
+  --md-comp-button-small-container-height: 40px;
+  --md-comp-button-small-container-shape-round: calc(infinity * 1px);
+  --md-comp-button-small-container-shape-square: 12px;
+  --md-comp-button-small-icon-label-space: 8px;
+  --md-comp-button-small-icon-size: 20px;
+  --md-comp-button-small-label-text: 500 14px/1.4285714285714286 Roboto;
+  --md-comp-button-small-label-text-letter-spacing: 0.1px;
+  --md-comp-button-small-leading-space: 16px;
+  --md-comp-button-small-outlined-outline-width: 1px;
+  --md-comp-button-small-pressed-container-corner-size-motion-spring-damping: 0.6;
+  --md-comp-button-small-pressed-container-corner-size-motion-spring-stiffness: 800;
+  --md-comp-button-small-pressed-container-shape: 8px;
+  --md-comp-button-small-selected-container-shape-round: 12px;
+  --md-comp-button-small-selected-container-shape-square: calc(infinity * 1px);
+  --md-comp-button-small-trailing-space: 16px;
+  --md-comp-button-tonal-container-color: #e2e0f9;
+  --md-comp-button-tonal-container-elevation: 0;
+  --md-comp-button-tonal-container-shadow-color: #000000;
+  --md-comp-button-tonal-disabled-container-color: #1d1b20;
+  --md-comp-button-tonal-disabled-container-elevation: 0;
+  --md-comp-button-tonal-disabled-container-opacity: 0.1;
+  --md-comp-button-tonal-disabled-icon-color: #1d1b20;
+  --md-comp-button-tonal-disabled-icon-opacity: 0.38;
+  --md-comp-button-tonal-disabled-label-text-color: #1d1b20;
+  --md-comp-button-tonal-disabled-label-text-opacity: 0.38;
+  --md-comp-button-tonal-focused-container-elevation: 0;
+  --md-comp-button-tonal-focused-icon-color: #454559;
+  --md-comp-button-tonal-focused-label-text-color: #454559;
+  --md-comp-button-tonal-focused-state-layer-color: #454559;
+  --md-comp-button-tonal-focused-state-layer-opacity: 0.1;
+  --md-comp-button-tonal-hovered-container-elevation: 1;
+  --md-comp-button-tonal-hovered-icon-color: #454559;
+  --md-comp-button-tonal-hovered-label-text-color: #454559;
+  --md-comp-button-tonal-hovered-state-layer-color: #454559;
+  --md-comp-button-tonal-hovered-state-layer-opacity: 0.08;
+  --md-comp-button-tonal-icon-color: #454559;
+  --md-comp-button-tonal-label-text-color: #454559;
+  --md-comp-button-tonal-pressed-container-elevation: 0;
+  --md-comp-button-tonal-pressed-icon-color: #454559;
+  --md-comp-button-tonal-pressed-label-text-color: #454559;
+  --md-comp-button-tonal-pressed-state-layer-color: #454559;
+  --md-comp-button-tonal-pressed-state-layer-opacity: 0.1;
+  --md-comp-button-tonal-selected-container-color: #5d5c72;
+  --md-comp-button-tonal-selected-focused-icon-color: #ffffff;
+  --md-comp-button-tonal-selected-focused-label-text-color: #ffffff;
+  --md-comp-button-tonal-selected-focused-state-layer-color: #ffffff;
+  --md-comp-button-tonal-selected-hovered-icon-color: #ffffff;
+  --md-comp-button-tonal-selected-hovered-label-text-color: #ffffff;
+  --md-comp-button-tonal-selected-hovered-state-layer-color: #ffffff;
+  --md-comp-button-tonal-selected-icon-color: #ffffff;
+  --md-comp-button-tonal-selected-label-text-color: #ffffff;
+  --md-comp-button-tonal-selected-pressed-icon-color: #ffffff;
+  --md-comp-button-tonal-selected-pressed-label-text-color: #ffffff;
+  --md-comp-button-tonal-selected-pressed-state-layer-color: #ffffff;
+  --md-comp-button-tonal-unselected-container-color: #e2e0f9;
+  --md-comp-button-tonal-unselected-focused-icon-color: #454559;
+  --md-comp-button-tonal-unselected-focused-label-text-color: #454559;
+  --md-comp-button-tonal-unselected-focused-state-layer-color: #454559;
+  --md-comp-button-tonal-unselected-hovered-icon-color: #454559;
+  --md-comp-button-tonal-unselected-hovered-label-text-color: #454559;
+  --md-comp-button-tonal-unselected-hovered-state-layer-color: #454559;
+  --md-comp-button-tonal-unselected-icon-color: #454559;
+  --md-comp-button-tonal-unselected-label-text-color: #454559;
+  --md-comp-button-tonal-unselected-pressed-icon-color: #454559;
+  --md-comp-button-tonal-unselected-pressed-label-text-color: #454559;
+  --md-comp-button-tonal-unselected-pressed-state-layer-color: #454559;
+  --md-comp-icon-button-small-container-height: 40px;
+  --md-comp-icon-button-small-container-shape-round: calc(infinity * 1px);
+  --md-comp-icon-button-small-container-shape-square: 12px;
+  --md-comp-icon-button-small-default-leading-space: 8px;
+  --md-comp-icon-button-small-default-trailing-space: 8px;
+  --md-comp-icon-button-small-icon-size: 24px;
+  --md-comp-icon-button-small-outlined-outline-width: 1px;
+  --md-comp-icon-button-small-pressed-container-corner-size-motion-spring-damping: 0.6;
+  --md-comp-icon-button-small-pressed-container-corner-size-motion-spring-stiffness: 800;
+  --md-comp-icon-button-small-pressed-container-shape: 8px;
+  --md-comp-icon-button-small-selected-container-shape-round: 12px;
+  --md-comp-icon-button-small-selected-container-shape-square: calc(infinity * 1px);
+  --md-comp-icon-button-tonal-container-color: #e2e0f9;
+  --md-comp-icon-button-tonal-disabled-container-color: #1d1b20;
+  --md-comp-icon-button-tonal-disabled-container-opacity: 0.1;
+  --md-comp-icon-button-tonal-disabled-icon-color: #1d1b20;
+  --md-comp-icon-button-tonal-disabled-icon-opacity: 0.38;
+  --md-comp-icon-button-tonal-focused-icon-color: #454559;
+  --md-comp-icon-button-tonal-focused-state-layer-color: #454559;
+  --md-comp-icon-button-tonal-focused-state-layer-opacity: 0.1;
+  --md-comp-icon-button-tonal-hovered-icon-color: #454559;
+  --md-comp-icon-button-tonal-hovered-state-layer-color: #454559;
+  --md-comp-icon-button-tonal-hovered-state-layer-opacity: 0.08;
+  --md-comp-icon-button-tonal-icon-color: #454559;
+  --md-comp-icon-button-tonal-pressed-icon-color: #454559;
+  --md-comp-icon-button-tonal-pressed-state-layer-color: #454559;
+  --md-comp-icon-button-tonal-pressed-state-layer-opacity: 0.1;
+  --md-comp-icon-button-tonal-selected-container-color: #5d5c72;
+  --md-comp-icon-button-tonal-selected-focused-icon-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-focused-state-layer-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-hovered-icon-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-hovered-state-layer-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-icon-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-pressed-icon-color: #ffffff;
+  --md-comp-icon-button-tonal-selected-pressed-state-layer-color: #ffffff;
+  --md-comp-icon-button-tonal-unselected-container-color: #e2e0f9;
+  --md-comp-icon-button-tonal-unselected-focused-icon-color: #454559;
+  --md-comp-icon-button-tonal-unselected-focused-state-layer-color: #454559;
+  --md-comp-icon-button-tonal-unselected-hovered-icon-color: #454559;
+  --md-comp-icon-button-tonal-unselected-hovered-state-layer-color: #454559;
+  --md-comp-icon-button-tonal-unselected-icon-color: #454559;
+  --md-comp-icon-button-tonal-unselected-pressed-icon-color: #454559;
+  --md-comp-icon-button-tonal-unselected-pressed-state-layer-color: #454559;
+  --md-sys-color-error: #ba1a1a;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-on-primary-container: #4d3d75;
+  --md-sys-color-on-secondary-container: #454559;
+  --md-sys-color-on-surface: #1d1b20;
+  --md-sys-color-on-surface-variant: #49454e;
+  --md-sys-color-outline: #7a757f;
+  --md-sys-color-outline-variant: #cac4cf;
+  --md-sys-color-primary: #65558f;
+  --md-sys-color-primary-container: #e9ddff;
+  --md-sys-color-secondary: #5d5c72;
+  --md-sys-color-secondary-container: #e2e0f9;
+  --md-sys-color-surface: #fdf7ff;
+  --md-sys-color-surface-container: #f2ecf4;
+  --md-sys-color-surface-container-high: #ece6ee;
+  --md-sys-color-surface-container-low: #f8f2fa;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-state-focus-indicator-outer-offset: 2px;
+  --md-sys-state-focus-indicator-thickness: 3px;
+  --md-sys-typescale-body-large: var(--md-sys-typescale-body-large-weight) var(--md-sys-typescale-body-large-size)/var(--md-sys-typescale-body-large-line-height) var(--md-sys-typescale-body-large-font);
+  --md-sys-typescale-body-large-font: Roboto, sans-serif;
+  --md-sys-typescale-body-large-line-height: 24px;
+  --md-sys-typescale-body-large-size: 16px;
+  --md-sys-typescale-body-large-weight: 400;
+  --md-sys-typescale-body-medium: 400 14px/1.4285714285714286 Roboto;
+  --md-sys-typescale-body-small: 400 12px/1.3333333333333333 Roboto;
+  --md-sys-typescale-display-small: 400 36px/1.2222222222222223 Roboto;
+  --md-sys-typescale-headline-medium: var(--md-sys-typescale-headline-medium-weight) var(--md-sys-typescale-headline-medium-size)/var(--md-sys-typescale-headline-medium-line-height) var(--md-sys-typescale-headline-medium-font);
+  --md-sys-typescale-headline-medium-font: Roboto, sans-serif;
+  --md-sys-typescale-headline-medium-line-height: 36px;
+  --md-sys-typescale-headline-medium-size: 28px;
+  --md-sys-typescale-headline-medium-weight: 400;
+  --md-sys-typescale-label-large: 500 14px/1.4285714285714286 Roboto;
+  --md-sys-typescale-title-large: 400 22px/1.2727272727272727 Roboto;
+}
+.md-button {
+  --_button-container: transparent; --_button-container-opacity: 1;
+  --_button-label-opacity: 1; --_button-icon-opacity: 1;
+  --_button-state-color: currentColor; --_button-state-opacity: 0;
+  --_button-background-state-color: currentColor; --_button-background-state-opacity: 0;
+  --_button-outline: transparent; --_button-outline-width: 0px;
+  --_elevation-level: 0; --_shadow-color: transparent;
+  --_button-rest-shape: var(--_button-round-shape);
+  --_button-shape: var(--_button-rest-shape);
+  --_button-effects-duration: var(--_motion-fast-effects-duration);
+  --_button-easing: var(--_motion-fast-effects-easing);
+  position: relative; isolation: isolate; display: inline-flex; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none;
+  align-items: center; justify-content: center; flex: none;
+  min-height: var(--_button-height); min-inline-size: max-content; white-space: nowrap;
+  padding-block: 0; padding-inline: var(--_button-leading) var(--_button-trailing);
+  gap: var(--_button-gap); font: var(--_button-font);
+  letter-spacing: var(--_button-letter-spacing); text-decoration: none;
+  border: var(--_button-outline-width) solid var(--_button-outline);
+  border-radius: var(--_button-shape); vertical-align: middle;
+  color: color-mix(in srgb,var(--_button-label) calc(var(--_button-label-opacity) * 100%),transparent);
+  background: color-mix(in srgb,var(--_button-container) calc(var(--_button-container-opacity) * 100%),transparent);
+  transition: background-color var(--_button-effects-duration) var(--_button-easing), color var(--_button-effects-duration) var(--_button-easing), border-color var(--_button-effects-duration) var(--_button-easing), box-shadow var(--_button-effects-duration) var(--_button-easing);
+}
+.md-button[hidden] { display: none; }
+.md-button[data-shape="square"] { --_button-rest-shape: var(--_button-square-shape); }
+.md-button[aria-pressed="true"] { --_button-rest-shape: var(--_button-selected-round-shape); }
+.md-button[aria-pressed="true"][data-shape="square"] { --_button-rest-shape: var(--_button-selected-square-shape); }
+.md-outlined-button { --_button-outline-width: var(--_button-size-outline-width); }
+.md-outlined-button[aria-pressed="true"] { --_button-outline-width: 0px; --_button-outline: transparent; }
+.md-button:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) { --_button-shape: var(--_button-pressed-shape); }
+.md-button::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: var(--_button-background-state-color); opacity: var(--_button-background-state-opacity); transition: opacity 15ms linear, background-color 15ms linear; }
+.md-button > svg { flex: none; width: var(--_button-icon-size); height: var(--_button-icon-size); color: color-mix(in srgb,var(--_button-icon) calc(var(--_button-icon-opacity) * 100%),transparent); }
+.md-button:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) { outline: var(--md-sys-state-focus-indicator-thickness) solid var(--md-sys-color-secondary); outline-offset: var(--md-sys-state-focus-indicator-outer-offset); }
+.md-button:is(:disabled,[aria-disabled="true"]) { cursor: default; }
+:root:not([data-feedback-ready]) :is(.md-button,.md-icon-button)::before { background: var(--_button-state-color); opacity: var(--_button-state-opacity); }
+
+@media (prefers-reduced-motion: reduce) { .md-button, .md-button::before { transition: none; } }
+
+@media (prefers-reduced-motion: reduce) { .md-button::before { background: var(--_button-state-color); opacity: var(--_button-state-opacity); } }
+.md-button:not([data-size]), .md-button[data-size="small"] {
+  --_button-height: var(--md-comp-button-small-container-height);
+  --_button-round-shape: var(--md-comp-button-small-container-shape-round);
+  --_button-square-shape: var(--md-comp-button-small-container-shape-square);
+  --_button-icon-size: var(--md-comp-button-small-icon-size);
+  --_button-gap: var(--md-comp-button-small-icon-label-space);
+  --_button-font: var(--md-comp-button-small-label-text);
+  --_button-leading: var(--md-comp-button-small-leading-space);
+  --_button-size-outline-width: var(--md-comp-button-small-outlined-outline-width);
+  --_button-spring-damping: var(--md-comp-button-small-pressed-container-corner-size-motion-spring-damping);
+  --_button-spring-stiffness: var(--md-comp-button-small-pressed-container-corner-size-motion-spring-stiffness);
+  --_button-pressed-shape: var(--md-comp-button-small-pressed-container-shape);
+  --_button-selected-round-shape: var(--md-comp-button-small-selected-container-shape-round);
+  --_button-selected-square-shape: var(--md-comp-button-small-selected-container-shape-square);
+  --_button-trailing: var(--md-comp-button-small-trailing-space);
+}
+.md-button:not([data-size]), .md-button[data-size="small"] { --_button-letter-spacing: var(--md-comp-button-small-label-text-letter-spacing); }
+.md-filled-button {
+  --_button-container: var(--md-comp-button-filled-container-color);
+  --_elevation-level: var(--md-comp-button-filled-container-elevation);
+  --_shadow-color: var(--md-comp-button-filled-container-shadow-color);
+  --_button-icon: var(--md-comp-button-filled-icon-color);
+  --_button-label: var(--md-comp-button-filled-label-text-color);
+}
+.md-filled-button[aria-pressed="false"] {
+  --_button-container: var(--md-comp-button-filled-unselected-container-color);
+  --_button-icon: var(--md-comp-button-filled-unselected-icon-color);
+  --_button-label: var(--md-comp-button-filled-unselected-label-text-color);
+}
+.md-filled-button[aria-pressed="true"] {
+  --_button-container: var(--md-comp-button-filled-selected-container-color);
+  --_button-icon: var(--md-comp-button-filled-selected-icon-color);
+  --_button-label: var(--md-comp-button-filled-selected-label-text-color);
+}
+.md-filled-button:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_elevation-level: var(--md-comp-button-filled-hovered-container-elevation);
+  --_button-icon: var(--md-comp-button-filled-hovered-icon-color);
+  --_button-label: var(--md-comp-button-filled-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-hovered-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-filled-hovered-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-filled-hovered-state-layer-opacity);
+}
+.md-filled-button[aria-pressed="false"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-filled-unselected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-filled-unselected-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-unselected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-unselected-hovered-state-layer-color);
+}
+.md-filled-button[aria-pressed="true"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-filled-selected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-filled-selected-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-selected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-selected-hovered-state-layer-color);
+}
+.md-filled-button:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_elevation-level: var(--md-comp-button-filled-focused-container-elevation);
+  --_button-icon: var(--md-comp-button-filled-focused-icon-color);
+  --_button-label: var(--md-comp-button-filled-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-focused-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-filled-focused-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-filled-focused-state-layer-opacity);
+}
+.md-filled-button[aria-pressed="false"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-filled-unselected-focused-icon-color);
+  --_button-label: var(--md-comp-button-filled-unselected-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-unselected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-unselected-focused-state-layer-color);
+}
+.md-filled-button[aria-pressed="true"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-filled-selected-focused-icon-color);
+  --_button-label: var(--md-comp-button-filled-selected-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-selected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-filled-selected-focused-state-layer-color);
+}
+.md-filled-button:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_elevation-level: var(--md-comp-button-filled-pressed-container-elevation);
+  --_button-icon: var(--md-comp-button-filled-pressed-icon-color);
+  --_button-label: var(--md-comp-button-filled-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-pressed-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-filled-pressed-state-layer-opacity);
+}
+.md-filled-button { --_button-pressed-state-color: var(--md-comp-button-filled-pressed-state-layer-color); }
+.md-filled-button { --_button-pressed-state-opacity: var(--md-comp-button-filled-pressed-state-layer-opacity); }
+.md-filled-button[aria-pressed="false"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-filled-unselected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-filled-unselected-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-unselected-pressed-state-layer-color);
+}
+.md-filled-button[aria-pressed="false"] { --_button-pressed-state-color: var(--md-comp-button-filled-unselected-pressed-state-layer-color); }
+.md-filled-button[aria-pressed="true"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-filled-selected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-filled-selected-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-filled-selected-pressed-state-layer-color);
+}
+.md-filled-button[aria-pressed="true"] { --_button-pressed-state-color: var(--md-comp-button-filled-selected-pressed-state-layer-color); }
+.md-filled-button:is(:disabled,[aria-disabled="true"]) {
+  --_button-container: var(--md-comp-button-filled-disabled-container-color);
+  --_elevation-level: var(--md-comp-button-filled-disabled-container-elevation);
+  --_button-container-opacity: var(--md-comp-button-filled-disabled-container-opacity);
+  --_button-icon: var(--md-comp-button-filled-disabled-icon-color);
+  --_button-icon-opacity: var(--md-comp-button-filled-disabled-icon-opacity);
+  --_button-label: var(--md-comp-button-filled-disabled-label-text-color);
+  --_button-label-opacity: var(--md-comp-button-filled-disabled-label-text-opacity);
+}
+.md-outlined-button {
+  --_button-icon: var(--md-comp-button-outlined-icon-color);
+  --_button-label: var(--md-comp-button-outlined-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-outline-color);
+}
+.md-outlined-button[aria-pressed="false"] {
+  --_button-icon: var(--md-comp-button-outlined-unselected-icon-color);
+  --_button-label: var(--md-comp-button-outlined-unselected-label-text-color);
+}
+.md-outlined-button[aria-pressed="true"] {
+  --_button-container: var(--md-comp-button-outlined-selected-container-color);
+  --_button-icon: var(--md-comp-button-outlined-selected-icon-color);
+  --_button-label: var(--md-comp-button-outlined-selected-label-text-color);
+}
+.md-outlined-button:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-outlined-hovered-icon-color);
+  --_button-label: var(--md-comp-button-outlined-hovered-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-hovered-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-hovered-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-outlined-hovered-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-outlined-hovered-state-layer-opacity);
+}
+.md-outlined-button[aria-pressed="false"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-outlined-unselected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-outlined-unselected-hovered-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-unselected-hovered-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-unselected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-unselected-hovered-state-layer-color);
+}
+.md-outlined-button[aria-pressed="true"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-outlined-selected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-outlined-selected-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-outlined-selected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-selected-hovered-state-layer-color);
+}
+.md-outlined-button:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-outlined-focused-icon-color);
+  --_button-label: var(--md-comp-button-outlined-focused-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-focused-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-focused-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-outlined-focused-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-outlined-focused-state-layer-opacity);
+}
+.md-outlined-button[aria-pressed="false"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-outlined-unselected-focused-icon-color);
+  --_button-label: var(--md-comp-button-outlined-unselected-focused-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-unselected-focused-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-unselected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-unselected-focused-state-layer-color);
+}
+.md-outlined-button[aria-pressed="true"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-outlined-selected-focused-icon-color);
+  --_button-label: var(--md-comp-button-outlined-selected-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-outlined-selected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-outlined-selected-focused-state-layer-color);
+}
+.md-outlined-button:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-outlined-pressed-icon-color);
+  --_button-label: var(--md-comp-button-outlined-pressed-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-pressed-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-pressed-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-outlined-pressed-state-layer-opacity);
+}
+.md-outlined-button { --_button-pressed-state-color: var(--md-comp-button-outlined-pressed-state-layer-color); }
+.md-outlined-button { --_button-pressed-state-opacity: var(--md-comp-button-outlined-pressed-state-layer-opacity); }
+.md-outlined-button[aria-pressed="false"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-outlined-unselected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-outlined-unselected-pressed-label-text-color);
+  --_button-outline: var(--md-comp-button-outlined-unselected-pressed-outline-color);
+  --_button-state-color: var(--md-comp-button-outlined-unselected-pressed-state-layer-color);
+}
+.md-outlined-button[aria-pressed="false"] { --_button-pressed-state-color: var(--md-comp-button-outlined-unselected-pressed-state-layer-color); }
+.md-outlined-button[aria-pressed="true"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-outlined-selected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-outlined-selected-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-outlined-selected-pressed-state-layer-color);
+}
+.md-outlined-button[aria-pressed="true"] { --_button-pressed-state-color: var(--md-comp-button-outlined-selected-pressed-state-layer-color); }
+.md-outlined-button:is(:disabled,[aria-disabled="true"]) {
+  --_button-container-opacity: var(--md-comp-button-outlined-disabled-container-opacity);
+  --_button-icon: var(--md-comp-button-outlined-disabled-icon-color);
+  --_button-icon-opacity: var(--md-comp-button-outlined-disabled-icon-opacity);
+  --_button-label: var(--md-comp-button-outlined-disabled-label-text-color);
+  --_button-label-opacity: var(--md-comp-button-outlined-disabled-label-text-opacity);
+  --_button-outline: var(--md-comp-button-outlined-disabled-outline-color);
+}
+.md-outlined-button[aria-pressed="false"]:is(:disabled,[aria-disabled="true"]) {
+  --_button-outline: var(--md-comp-button-outlined-unselected-disabled-outline-color);
+}
+.md-outlined-button[aria-pressed="true"]:is(:disabled,[aria-disabled="true"]) {
+  --_button-container: var(--md-comp-button-outlined-selected-disabled-container-color);
+}
+.md-tonal-button {
+  --_button-container: var(--md-comp-button-tonal-container-color);
+  --_elevation-level: var(--md-comp-button-tonal-container-elevation);
+  --_shadow-color: var(--md-comp-button-tonal-container-shadow-color);
+  --_button-icon: var(--md-comp-button-tonal-icon-color);
+  --_button-label: var(--md-comp-button-tonal-label-text-color);
+}
+.md-tonal-button[aria-pressed="false"] {
+  --_button-container: var(--md-comp-button-tonal-unselected-container-color);
+  --_button-icon: var(--md-comp-button-tonal-unselected-icon-color);
+  --_button-label: var(--md-comp-button-tonal-unselected-label-text-color);
+}
+.md-tonal-button[aria-pressed="true"] {
+  --_button-container: var(--md-comp-button-tonal-selected-container-color);
+  --_button-icon: var(--md-comp-button-tonal-selected-icon-color);
+  --_button-label: var(--md-comp-button-tonal-selected-label-text-color);
+}
+.md-tonal-button:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_elevation-level: var(--md-comp-button-tonal-hovered-container-elevation);
+  --_button-icon: var(--md-comp-button-tonal-hovered-icon-color);
+  --_button-label: var(--md-comp-button-tonal-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-hovered-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-tonal-hovered-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-tonal-hovered-state-layer-opacity);
+}
+.md-tonal-button[aria-pressed="false"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-tonal-unselected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-tonal-unselected-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-unselected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-unselected-hovered-state-layer-color);
+}
+.md-tonal-button[aria-pressed="true"]:is(:hover,[data-button-state="hovered"]):not(:disabled):not([aria-disabled="true"]):not(:where([data-touch])) {
+  --_button-icon: var(--md-comp-button-tonal-selected-hovered-icon-color);
+  --_button-label: var(--md-comp-button-tonal-selected-hovered-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-selected-hovered-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-selected-hovered-state-layer-color);
+}
+.md-tonal-button:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_elevation-level: var(--md-comp-button-tonal-focused-container-elevation);
+  --_button-icon: var(--md-comp-button-tonal-focused-icon-color);
+  --_button-label: var(--md-comp-button-tonal-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-focused-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-tonal-focused-state-layer-opacity);
+  --_button-background-state-opacity: var(--md-comp-button-tonal-focused-state-layer-opacity);
+}
+.md-tonal-button[aria-pressed="false"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-tonal-unselected-focused-icon-color);
+  --_button-label: var(--md-comp-button-tonal-unselected-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-unselected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-unselected-focused-state-layer-color);
+}
+.md-tonal-button[aria-pressed="true"]:is(:focus-visible,[data-button-state="focused"]):not(:disabled):not([aria-disabled="true"]) {
+  --_button-icon: var(--md-comp-button-tonal-selected-focused-icon-color);
+  --_button-label: var(--md-comp-button-tonal-selected-focused-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-selected-focused-state-layer-color);
+  --_button-background-state-color: var(--md-comp-button-tonal-selected-focused-state-layer-color);
+}
+.md-tonal-button:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_elevation-level: var(--md-comp-button-tonal-pressed-container-elevation);
+  --_button-icon: var(--md-comp-button-tonal-pressed-icon-color);
+  --_button-label: var(--md-comp-button-tonal-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-pressed-state-layer-color);
+  --_button-state-opacity: var(--md-comp-button-tonal-pressed-state-layer-opacity);
+}
+.md-tonal-button { --_button-pressed-state-color: var(--md-comp-button-tonal-pressed-state-layer-color); }
+.md-tonal-button { --_button-pressed-state-opacity: var(--md-comp-button-tonal-pressed-state-layer-opacity); }
+.md-tonal-button[aria-pressed="false"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-tonal-unselected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-tonal-unselected-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-unselected-pressed-state-layer-color);
+}
+.md-tonal-button[aria-pressed="false"] { --_button-pressed-state-color: var(--md-comp-button-tonal-unselected-pressed-state-layer-color); }
+.md-tonal-button[aria-pressed="true"]:is(:active,[data-pressed],[data-button-state="pressed"]):not(:disabled):not([aria-disabled="true"]):not([data-button-cancelled]) {
+  --_button-icon: var(--md-comp-button-tonal-selected-pressed-icon-color);
+  --_button-label: var(--md-comp-button-tonal-selected-pressed-label-text-color);
+  --_button-state-color: var(--md-comp-button-tonal-selected-pressed-state-layer-color);
+}
+.md-tonal-button[aria-pressed="true"] { --_button-pressed-state-color: var(--md-comp-button-tonal-selected-pressed-state-layer-color); }
+.md-tonal-button:is(:disabled,[aria-disabled="true"]) {
+  --_button-container: var(--md-comp-button-tonal-disabled-container-color);
+  --_elevation-level: var(--md-comp-button-tonal-disabled-container-elevation);
+  --_button-container-opacity: var(--md-comp-button-tonal-disabled-container-opacity);
+  --_button-icon: var(--md-comp-button-tonal-disabled-icon-color);
+  --_button-icon-opacity: var(--md-comp-button-tonal-disabled-icon-opacity);
+  --_button-label: var(--md-comp-button-tonal-disabled-label-text-color);
+  --_button-label-opacity: var(--md-comp-button-tonal-disabled-label-text-opacity);
+}.md-icon-button{--_icon-container: transparent;--_icon-container-opacity: 1;--_icon-icon-opacity: 1;--_icon-outline: transparent;--_icon-outline-opacity: 1;--_icon-outline-width: 0px;--_icon-state-color: transparent;--_icon-state-opacity: 0;--_elevation-level: 0;--_shadow-color: transparent;--_icon-background-state-color: transparent;--_icon-background-state-opacity: 0;--_button-background-state-color: var(--_icon-background-state-color);--_button-background-state-opacity: var(--_icon-background-state-opacity);--_button-pressed-state-color: var(--_icon-pressed-state-color);--_button-pressed-state-opacity: var(--_icon-pressed-state-opacity);--_button-state-color: var(--_icon-state-color);--_button-state-opacity: var(--_icon-state-opacity);--_button-rest-shape: var(--_icon-round-shape);--_button-pressed-shape: var(--_icon-pressed-shape);--_button-spring-damping: var(--_icon-spring-damping);--_button-spring-stiffness: var(--_icon-spring-stiffness);position:relative;isolation:isolate;display:inline-flex;flex:none;align-items:center;justify-content:center;box-sizing:border-box;height:var(--_icon-height);min-width:calc(var(--_icon-icon-size) + var(--_icon-leading) + var(--_icon-trailing));padding:0 var(--_icon-trailing) 0 var(--_icon-leading);gap:0;border:var(--_icon-outline-width) solid var(--_icon-outline);border-radius:var(--_button-rest-shape);background:color-mix(in srgb,var(--_icon-container) calc(var(--_icon-container-opacity) * 100%),transparent);color:color-mix(in srgb,var(--_icon-icon) calc(var(--_icon-icon-opacity) * 100%),transparent);text-decoration:none;vertical-align:middle;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.md-icon-button[data-shape=square]{--_button-rest-shape: var(--_icon-square-shape)}.md-icon-button[aria-pressed=true]{--_button-rest-shape: var(--_icon-selected-round-shape)}.md-icon-button[aria-pressed=true][data-shape=square]{--_button-rest-shape: var(--_icon-selected-square-shape)}.md-icon-button>svg, .md-icon-button>span>svg{color:inherit;width:var(--_icon-icon-size);height:var(--_icon-icon-size);flex:none}.md-icon-button::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;background:var(--_button-background-state-color);opacity:var(--_button-background-state-opacity)}.md-icon-button{--_button-effects-duration: var(--_motion-fast-effects-duration);--_button-easing: var(--_motion-fast-effects-easing);transition:background-color var(--_button-effects-duration) var(--_button-easing),color var(--_button-effects-duration) var(--_button-easing),border-color var(--_button-effects-duration) var(--_button-easing),box-shadow var(--_button-effects-duration) var(--_button-easing)}.md-icon-button:focus-visible{outline:var(--md-sys-state-focus-indicator-thickness) solid var(--md-sys-color-secondary);outline-offset:var(--md-sys-state-focus-indicator-outer-offset)}.md-icon-button:is(:active,[data-pressed],[data-component-state=pressed]):not(:disabled):not([aria-disabled=true]):not([data-button-cancelled]){border-radius:var(--_button-pressed-shape)}@media(prefers-reduced-motion:reduce){.md-icon-button{transition:none}}@media(forced-colors:active){.md-icon-button{border:1px solid ButtonText}}.md-icon-button::before{transition:opacity 15ms linear,background-color 15ms linear}@media(prefers-reduced-motion:reduce){.md-icon-button::before{transition:none;background:var(--_button-state-color);opacity:var(--_button-state-opacity)}}.md-icon-button{box-shadow:0 calc(1px * (clamp(0,var(--_elevation-level),1) + clamp(0,var(--_elevation-level) - 3,1) + 2 * clamp(0,var(--_elevation-level) - 4,1))) calc(1px * (2 * clamp(0,var(--_elevation-level),1) + clamp(0,var(--_elevation-level) - 2,1) + clamp(0,var(--_elevation-level) - 4,1))) 0 color-mix(in srgb,var(--_shadow-color) 30%,transparent),0 calc(1px * (clamp(0,var(--_elevation-level),1) + clamp(0,var(--_elevation-level) - 1,1) + 2 * clamp(0,var(--_elevation-level) - 2,3))) calc(1px * (3 * clamp(0,var(--_elevation-level),2) + 2 * clamp(0,var(--_elevation-level) - 2,3))) calc(1px * (clamp(0,var(--_elevation-level),4) + 2 * clamp(0,var(--_elevation-level) - 4,1))) color-mix(in srgb,var(--_shadow-color) 15%,transparent)}.md-icon-button[data-size=small], .md-icon-button:not([data-size]){--_icon-height: var(--md-comp-icon-button-small-container-height);--_icon-round-shape: var(--md-comp-icon-button-small-container-shape-round);--_icon-square-shape: var(--md-comp-icon-button-small-container-shape-square);--_icon-icon-size: var(--md-comp-icon-button-small-icon-size);--_icon-size-outline-width: var(--md-comp-icon-button-small-outlined-outline-width);--_icon-spring-damping: var(--md-comp-icon-button-small-pressed-container-corner-size-motion-spring-damping);--_icon-spring-stiffness: var(--md-comp-icon-button-small-pressed-container-corner-size-motion-spring-stiffness);--_icon-pressed-shape: var(--md-comp-icon-button-small-pressed-container-shape)}.md-icon-button[data-size=small]:is(:not([data-width]),[data-width=default]), .md-icon-button:not([data-size]):is(:not([data-width]),[data-width=default]){--_icon-leading: var(--md-comp-icon-button-small-default-leading-space);--_icon-trailing: var(--md-comp-icon-button-small-default-trailing-space)}.md-icon-button.md-tonal-icon-button{--_icon-container: var(--md-comp-icon-button-tonal-container-color);--_icon-icon: var(--md-comp-icon-button-tonal-icon-color)}.md-icon-button[data-size=small]:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)), .md-icon-button:not([data-size]):where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)){--_icon-selected-round-shape: var(--md-comp-icon-button-small-selected-container-shape-round);--_icon-selected-square-shape: var(--md-comp-icon-button-small-selected-container-shape-square)}.md-icon-button.md-tonal-icon-button:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)){--_icon-container: var(--md-comp-icon-button-tonal-selected-container-color);--_icon-icon: var(--md-comp-icon-button-tonal-selected-icon-color)}.md-icon-button.md-tonal-icon-button:not(:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked))){--_icon-container: var(--md-comp-icon-button-tonal-unselected-container-color);--_icon-icon: var(--md-comp-icon-button-tonal-unselected-icon-color)}.md-icon-button.md-tonal-icon-button:where(:hover,[data-component-state=hovered]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-touch])){--_icon-icon: var(--md-comp-icon-button-tonal-hovered-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-hovered-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-hovered-state-layer-color);--_icon-state-opacity: var(--md-comp-icon-button-tonal-hovered-state-layer-opacity);--_icon-background-state-opacity: var(--md-comp-icon-button-tonal-hovered-state-layer-opacity)}.md-icon-button.md-tonal-icon-button:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)):where(:hover,[data-component-state=hovered]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-touch])){--_icon-icon: var(--md-comp-icon-button-tonal-selected-hovered-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-selected-hovered-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-selected-hovered-state-layer-color)}.md-icon-button.md-tonal-icon-button:not(:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked))):where(:hover,[data-component-state=hovered]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-touch])){--_icon-icon: var(--md-comp-icon-button-tonal-unselected-hovered-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-unselected-hovered-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-unselected-hovered-state-layer-color)}.md-icon-button.md-tonal-icon-button:where(:focus-visible,:has(>input:focus-visible),[data-component-state=focused]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)){--_icon-icon: var(--md-comp-icon-button-tonal-focused-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-focused-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-focused-state-layer-color);--_icon-state-opacity: var(--md-comp-icon-button-tonal-focused-state-layer-opacity);--_icon-background-state-opacity: var(--md-comp-icon-button-tonal-focused-state-layer-opacity)}.md-icon-button.md-tonal-icon-button:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)):where(:focus-visible,:has(>input:focus-visible),[data-component-state=focused]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)){--_icon-icon: var(--md-comp-icon-button-tonal-selected-focused-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-selected-focused-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-selected-focused-state-layer-color)}.md-icon-button.md-tonal-icon-button:not(:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked))):where(:focus-visible,:has(>input:focus-visible),[data-component-state=focused]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)){--_icon-icon: var(--md-comp-icon-button-tonal-unselected-focused-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-unselected-focused-state-layer-color);--_icon-background-state-color: var(--md-comp-icon-button-tonal-unselected-focused-state-layer-color)}.md-icon-button.md-tonal-icon-button:where(:active,[data-pressed],[data-component-state=pressed]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-button-cancelled])){--_icon-icon: var(--md-comp-icon-button-tonal-pressed-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-pressed-state-layer-color);--_icon-state-opacity: var(--md-comp-icon-button-tonal-pressed-state-layer-opacity)}.md-icon-button.md-tonal-icon-button{--_icon-pressed-state-color: var(--md-comp-icon-button-tonal-pressed-state-layer-color);--_icon-pressed-state-opacity: var(--md-comp-icon-button-tonal-pressed-state-layer-opacity)}.md-icon-button.md-tonal-icon-button:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)):where(:active,[data-pressed],[data-component-state=pressed]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-button-cancelled])){--_icon-icon: var(--md-comp-icon-button-tonal-selected-pressed-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-selected-pressed-state-layer-color)}.md-icon-button.md-tonal-icon-button:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked)){--_icon-pressed-state-color: var(--md-comp-icon-button-tonal-selected-pressed-state-layer-color)}.md-icon-button.md-tonal-icon-button:not(:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked))):where(:active,[data-pressed],[data-component-state=pressed]):not(:disabled):not([aria-disabled=true]):not(:has(>input:disabled,>select:disabled)):not(:where([data-button-cancelled])){--_icon-icon: var(--md-comp-icon-button-tonal-unselected-pressed-icon-color);--_icon-state-color: var(--md-comp-icon-button-tonal-unselected-pressed-state-layer-color)}.md-icon-button.md-tonal-icon-button:not(:where(:checked,[aria-pressed=true],[aria-selected=true],[aria-current=page],[data-selected=true],:has(>input:checked))){--_icon-pressed-state-color: var(--md-comp-icon-button-tonal-unselected-pressed-state-layer-color)}.md-icon-button.md-tonal-icon-button:is(:disabled,[aria-disabled=true],:has(>input:disabled,>select:disabled)){--_icon-container: var(--md-comp-icon-button-tonal-disabled-container-color);--_icon-container-opacity: var(--md-comp-icon-button-tonal-disabled-container-opacity);--_icon-icon: var(--md-comp-icon-button-tonal-disabled-icon-color);--_icon-icon-opacity: var(--md-comp-icon-button-tonal-disabled-icon-opacity)}

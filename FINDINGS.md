@@ -31,8 +31,8 @@ Custom settling uses a targetless Web Animations clock with a 300 ms duration an
 | Experiment | Result |
 |---|---|
 | Fixed masks | Remaining stutter with gaps and overlaps. |
-| Native scrolling | Smoother phone motion with integer offset readings. |
-| Rounded clock | Arrow-button comparison pending. |
+| Native scrolling | Smoother initial phone tests; desktop scroll-wheel settling still steps. |
+| Rounded clock | Smooth mouse-release settling in the latest desktop test. |
 | Touch handoff | Smoother initial motion with late native corrections. |
 
 Native scrolling moves fixed-width cards in normal flow. Its sampled offsets remain integer-valued in the iPhone trace.
@@ -40,6 +40,16 @@ Native scrolling moves fixed-width cards in normal flow. Its sampled offsets rem
 Touch handoff produces fractional CSS positions during release. Two opposite-direction flick captures then show native offsets departing from the target by 6 and 7 CSS px. Card geometry follows those departures into a second stepped settle.
 
 Both captures select the expected target from the projected velocity. Native scrolling continues after the custom clock reaches that target.
+
+## Desktop comparison
+
+The latest PC comparison used Firefox on Linux. Original and Native felt stuttery; Rounded felt smooth. Eight JSON recordings used mouse drag and release. The Native JSON used an arrow button; its later video used the scroll wheel.
+
+Original’s JSON shows final native scroll increments of about 1.12 CSS px with a 77 ms hold before the final increment. Native’s arrow-button trace shows a 118 ms final hold. Frame callbacks continue about every 7 ms. The custom clocks keep assigning fractional positions through the release tail, except Rounded’s deliberate whole-pixel steps.
+
+The annotated desktop videos show 50–67 ms holds followed by one-pixel advances in Original and Native. Rounded finishes sooner. Its smooth appearance suggests that integer positions alone do not explain the reported stutter. The Native video reproduces the symptom without changing card masks or a sticky visual track.
+
+All six annotated recordings share a 16:9 frame and a persistent hold history. The iOS settling clip shows three-pixel advances in recording coordinates, with 67–117 ms holds. Hold durations use source timestamps; frame counts use captured frames.
 
 ## Boundary overscroll
 

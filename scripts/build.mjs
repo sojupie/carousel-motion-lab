@@ -8,8 +8,8 @@ function replaceOnce(source,before,after){
 }
 const entries={
  baseline:{label:'Current baseline',note:'Sticky track and boundary clamping without layout hints. Smoother desktop motion with remaining touch settling steps.',js:baseline,css},
- native:{label:'1 · Native scrolling',note:'Fixed-width cards in normal flow for touch and trackpad input. Smoother phone motion without changing card widths.',js:await read('src/native.js'),css:css+'\n'+await read('src/native.css')},
- rounded:{label:'2 · Rounded clock',note:'Whole-pixel positions during custom settling. Arrow-button comparison against Current baseline.',js:replaceOnce(baseline,'paint(state,motion.position);','paint(state,Math.round(motion.position));'),css},
+ native:{label:'1 · Native scrolling',note:'Fixed-width cards in normal flow for touch, trackpad, and scroll-wheel input. Desktop scroll-wheel settling still steps.',js:await read('src/native.js'),css:css+'\n'+await read('src/native.css')},
+ rounded:{label:'2 · Rounded clock',note:'Whole-pixel positions during custom settling. Smooth mouse-release settling in the latest desktop test.',js:replaceOnce(baseline,'paint(state,motion.position);','paint(state,Math.round(motion.position));'),css},
  'touch-handoff':{label:'3 · Touch handoff',note:'Native dragging followed by fractional custom settling. Smoother initial motion with late corrections and boundary overscroll.',js:replaceOnce(baseline,'  let drag;',await read('src/touch-handoff.js')+'\n  installTouchHandoff({roots,cancelMotion,offset,go});\n  let drag;'),css},
 };
 const history={
@@ -31,8 +31,8 @@ for(const [key,{js,css,...info}] of Object.entries(entries)){
 await writeFile(new URL('site/runtimes/manifest.json',root),JSON.stringify(manifest,null,2)+'\n');
 // Version the page assets too: an old app must not drive a new version selector.
 const pageAssets={};
-for(const file of ['app.js','recorder.js','styles.css','fixture.css'])
+for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css'])
  pageAssets[file]=createHash('sha256').update(await read('site/'+file)).digest('hex').slice(0,12);
-const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
 await writeFile(new URL('site/index.html',root),html);
 console.log('Built nine static implementation and diagnostic runtimes.');

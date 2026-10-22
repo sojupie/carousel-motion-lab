@@ -8,14 +8,14 @@
   },
   "native": {
     "label": "1 · Native scrolling",
-    "note": "Fixed-width cards in normal flow for touch and trackpad input. Smoother phone motion without changing card widths.",
+    "note": "Fixed-width cards in normal flow for touch, trackpad, and scroll-wheel input. Desktop scroll-wheel settling still steps.",
     "jsSHA256": "cff5f1db11e6b58fa2d56d355ec76dc638abc2406c86d8e5553d7c1823b4f367",
     "cssSHA256": "e61e6db5dc0b8437b4f381bbb965eafe6289f896fe966b27dbc10f2af98e70aa",
     "baseRevision": "c13bc6a"
   },
   "rounded": {
     "label": "2 · Rounded clock",
-    "note": "Whole-pixel positions during custom settling. Arrow-button comparison against Current baseline.",
+    "note": "Whole-pixel positions during custom settling. Smooth mouse-release settling in the latest desktop test.",
     "jsSHA256": "5eac75c0cbdb9286ca3412745d9ad8f59ae9cfa891518213767991166ed326de",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
