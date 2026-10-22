@@ -1,60 +1,70 @@
 # Findings
 
-These observations come from supplied device captures and screen recordings. They support a direction for investigation; they do not establish a universal browser defect.
+## Stutter
 
-## The original problem and implementation history
+Earlier implementations stuttered on desktop and iOS, especially during slow dragging and the final settle. Later versions improved desktop behavior. Native touch settling continued to show holds and small jumps.
 
-The investigation began with stuttering on desktop web as well as iOS, especially during the final part of a release. A slow drag and the movement of the image inside a changing card mask were also reported as rough. The target is continuous visible movement through those stages, not merely smooth fast arrow-button animations.
+The implementation history preserves those changes: token-timed settling, transform positioning, explicit artwork offsets, scroll synchronization, and overscroll clamping. The newer Touch handoff experiment also introduced late corrections and boundary overscroll.
 
-The Original, first Token clock, One visual clock, Overscroll clamp + hints, and Current baseline versions are all preserved. Earlier desktop behavior was rough; later desktop behavior improved. That does not make the issue uniquely iOS or establish one shared cause for every version.
+## Native offsets
 
-The first changes introduced a fractional token clock and transforms. A later version removed native scroll writes from custom animation frames and gave artwork an explicit fractional position. Overscroll clamping then addressed a separate directional jitter problem, and layout hints were removed to return to a plain sticky baseline. Native touch settling continued to show the stepped tail. The fixed-mask diagnostic and the three newer controls isolate parts of these interactions with known limits.
+Two native-touch captures contained 442 frame samples: DPR 2 on iPad and DPR 3 on iPhone. Every sampled horizontal offset was a whole CSS pixel. Final 1 CSS px advances arrived 50–116 ms apart. Frame callbacks continued around every 17 ms.
 
-The detailed touch traces below provide evidence for one remaining path. They do not retrospectively diagnose every earlier desktop implementation. The touch-handoff jump is a regression in one newer experiment, distinct from the original low-speed stuttering.
+Assigned card geometry followed those offsets, producing repeated positions between updates. The behavior appeared in Uncontained and Full-screen layouts as well as Hero. The multi-browse endpoint blend is therefore not required to reproduce it.
 
-## Stepped native input
+## Input paths
 
-Two native-touch captures contained 442 frame samples in total. Every sampled native horizontal offset was a whole CSS pixel, at DPR 2 on iPad and DPR 3 on iPhone. Near the snap target, final one-pixel advances were separated by roughly 50–116 ms. Frame callbacks continued, with median intervals around 17 ms.
+Current baseline:
 
-The assigned card geometry matched those sampled offsets. Repeated offsets therefore produced repeated assigned geometry. The multi-browse endpoint blend is not required: the captures also reproduce the behavior with Uncontained and Full-screen layouts.
+| Input | Dragging | Settling |
+|---|---|---|
+| Touch | Native scrolling | Native inertia and CSS scroll snap |
+| Mouse | Scripted dragging | Fractional animation clock |
+| Trackpad | Native scrolling | Native inertia and CSS scroll snap |
+| Arrow buttons | — | Fractional animation clock |
+| Keyboard | — | Fractional animation clock |
 
-This supports investigating the reconstruction of motion from sampled native offsets. It does not prove that native rendering itself steps at those intervals. A scrolling compositor can move content independently of the values available to JavaScript.
+Custom settling uses a targetless Web Animations clock with a 300 ms duration and MD3 standard easing. A desktop mouse capture shows fractional geometry updates during settling, followed by native scroll synchronization at completion.
 
-## Input paths differ
+## Diagnostic results
 
-Touch release in Baseline uses native inertia and CSS scroll snapping. Button, keyboard, and mouse-drag release use a targetless Web Animations clock with fractional progress, applying a 300 ms standard MD3 easing curve.
+| Experiment | Result |
+|---|---|
+| Fixed masks | Remaining stutter with gaps and overlaps. |
+| Native scrolling | Smoother phone motion with integer offset readings. |
+| Rounded clock | Arrow-button comparison pending. |
+| Touch handoff | Smoother initial motion with late native corrections. |
 
-In a desktop mouse capture, native offset remained fixed during custom settling while assigned geometry changed fractionally; the native offset was synchronized at completion. Desktop mouse and iOS touch results are therefore not a controlled comparison of the same scrolling path.
+Native scrolling moves fixed-width cards in normal flow. Its sampled offsets remain integer-valued in the iPhone trace.
 
-## Native and handoff controls
+Touch handoff produces fractional CSS positions during release. Two opposite-direction flick captures then show native offsets departing from the target by 6 and 7 CSS px. Card geometry follows those departures into a second stepped settle.
 
-Initial phone feedback described Native scrolling and Touch handoff as smoother than the other tested paths, though not necessarily perfect.
+Both captures select the expected target from the projected velocity. Native scrolling continues after the custom clock reaches that target.
 
-Native preserves ordinary browser visual scrolling. It still exposes integer native offsets in the captured iPhone report, but those readings do not drive its card transforms. This supports the sampled-input explanation when paired with the visual feedback.
+## Boundary overscroll
 
-Touch handoff produces fractional assigned positions at frame cadence. However, native scrolling can keep moving at the same time. Two opposite-direction flick captures show the clock reaching its target, followed by native offsets departing by 6 and 7 CSS px. Assigned geometry follows those late departures into a second stepped settle.
+The [annotated frames](site/assets/overscroll-annotated.webp) and [video](site/assets/overscroll.mp4) show item 2 returning to item 1. The card layer shifts right and leaves most of the viewport blank.
 
-Target selection agrees with the signed projected velocity in those captures. The failure is not simply an incorrect destination: the experiment does not maintain exclusive ownership of the motion through the handback.
+The paired trace reaches −275 CSS px of native overscroll with the first card’s own translation fixed at zero. At custom completion, the raw offset is still −50 CSS px. It returns to zero later.
 
-## Boundary overscroll is a visible failure
+The baseline clamps negative LTR offsets to zero for geometry calculations. Native rubber-banding continues to move the scrolling layer. The video shows that displacement outside the recorded child styles.
 
-The [annotated frames](site/assets/overscroll-annotated.webp) and [cropped video](site/assets/overscroll.mp4) show a return from item 2 to item 1 in Touch handoff. The card layer moves far right and leaves most of the viewport blank before returning.
+## Device reports
 
-The associated trace reports native offset reaching −275 CSS px while the custom animation assigns the first card a zero horizontal translation. At custom completion the raw offset is still −50, reaching zero later. Smooth assigned styles do not establish smooth rendered movement.
+| Device | Reported behavior |
+|---|---|
+| PC | Reduced stutter in later tests. |
+| iPhone 15 | Remaining touch stutter. |
+| iPhone 13 Pro Max | Remaining touch stutter. |
+| iPad Air, 5th generation | Remaining touch stutter. |
+| MacBook Air M4 | No stutter in the later test. |
 
-The baseline clamps negative LTR offsets to zero for geometry calculations. This prevents those negative readings from reversing the mathematical movement, but it does not suppress native rubber-banding of the scrolling/sticky layer. It can also hide late native activity from child-style-only telemetry.
+The iOS tests included Safari, Chrome, Firefox, and Brave. The available frame and offset measurements come from the supplied touch captures. Earlier desktop causes remain open.
 
-The video and trace describe the same transition, but their clocks are not synchronized to frame accuracy. The illustration labels video presentation times only. No exact compositor transform was captured.
+## Open questions
 
-## Device observations
-
-Stuttering was reported on PC in earlier implementations. Later desktop paths improved, while further tests reproduced remaining touch problems on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation), across iOS Safari, Chrome, Firefox, and Brave tests. A reported later test on a MacBook Air M4 did not show the problem. That result does not describe every previous implementation or input path. This is user feedback across tests, not a benchmark matrix proving that every browser/device pair behaves identically.
-
-## What remains unresolved
-
-- Which mechanisms account for the earlier desktop stutter, and whether any are shared with the remaining touch path.
-- Whether residual inertia, deferred programmatic scroll writes, snap restoration, or their interaction causes each late native departure.
-- Whether a horizontal gesture path with one motion owner can preserve the desired drag behavior while keeping native vertical page scrolling and pinch zoom.
-- How interruption, rapid flicks, RTL, focus, reduced motion, resize, and both boundaries behave after any further change.
-
-A fix must be checked with rendered behavior on affected devices, not only with fractional style values or passing desktop tests. The existing Touch handoff remains available as an experiment with known failures.
+- Causes of the earlier desktop stutter.
+- Contributions from residual inertia, deferred scroll writes, and snap restoration.
+- Horizontal gesture ownership alongside native vertical panning and pinch zoom.
+- Handoff behavior during rapid swipes, interruption, and direction changes.
+- Boundary, RTL, resize, focus, and reduced-motion behavior.

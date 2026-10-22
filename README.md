@@ -1,44 +1,46 @@
 # Carousel Motion Lab
 
-A comparison of carousel implementations that have shown stuttering during dragging and settling on desktop and touch devices. Cards change visible width as they move, while the artwork inside keeps its size. The goal is to keep that effect moving continuously, including at low speed.
+Carousel implementations for reproducing stutter during slow dragging and settling on desktop and touch devices. Card masks change width as they scroll; the artwork retains its size. The goal is continuous motion through dragging, release, and interruption.
 
-**[Open the experiments](https://sojupie.github.io/carousel-motion-lab/)** · [Findings](FINDINGS.md)
+**[Experiments](https://sojupie.github.io/carousel-motion-lab/)** · [Findings](FINDINGS.md)
 
-The original symptom is uneven movement: brief holds, small jumps, and a rough final settle. It was observed on desktop as well as on iPhone and iPad. Later implementations improved some paths; the remaining behavior depends on the version and input. The newer touch-handoff experiment also introduced a separate jump and overscroll failure. That regression does not define the whole investigation.
+## Versions
 
-## Experiments
-
-| Implementation | What changes | How to test |
+| Version | Change | Observed result |
 |---|---|---|
-| Original | Native smooth scrolling with queued scroll-driven geometry updates. | Compare slow dragging, native release and arrow buttons. Stuttering was reported on desktop and iOS. |
-| Token clock | Adds token-timed custom settling and transform positioning, with per-frame native scroll writes. | Compare with Original; this is an early intermediate implementation. |
-| One visual clock | Removes per-frame native writes during custom settling and uses explicit fractional artwork positioning. | Desktop motion improved; touch jitter and stuttering remained. |
-| Overscroll clamp + hints | Clamps out-of-range offsets and adds layout/compositing hints. | Reported directional jitter improved; settling still needed work. |
-| Current baseline | Removes the layout hints, retaining the sticky track and clamp. | Later desktop tests felt smoother; native touch settling still stepped. |
-| Fixed masks | Freezes widths and artwork offsets; positions still follow native scroll values. | Did not fix the reported stutter. Gaps/overlaps make this a confounded diagnostic. |
-| 1 · Native scrolling | Fixed-width cards in normal flow. No changing masks. | Touch/trackpad control; no custom mouse dragging. Initially felt smoother on phones. |
-| 2 · Rounded clock | Rounds the custom clock’s paint input to whole CSS pixels. | Compare arrow buttons with Current baseline arrows. Touch release is unchanged. |
-| 3 · Touch handoff | Native dragging followed by fractional custom settling. | Initially felt smoother, but later flicks showed corrections and boundary overscroll. |
+| Original | Native smooth scrolling with queued geometry updates. | Stutter on desktop and iOS. |
+| Token clock | MD3-timed settling with native scroll writes on each frame. | Remaining roughness during settling. |
+| One visual clock | Fractional settling and artwork offsets with native synchronization at completion. | Smoother desktop motion with remaining touch jitter and stutter. |
+| Overscroll clamp + hints | Boundary clamping with layout containment and compositor hints. | Reduced directional jitter with remaining settling stutter. |
+| Current baseline | Sticky track and boundary clamping without layout hints. | Smoother desktop motion with remaining touch settling steps. |
+| Fixed masks | Fixed mask widths and artwork offsets with scroll-driven positions. | Remaining stutter, gaps, and overlaps. |
+| 1 · Native scrolling | Fixed-width cards in normal flow. | Smoother phone motion without changing card widths. |
+| 2 · Rounded clock | Whole-pixel positions during custom settling. | Arrow-button comparison pending. |
+| 3 · Touch handoff | Native dragging followed by fractional custom settling. | Smoother initial settling with late corrections and boundary overscroll. |
 
-Use the same device, layout, size, width, direction, and input when comparing versions. The default is Original / Uncontained / Large / 640 px maximum width / LTR. The page explains each version and its observed limits before drawing conclusions from a comparison. Query parameters preserve the selected settings, for example `?version=touch-handoff&variant=uncontained&size=large&width=640&direction=ltr`.
+Compare slow drags, release, and arrow-button navigation with the same device and settings. The Native control supports touch and trackpad scrolling. The Rounded control changes arrow-button and mouse-release settling.
 
-## Record a test
+Default settings: Original, Uncontained, Large, 640 px maximum width, LTR. Query parameters retain the configuration:
+
+```text
+?version=touch-handoff&variant=uncontained&size=large&width=640&direction=ltr
+```
+
+## Recording
 
 1. Load the implementation and settings.
 2. Press **Start recording**.
-3. Interact with the carousel. Several gestures can be included in one recording.
-4. Wait for the motion to finish, then press **Stop recording**.
-5. Press **Download JSON**. On iOS, save the file to Files and transfer it as needed.
+3. Perform the gestures.
+4. Press **Stop recording** after the carousel settles.
+5. Press **Download JSON**.
 
-Recording never starts from a gesture alone. Hiding the page or reaching 60 seconds also stops an active recording. The last five recordings remain in tab memory; download them before changing settings or reloading. There are no automatic uploads or persistent recordings.
+Each recording can contain several gestures. Recording also stops when the page is hidden or the 60-second limit is reached. The last five recordings stay in tab memory. Download before changing settings or reloading.
 
-The report contains the configuration, runtime hashes, browser details, DPR, viewport scale, input-event timestamps, native scroll offsets, and assigned item styles sampled through `requestAnimationFrame`. It does not measure compositor transforms or rendered pixels. Recording adds work: repeat the test without it as a comparison. Review the browser/device information before sharing a report.
+Reports contain browser and display settings, runtime hashes, input events, frame timestamps, native scroll offsets, and assigned CSS values. Data stays in tab memory until downloaded. Pair the JSON with a screen recording to compare CSS values with rendered motion. Repeat without recording to check instrumentation overhead.
 
-A matching screen recording is useful. Describe which implementation and gesture looked wrong; a JSON trace alone cannot establish visual smoothness. A cropped video on the page shows why this distinction matters.
+## Local development
 
-## Run locally
-
-No packages need to be installed. Node builds the static runtimes and runs the small test suite; Python can serve the files:
+Node builds the static files and runs the tests. Python serves the site. There are no package dependencies.
 
 ```sh
 npm run build
@@ -46,26 +48,32 @@ npm test
 python3 -m http.server 8083 --directory site
 ```
 
-Open `http://localhost:8083/`. For another device on the same network, bind the server to the local network interface and allow that port through the firewall.
+Open `http://localhost:8083/`. For LAN access, bind the server to the network interface and allow the port through the firewall.
 
-## Repository layout
+## Files
 
-- `src/`: frozen masked baseline, native control, and touch-handoff experiment. `src/history/` preserves the earlier implementations and fixed-mask diagnostic.
-- `scripts/build.mjs`: creates the nine static implementation/diagnostic runtimes and SHA-256 manifest. The rounded and handoff experiments each start from Baseline.
-- `site/`: the single-page site, explicit recorder, fixture theme, generated runtimes, and cropped evidence.
-- `tests/`: checks for touch-handoff direction/gesture guards and explicit recording behavior.
-- `FINDINGS.md`: observations, interpretation, and unresolved questions.
+- `src/`: baseline, native control, and touch-handoff code.
+- `src/history/`: earlier implementations and the fixed-mask diagnostic.
+- `scripts/build.mjs`: runtime generation, hashes, and page asset URLs.
+- `site/`: page, recorder, styles, generated runtimes, and visual evidence.
+- `tests/`: recording, gesture, runtime, and snapshot checks.
+- `FINDINGS.md`: measurements and open questions.
 
-Generated runtimes are committed so GitHub Pages can publish `site/` without installing dependencies. Run the build after editing `src/` or the page assets. The build adds content hashes to page asset URLs to avoid mixing old scripts with a new version selector. The build checks that each injection point occurs exactly once instead of silently patching the wrong code.
+Each generated version starts from its own snapshot or the current baseline. The build checks each injection point and hashes the output. Run `npm run build` after editing source or page assets. Generated files are committed for static hosting.
 
-## Hosting
+## Publishing
 
-GitHub Pages publishes the `site/` directory from the `gh-pages` branch. `scripts/publish.sh` checks the build and tests, then updates that branch from `main` without rewriting the source branch. The Pages source is the root of `gh-pages`. No custom domain is required.
+```sh
+git push origin main
+./scripts/publish.sh
+```
 
-## Evidence and scope
+The publish script builds, tests, and pushes the static site to `gh-pages`. GitHub Pages serves that branch’s root directory.
 
-The fixture uses static theme values, inline SVG artwork, an 8 px gap, 28 px corners, and a 300 ms standard MD3 easing curve. It has no external fonts, frameworks, or analytics. It is an investigation fixture, not a complete component library.
+## Evidence
 
-The primary evidence shows the small settling steps, with a magnified card edge and a cropped silent clip. A second annotated image and clip show the separate touch-handoff overscroll regression. Both examples are from supplied iPhone recordings; desktop stutter remains in scope even though the available paired video/trace evidence is from iOS. Browser chrome and local network details are excluded. Raw recordings and device JSON reports are not published. The baseline's source revision is `c13bc6a`; the experiment runtime hashes identify the exact files used in new reports. The original temporary experiment references were `078f82b` (Native), `380e332` (Rounded), and `4e72069` (Touch handoff).
+The page includes a magnified settling edge, annotated overscroll frames, and cropped silent clips from iPhone recordings. Raw videos and device reports remain local. Runtime hashes identify the files used in each report.
 
-The source retains the Business Source License 1.1 terms in [LICENSE](LICENSE).
+The fixture uses inline SVG, static colors, an 8 px gap, and 28 px corners. Custom settling uses Material Design 3 (MD3) standard easing over 300 ms.
+
+Source license: [Business Source License 1.1](LICENSE).
