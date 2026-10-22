@@ -2,6 +2,16 @@
 
 These observations come from supplied device captures and screen recordings. They support a direction for investigation; they do not establish a universal browser defect.
 
+## The original problem and implementation history
+
+The investigation began with stuttering on desktop web as well as iOS, especially during the final part of a release. A slow drag and the movement of the image inside a changing card mask were also reported as rough. The target is continuous visible movement through those stages, not merely smooth fast arrow-button animations.
+
+The Original, first Token clock, One visual clock, Overscroll clamp + hints, and Current baseline versions are all preserved. Earlier desktop behavior was rough; later desktop behavior improved. That does not make the issue uniquely iOS or establish one shared cause for every version.
+
+The first changes introduced a fractional token clock and transforms. A later version removed native scroll writes from custom animation frames and gave artwork an explicit fractional position. Overscroll clamping then addressed a separate directional jitter problem, and layout hints were removed to return to a plain sticky baseline. Native touch settling continued to show the stepped tail. The fixed-mask diagnostic and the three newer controls isolate parts of these interactions with known limits.
+
+The detailed touch traces below provide evidence for one remaining path. They do not retrospectively diagnose every earlier desktop implementation. The touch-handoff jump is a regression in one newer experiment, distinct from the original low-speed stuttering.
+
 ## Stepped native input
 
 Two native-touch captures contained 442 frame samples in total. Every sampled native horizontal offset was a whole CSS pixel, at DPR 2 on iPad and DPR 3 on iPhone. Near the snap target, final one-pixel advances were separated by roughly 50–116 ms. Frame callbacks continued, with median intervals around 17 ms.
@@ -38,10 +48,11 @@ The video and trace describe the same transition, but their clocks are not synch
 
 ## Device observations
 
-The issue was reported on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation), across iOS Safari, Chrome, Firefox, and Brave tests. It was not observed on a MacBook Air M4. This is user feedback across tests, not a benchmark matrix proving that every browser/device pair behaves identically.
+Stuttering was reported on PC in earlier implementations. Later desktop paths improved, while further tests reproduced remaining touch problems on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation), across iOS Safari, Chrome, Firefox, and Brave tests. A reported later test on a MacBook Air M4 did not show the problem. That result does not describe every previous implementation or input path. This is user feedback across tests, not a benchmark matrix proving that every browser/device pair behaves identically.
 
 ## What remains unresolved
 
+- Which mechanisms account for the earlier desktop stutter, and whether any are shared with the remaining touch path.
 - Whether residual inertia, deferred programmatic scroll writes, snap restoration, or their interaction causes each late native departure.
 - Whether a horizontal gesture path with one motion owner can preserve the desired drag behavior while keeping native vertical page scrolling and pinch zoom.
 - How interruption, rapid flicks, RTL, focus, reduced motion, resize, and both boundaries behave after any further change.

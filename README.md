@@ -1,21 +1,26 @@
 # Carousel Motion Lab
 
-A small browser experiment for investigating carousel settling on iOS. It compares native scrolling with a sticky visual layer that changes card masks as items move.
+A comparison of carousel implementations that have shown stuttering during dragging and settling on desktop and touch devices. Cards change visible width as they move, while the artwork inside keeps its size. The goal is to keep that effect moving continuously, including at low speed.
 
 **[Open the experiments](https://sojupie.github.io/carousel-motion-lab/)** · [Findings](FINDINGS.md)
 
-The goal is smooth dragging and release with crisp, changing masks, while preserving vertical page scrolling, keyboard access, RTL layout, and reduced motion. The current experiments isolate different parts of that interaction. None is a production-ready fix.
+The original symptom is uneven movement: brief holds, small jumps, and a rough final settle. It was observed on desktop as well as on iPhone and iPad. Later implementations improved some paths; the remaining behavior depends on the version and input. The newer touch-handoff experiment also introduced a separate jump and overscroll failure. That regression does not define the whole investigation.
 
 ## Experiments
 
 | Implementation | What changes | How to test |
 |---|---|---|
-| Baseline | Native touch offsets drive masked cards on a sticky track. Buttons and mouse release use a fractional animation clock. | Swipe, release, and watch the final movement. Compare buttons separately. |
-| 1 · Native scrolling | Fixed-width cards move in normal flow. No sticky visual projection or changing masks. | Use touch or a trackpad. Custom mouse dragging is intentionally absent. |
-| 2 · Rounded clock | The custom clock's paint input is rounded to whole CSS pixels. | Compare arrow buttons with Baseline arrows. Touch release is unchanged. |
-| 3 · Touch handoff | Native dragging hands release to the existing 300 ms MD3 clock. | Test both directions, fast flicks, interrupted settling, boundaries, RTL, and vertical scrolling. Native movement can continue after release. |
+| Original | Native smooth scrolling with queued scroll-driven geometry updates. | Compare slow dragging, native release and arrow buttons. Stuttering was reported on desktop and iOS. |
+| Token clock | Adds token-timed custom settling and transform positioning, with per-frame native scroll writes. | Compare with Original; this is an early intermediate implementation. |
+| One visual clock | Removes per-frame native writes during custom settling and uses explicit fractional artwork positioning. | Desktop motion improved; touch jitter and stuttering remained. |
+| Overscroll clamp + hints | Clamps out-of-range offsets and adds layout/compositing hints. | Reported directional jitter improved; settling still needed work. |
+| Current baseline | Removes the layout hints, retaining the sticky track and clamp. | Later desktop tests felt smoother; native touch settling still stepped. |
+| Fixed masks | Freezes widths and artwork offsets; positions still follow native scroll values. | Did not fix the reported stutter. Gaps/overlaps make this a confounded diagnostic. |
+| 1 · Native scrolling | Fixed-width cards in normal flow. No changing masks. | Touch/trackpad control; no custom mouse dragging. Initially felt smoother on phones. |
+| 2 · Rounded clock | Rounds the custom clock’s paint input to whole CSS pixels. | Compare arrow buttons with Current baseline arrows. Touch release is unchanged. |
+| 3 · Touch handoff | Native dragging followed by fractional custom settling. | Initially felt smoother, but later flicks showed corrections and boundary overscroll. |
 
-Use the same device, layout, size, width, direction, and input when comparing versions. The default is Uncontained / Large / 640 px maximum width / LTR. Query parameters preserve the selected settings, for example `?version=touch-handoff&variant=uncontained&size=large&width=640&direction=ltr`.
+Use the same device, layout, size, width, direction, and input when comparing versions. The default is Original / Uncontained / Large / 640 px maximum width / LTR. The page explains each version and its observed limits before drawing conclusions from a comparison. Query parameters preserve the selected settings, for example `?version=touch-handoff&variant=uncontained&size=large&width=640&direction=ltr`.
 
 ## Record a test
 
@@ -45,8 +50,8 @@ Open `http://localhost:8083/`. For another device on the same network, bind the 
 
 ## Repository layout
 
-- `src/`: frozen masked baseline, native control, and touch-handoff experiment.
-- `scripts/build.mjs`: creates the four static runtime files and SHA-256 manifest. The rounded and handoff experiments each start from Baseline.
+- `src/`: frozen masked baseline, native control, and touch-handoff experiment. `src/history/` preserves the earlier implementations and fixed-mask diagnostic.
+- `scripts/build.mjs`: creates the nine static implementation/diagnostic runtimes and SHA-256 manifest. The rounded and handoff experiments each start from Baseline.
 - `site/`: the single-page site, explicit recorder, fixture theme, generated runtimes, and cropped evidence.
 - `tests/`: checks for touch-handoff direction/gesture guards and explicit recording behavior.
 - `FINDINGS.md`: observations, interpretation, and unresolved questions.
@@ -61,6 +66,6 @@ GitHub Pages publishes the `site/` directory from the `gh-pages` branch. `script
 
 The fixture uses static theme values, inline SVG artwork, an 8 px gap, 28 px corners, and a 300 ms standard MD3 easing curve. It has no external fonts, frameworks, or analytics. It is an investigation fixture, not a complete component library.
 
-The annotated image and silent video are cropped from a supplied iPhone recording. Browser chrome and local network details are excluded. Raw recordings and device JSON reports are not published. The baseline's source revision is `c13bc6a`; the experiment runtime hashes identify the exact files used in new reports. The original temporary experiment references were `078f82b` (Native), `380e332` (Rounded), and `4e72069` (Touch handoff).
+The primary evidence shows the small settling steps, with a magnified card edge and a cropped silent clip. A second annotated image and clip show the separate touch-handoff overscroll regression. Both examples are from supplied iPhone recordings; desktop stutter remains in scope even though the available paired video/trace evidence is from iOS. Browser chrome and local network details are excluded. Raw recordings and device JSON reports are not published. The baseline's source revision is `c13bc6a`; the experiment runtime hashes identify the exact files used in new reports. The original temporary experiment references were `078f82b` (Native), `380e332` (Rounded), and `4e72069` (Touch handoff).
 
 The source retains the Business Source License 1.1 terms in [LICENSE](LICENSE).
