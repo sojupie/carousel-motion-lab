@@ -10,7 +10,7 @@ const read=p=>readFile(path.join(source,p),'utf8');
 const buttons=postcss.parse(await read('forge/components/static/buttons.css'));
 const components=postcss.parse(await read('forge/components/static/components.css'));
 const themeCSS=postcss.parse(await readFile(theme,'utf8'));
-const allowed=new Set(['md-button','md-filled-button','md-tonal-button','md-outlined-button','md-icon-button','md-tonal-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider']);
+const allowed=new Set(['md-button','md-filled-button','md-tonal-button','md-outlined-button','md-icon-button','md-tonal-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider','md-card','md-elevated-card','md-outlined-card']);
 const output=postcss.root();
 for(const root of [buttons,components])root.walkRules(rule=>{
  if(root===buttons&&rule.selector.startsWith(':root:not([data-feedback-ready])')){
@@ -19,7 +19,7 @@ for(const root of [buttons,components])root.walkRules(rule=>{
  const selectors=rule.selectors.map(s=>s.replace(/:is\(\.md-filter-chip,\s*\.md-assist-chip,\s*\.md-suggestion-chip,\s*\.md-input-chip\)/g,'.md-filter-chip')).filter(s=>{
   const classes=[...s.matchAll(/\.([\w-]+)/g)].map(m=>m[1]);
   if(!classes.length||!classes.every(c=>allowed.has(c)))return false;
-  if(root===components&&!classes.some(c=>['md-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider'].includes(c)))return false;
+  if(root===components&&!classes.some(c=>['md-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider','md-card','md-elevated-card','md-outlined-card'].includes(c)))return false;
   if(/data-variant=[\"']?(?:vibrant|baseline)/.test(s.replace(/:not\(\[data-variant=(?:vibrant|baseline)\]\)/g,'')))return false;
   if(/data-size=["']?(?:xsmall|medium|large|xlarge)|data-width=["']?(?:narrow|wide)/.test(s))return false;
   return true;

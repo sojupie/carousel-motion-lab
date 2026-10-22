@@ -8,9 +8,9 @@ The carousel in [Token Catalog](https://tokencatalog.dev/md3/components/carousel
 
 The edge holds for 50 ms, then advances three recording pixels. The annotated videos on the test page slow this down and keep a history of the holds beside the recording.
 
-## How it got here
+## What changed
 
-This started while building a Material Design 3 carousel for Token Catalog. Its cards change visible width as they move through the layout. The artwork stays at its original size inside each mask.
+The Material Design 3 carousel changes each card’s visible width as it moves through the layout. The artwork keeps its original size inside the mask.
 
 The first version followed native scroll events. Later attempts used an MD3 animation clock, explicit artwork offsets, and a single scroll synchronization at the end of the animation. These improved desktop motion. Touch release still stepped on several iPhones and an iPad.
 
@@ -99,7 +99,7 @@ The publish script builds, tests, and pushes the static site to `gh-pages`. GitH
 
 The page uses a small snapshot of the Material light/default tokens and the button, filter-chip, and menu rules it needs. The filter pills and selection runtime come from the component previews. Selections apply immediately. Roboto is self-hosted; Material Symbols use inline SVG paths. The full theme stylesheet is not loaded.
 
-Regular text is 18 px. Labels and supporting text are 16 px or larger. These reading-size adjustments apply to the page; the frozen carousel palette, geometry, and 300 ms timing remain scoped to each specimen.
+Regular text is 16 px. Labels and supporting text are 16 px or larger. These reading-size adjustments apply to the page; the frozen carousel palette, geometry, and 300 ms timing remain scoped to each specimen.
 
 To refresh the Material snapshot from the source repository and its generated theme:
 
@@ -110,6 +110,6 @@ npm run build
 
 The refresh script uses the source repository’s installed PostCSS. Serving and building this repository require no package dependencies. Roboto’s license is in `site/assets/fonts/OFL.txt`. Material Symbols use Apache-2.0; the license is in `site/assets/material-symbols-LICENSE.txt`.
 
-The six annotated clips use 1280 × 720 frames, with the component on the left and the hold history on the right. Regular settling plays at ¼ speed; the handoff jump plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw recordings and device reports stay local.
+The six annotated clips use 1280 × 720 frames, with the component on the left and the hold history on the right. Regular settling clips play at ¼ speed. The overscroll clip plays at ⅛ speed. Each clip ends with a four-second freeze and links to its hold summary. Raw recordings and device reports stay local.
 
 Source license: [Business Source License 1.1](LICENSE).

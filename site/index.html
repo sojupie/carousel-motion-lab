@@ -7,8 +7,8 @@
   <title>Carousel Motion Lab</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css?v=662d2b80d1b6">
-  <link rel="stylesheet" href="material.css?v=a34993a78cf6">
-  <link rel="stylesheet" href="styles.css?v=9df19237b99b">
+  <link rel="stylesheet" href="material.css?v=709ac7ab76ff">
+  <link rel="stylesheet" href="styles.css?v=e4bb078bfad8">
   <script src="recorder.js?v=d94dd32a1dd4" defer></script>
   <script src="app.js?v=1c1de3950e04" defer></script>
   <script src="fields.js?v=5b4ad1185ecc" defer></script>
@@ -21,9 +21,9 @@
 </header>
 <main>
   <section class="intro" aria-labelledby="title">
-    <h1 id="title">Carousel stutter</h1>
-    <p class="lead">Help figure out why this carousel stutters as it slows down.</p>
-    <p>This started with the Material Design 3 carousel in <a href="https://tokencatalog.dev/md3/components/carousel">Token Catalog</a>. Dragging felt smooth. The end of the release sometimes paused or jumped.</p>
+    <h1 id="title">Carousel motion</h1>
+    <p class="lead">Help fix carousel stutter and overscroll.</p>
+    <p>The <a href="https://tokencatalog.dev/md3/components/carousel">Token Catalog carousel</a> can pause or step as it settles after a drag. Some implementations also overshoot and move back into place.</p>
     <figure class="evidence-figure"><a href="assets/settling-edge.webp"><img src="assets/settling-edge.webp" width="1080" height="612" alt="Three close-ups of the card’s right edge at 0.450, 0.500 and 0.550 seconds. The first two edges align; the third moves three recording pixels to the right." loading="lazy"></a><figcaption>The edge holds for 50 ms, then advances three recording pixels.</figcaption></figure>
   </section>
 
@@ -56,7 +56,7 @@
     <div id="test-area" aria-busy="true"></div>
     <p id="version-info" class="small"></p>
 
-    <section class="recording-panel" aria-labelledby="record-title">
+    <section class="md-card md-elevated-card recording-panel" aria-labelledby="record-title">
       <div><h3 id="record-title">Recording</h3><p>Stop after the carousel settles.</p></div>
       <div class="record-actions"><button id="start" type="button" class="md-button md-filled-button" disabled>Start recording</button><button class="md-button md-tonal-button" id="stop" type="button" disabled>Stop recording</button><button class="md-button md-tonal-button" id="download" type="button" disabled>Download JSON</button><button class="md-button md-outlined-button" id="clear" type="button" disabled>Clear recordings</button></div>
       <p id="capture-status" role="status">Loading recorder…</p>
@@ -65,7 +65,7 @@
     </section>
   </section>
 
-  <section id="versions" aria-labelledby="versions-title"><h2 id="versions-title">Implementation history</h2>
+  <section id="versions" aria-labelledby="versions-title"><div class="md-card md-outlined-card history-card"><h2 id="versions-title">Implementation history</h2>
     <div class="table-scroll"><table><thead><tr><th>Version</th><th>Change</th><th>Observed result</th></tr></thead><tbody>
       <tr><td>Original</td><td>Native smooth scrolling with queued geometry updates.</td><td>Stutter on desktop and iOS.</td></tr>
       <tr><td>Token clock</td><td>MD3-timed settling, transform positioning, and native scroll writes on each frame.</td><td>Remaining roughness during settling.</td></tr>
@@ -76,21 +76,21 @@
       <tr><td>1 · Native scrolling</td><td>Fixed-width cards in normal flow.</td><td>Smoother initial phone tests; desktop scroll-wheel settling still steps.</td></tr>
       <tr><td>2 · Rounded clock</td><td>Whole-pixel positions during custom settling.</td><td>Smooth mouse-release settling in the latest desktop test.</td></tr>
       <tr><td>3 · Touch handoff</td><td>Native dragging followed by fractional custom settling.</td><td>Smoother initial settling with late corrections and boundary overscroll.</td></tr>
-    </tbody></table></div>
+    </tbody></table></div></div>
   </section>
 
-  <section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">Stepping as motion slows</h2>
-    <p>Near the end of a release, card edges can hold across several frames and then advance in small steps. Earlier versions showed similar roughness on desktop and touch devices.</p>
-    <p class="small">Regular clips play at ¼ speed; the handoff jump plays at ⅛ speed. Hold timings accumulate on the right and stay visible during the final four-second freeze. Coordinates and timestamps refer to the original recording.</p>
+  <section id="evidence" aria-labelledby="evidence-title"><h2 id="evidence-title">Stutter and overscroll</h2>
+    <p>These recordings show pauses during settling, small position corrections, and a large displacement after a slight touch.</p>
 
-    <figure class="evidence-figure"><a href="assets/overscroll-annotated.webp"><img src="assets/overscroll-annotated.webp" width="1860" height="492" alt="Touch handoff: cards before release, shifted far right leaving blank space, and back at the resting left edge." loading="lazy"></a><figcaption>A separate regression in Touch handoff: the card layer overshoots the left boundary and returns.</figcaption></figure>
+
     <div class="recording-grid">
       <figure class="recording-card"><h3>Original · desktop</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/original-poster.webp" aria-label="Original · desktop annotated recording"><source src="assets/recordings/original.mp4" type="video/mp4"></video><figcaption>Native scrolling drives the changing card masks. The final one-pixel advances follow holds of up to 67 ms. <a href="assets/recordings/original-summary.webp">View hold summary</a></figcaption></figure>
       <figure class="recording-card"><h3>Native · desktop</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/native-poster.webp" aria-label="Native · desktop annotated recording"><source src="assets/recordings/native.mp4" type="video/mp4"></video><figcaption>Scroll-wheel input with fixed-width cards in normal flow. The final edge still advances after held frames. <a href="assets/recordings/native-summary.webp">View hold summary</a></figcaption></figure>
       <figure class="recording-card"><h3>Rounded clock · desktop</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/rounded-poster.webp" aria-label="Rounded clock · desktop annotated recording"><source src="assets/recordings/rounded.mp4" type="video/mp4"></video><figcaption>Whole-pixel custom settling felt smooth in this test. The final approach is shorter. <a href="assets/recordings/rounded-summary.webp">View hold summary</a></figcaption></figure>
       <figure class="recording-card"><h3>Current baseline · desktop</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/desktop-poster.webp" aria-label="Current baseline · desktop annotated recording"><source src="assets/recordings/desktop.mp4" type="video/mp4"></video><figcaption>The latest desktop recording shows shorter holds during the final approach. <a href="assets/recordings/desktop-summary.webp">View hold summary</a></figcaption></figure>
       <figure class="recording-card"><h3>Settling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-release-poster.webp" aria-label="Settling · iOS annotated recording"><source src="assets/recordings/ios-release.mp4" type="video/mp4"></video><figcaption>The edge advances three recording pixels at a time, with holds of up to 117 ms. <a href="assets/recordings/ios-release-summary.webp">View hold summary</a></figcaption></figure>
-      <figure class="recording-card"><h3>Handoff jump · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-handoff-poster.webp" aria-label="Handoff jump · iOS annotated recording"><source src="assets/recordings/ios-handoff.mp4" type="video/mp4"></video><figcaption>The card layer moves past its resting left edge, leaves a blank area, and returns. <a href="assets/recordings/ios-handoff-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>Overscroll after touch · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-overscroll-poster.webp" aria-label="Overscroll after touch · iOS annotated recording"><source src="assets/recordings/ios-overscroll.mp4" type="video/mp4"></video><figcaption>The card layer moves past its resting left edge, leaves a blank area, and returns. <a href="assets/recordings/ios-overscroll-summary.webp">View hold summary</a></figcaption></figure>
+    <figure class="evidence-figure"><a href="assets/overscroll-annotated.webp"><img src="assets/overscroll-annotated.webp" width="1860" height="492" alt="Touch handoff: cards before release, shifted far right leaving blank space, and back at the resting left edge." loading="lazy"></a><figcaption>A slight touch produces a large displacement to the right before the cards return.</figcaption></figure>
     </div>
     <details><summary>Device results</summary><p>Earlier versions stuttered on PC. Later desktop tests showed smoother motion. Touch stutter remained on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation). Tests included Safari, Chrome, Firefox, and Brave on iOS. The later MacBook Air M4 test showed no stutter.</p><p>Native scrolling and Touch handoff felt smoother in initial phone tests. Further handoff tests exposed the overscroll regression. Desktop mouse release and baseline touch release use different settling paths.</p></details>
   </section>
