@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "label": "Baseline",
+    "note": "Native touch scrolling drives a sticky layer of masked cards. Release can settle in visible steps on iOS.",
+    "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
+    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "baseRevision": "c13bc6a"
+  },
+  "native": {
+    "label": "1 · Native scrolling",
+    "note": "Fixed-width cards move in normal flow. Swipe to compare browser scrolling with the masked baseline. This control has no custom mouse dragging or changing masks.",
+    "jsSHA256": "cff5f1db11e6b58fa2d56d355ec76dc638abc2406c86d8e5553d7c1823b4f367",
+    "cssSHA256": "e61e6db5dc0b8437b4f381bbb965eafe6289f896fe966b27dbc10f2af98e70aa",
+    "baseRevision": "c13bc6a"
+  },
+  "rounded": {
+    "label": "2 · Rounded clock",
+    "note": "Use the arrow buttons. This deliberately rounds the custom animation’s paint input to whole CSS pixels. Finger swipes use the unchanged baseline path.",
+    "jsSHA256": "5eac75c0cbdb9286ca3412745d9ad8f59ae9cfa891518213767991166ed326de",
+    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "baseRevision": "c13bc6a"
+  },
+  "touch-handoff": {
+    "label": "3 · Touch handoff",
+    "note": "Native finger dragging hands release to the fractional MD3 animation clock. It can still jump or rubber-band because native scrolling may continue. This is an experiment, not a completed fix.",
+    "jsSHA256": "defc75da3880b3c75e47ab21f746fd247efb8f0343c761e5205649e2ae742a9d",
+    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "baseRevision": "c13bc6a"
+  }
+}

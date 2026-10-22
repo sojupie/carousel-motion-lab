@@ -1,0 +1,8 @@
+{
+  "name": "carousel-motion-lab",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/touch-handoff.cjs"
+  }
+}
