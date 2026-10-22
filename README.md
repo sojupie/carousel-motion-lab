@@ -99,7 +99,7 @@ The publish script builds, tests, and pushes the static site to `gh-pages`. GitH
 
 The page uses a small snapshot of the Material light/default tokens and the button, filter-chip, and menu rules it needs. The filter pills and selection runtime come from the component previews. Selections apply immediately. Roboto is self-hosted; Material Symbols use inline SVG paths. The full theme stylesheet is not loaded.
 
-Regular text is 16 px. Labels and supporting text are 16 px or larger. These reading-size adjustments apply to the page; the frozen carousel palette, geometry, and 300 ms timing remain scoped to each specimen.
+Regular text is 16 px. Supporting text is 16 px. Filter pills retain the compact MD3 label size. These reading-size adjustments apply to the page; the frozen carousel palette, geometry, and 300 ms timing remain scoped to each specimen.
 
 To refresh the Material snapshot from the source repository and its generated theme:
 
