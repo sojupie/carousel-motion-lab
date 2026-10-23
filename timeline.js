@@ -91,11 +91,12 @@
   for(const trace of traces)renderTrace(trace);
   const action=root.querySelector('#trace-action'),platform=root.querySelector('#trace-platform');function filter(){let shown=0;for(const row of rows.children){row.hidden=row.dataset.traceGroup!==action.value||(platform.value!=='all'&&row.dataset.platform!==platform.value);if(!row.hidden)shown++;}empty.hidden=shown>0;}const empty=document.createElement('p');empty.textContent='No captures for this device and gesture.';root.querySelector('#trace-recorded').append(empty);action.addEventListener('change',filter);platform.addEventListener('change',filter);filter();
   const recordedButton=root.querySelector('#trace-show-recorded'),loadButton=root.querySelector('#trace-load-json'),recorded=root.querySelector('#trace-recorded'),upload=root.querySelector('#trace-upload');
-  recordedButton.addEventListener('click',()=>{recorded.hidden=false;upload.hidden=true;recordedButton.setAttribute('aria-pressed','true');});
-  loadButton.addEventListener('click',()=>{recorded.hidden=true;upload.hidden=false;recordedButton.setAttribute('aria-pressed','false');root.querySelector('#trace-file').click();});
+  recordedButton.addEventListener('click',()=>{recorded.hidden=false;upload.hidden=true;recordedButton.setAttribute('aria-pressed','true');loadButton.setAttribute('aria-pressed','false');});
+  loadButton.addEventListener('click',()=>{recorded.hidden=true;upload.hidden=false;recordedButton.setAttribute('aria-pressed','false');loadButton.setAttribute('aria-pressed','true');});
   const file=root.querySelector('#trace-file'),captureSelect=root.querySelector('#trace-capture'),eventSelect=root.querySelector('#trace-event'),itemSelect=root.querySelector('#trace-item'),
    releaseInput=root.querySelector('#trace-release'),targetInput=root.querySelector('#trace-target'),durationInput=root.querySelector('#trace-duration'),
    controls=root.querySelector('#trace-align'),importRows=root.querySelector('.trace-import-rows'),status=root.querySelector('#trace-import-status');
+  root.querySelector('#trace-choose-file').addEventListener('click',()=>file.click());
   let captures=[];
   const option=(value,text)=>{const e=document.createElement('option');e.value=value;e.textContent=text;return e;};
   function drawImport(){
@@ -120,6 +121,7 @@
   }
   file.addEventListener('change',async()=>{
    const selected=file.files[0];if(!selected)return;
+   root.querySelector('#trace-filename').textContent=selected.name;
    controls.hidden=true;importRows.replaceChildren();status.textContent='Reading JSON…';
    try{
     if(selected.size>50*1024*1024)throw Error('File exceeds 50 MB. Choose a smaller recording.');
