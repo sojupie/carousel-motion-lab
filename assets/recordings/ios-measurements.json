@@ -1,0 +1,407 @@
+[
+  {
+    "name": "ios-original",
+    "source": "2-ScreenRecording_10-23-2026-01-25-06_1.mp4",
+    "speed": 0.25,
+    "scanRow": 1400,
+    "segments": [
+      {
+        "label": "Return \u00b7 settling tail",
+        "start": 11.8,
+        "end": 12.316667,
+        "holds": [
+          {
+            "t": 11.9,
+            "x": 1042,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 11.933333,
+            "x": 1044,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 11.966667,
+            "x": 1048,
+            "n": 3,
+            "duration_ms": 83.3
+          },
+          {
+            "t": 12.05,
+            "x": 1050,
+            "n": 4,
+            "duration_ms": 100.0
+          },
+          {
+            "t": 12.15,
+            "x": 1054,
+            "n": 5,
+            "duration_ms": 116.7
+          }
+        ]
+      },
+      {
+        "label": "Forward swipe \u00b7 settling tail",
+        "start": 5.983333,
+        "end": 6.4,
+        "holds": [
+          {
+            "t": 5.983333,
+            "x": 1096,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 6.116667,
+            "x": 1068,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 6.15,
+            "x": 1066,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 6.183333,
+            "x": 1062,
+            "n": 3,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 6.233333,
+            "x": 1060,
+            "n": 4,
+            "duration_ms": 116.7
+          }
+        ]
+      },
+      {
+        "label": "Backward swipe \u00b7 settling tail",
+        "start": 8.35,
+        "end": 8.75,
+        "holds": [
+          {
+            "t": 8.483333,
+            "x": 1044,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 8.516667,
+            "x": 1048,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 8.55,
+            "x": 1050,
+            "n": 2,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 8.6,
+            "x": 1054,
+            "n": 4,
+            "duration_ms": 100.0
+          }
+        ]
+      }
+    ],
+    "finalFreeze": 4
+  },
+  {
+    "name": "ios-baseline",
+    "source": "1-ScreenRecording_10-23-2026-01-25-34_1.mp4",
+    "speed": 0.25,
+    "scanRow": 1400,
+    "segments": [
+      {
+        "label": "Return \u00b7 settling tail",
+        "start": 8.75,
+        "end": 9.25,
+        "holds": [
+          {
+            "t": 8.833333,
+            "x": 1042,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 8.866667,
+            "x": 1044,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 8.9,
+            "x": 1048,
+            "n": 4,
+            "duration_ms": 83.3
+          },
+          {
+            "t": 8.983333,
+            "x": 1050,
+            "n": 5,
+            "duration_ms": 100.0
+          },
+          {
+            "t": 9.083333,
+            "x": 1054,
+            "n": 5,
+            "duration_ms": 116.7
+          }
+        ]
+      },
+      {
+        "label": "Forward swipe \u00b7 settling tail",
+        "start": 3.7,
+        "end": 4.133333,
+        "holds": [
+          {
+            "t": 3.716667,
+            "x": 1101,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 3.866667,
+            "x": 1068,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 3.9,
+            "x": 1065,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 3.933333,
+            "x": 1062,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 3.983333,
+            "x": 1060,
+            "n": 5,
+            "duration_ms": 100.0
+          }
+        ]
+      },
+      {
+        "label": "Backward swipe \u00b7 settling tail",
+        "start": 5.4,
+        "end": 5.883333,
+        "holds": [
+          {
+            "t": 5.466667,
+            "x": 1018,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 5.616667,
+            "x": 1048,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 5.65,
+            "x": 1050,
+            "n": 3,
+            "duration_ms": 66.7
+          },
+          {
+            "t": 5.716667,
+            "x": 1054,
+            "n": 6,
+            "duration_ms": 116.7
+          }
+        ]
+      }
+    ],
+    "finalFreeze": 4
+  },
+  {
+    "name": "ios-native",
+    "source": "1-ScreenRecording_10-23-2026-01-00-06_1.mp4",
+    "speed": 0.25,
+    "scanRow": 670,
+    "segments": [
+      {
+        "label": "Settling tail",
+        "start": 1.4,
+        "end": 1.883333,
+        "holds": [
+          {
+            "t": 1.533333,
+            "x": 1056,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.566667,
+            "x": 1057,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.6,
+            "x": 1058,
+            "n": 3,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 1.65,
+            "x": 1059,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.683333,
+            "x": 1060,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.716667,
+            "x": 1061,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.75,
+            "x": 1062,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 1.783333,
+            "x": 1063,
+            "n": 3,
+            "duration_ms": 50.0
+          }
+        ]
+      }
+    ],
+    "finalFreeze": 4
+  },
+  {
+    "name": "ios-rounded",
+    "source": "2-ScreenRecording_10-23-2026-01-00-22_1.mov",
+    "speed": 0.25,
+    "scanRow": 630,
+    "segments": [
+      {
+        "label": "Settling tail",
+        "start": 5.2,
+        "end": 5.716667,
+        "holds": [
+          {
+            "t": 5.3,
+            "x": 1052,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 5.333333,
+            "x": 1055,
+            "n": 3,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 5.383333,
+            "x": 1058,
+            "n": 2,
+            "duration_ms": 66.7
+          },
+          {
+            "t": 5.45,
+            "x": 1060,
+            "n": 5,
+            "duration_ms": 116.7
+          },
+          {
+            "t": 5.566667,
+            "x": 1063,
+            "n": 4,
+            "duration_ms": 100.0
+          }
+        ]
+      }
+    ],
+    "finalFreeze": 4
+  },
+  {
+    "name": "ios-touch-return",
+    "source": "3-ScreenRecording_10-23-2026-01-00-43_1.mov",
+    "speed": 0.25,
+    "scanRow": 400,
+    "segments": [
+      {
+        "label": "Smooth return \u00b7 target quality",
+        "start": 0.6,
+        "end": 0.95,
+        "holds": []
+      }
+    ],
+    "finalFreeze": 1
+  },
+  {
+    "name": "ios-touch-correction",
+    "source": "4-ScreenRecording_10-23-2026-01-00-43_1.mov",
+    "speed": 0.125,
+    "scanRow": 400,
+    "segments": [
+      {
+        "label": "Small correction after settling",
+        "start": 0.333333,
+        "end": 0.8,
+        "holds": [
+          {
+            "t": 0.4,
+            "x": 1062,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 0.433333,
+            "x": 1058,
+            "n": 3,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 0.516667,
+            "x": 1068,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 0.55,
+            "x": 1066,
+            "n": 2,
+            "duration_ms": 33.3
+          },
+          {
+            "t": 0.583333,
+            "x": 1064,
+            "n": 2,
+            "duration_ms": 50.0
+          },
+          {
+            "t": 0.633333,
+            "x": 1061,
+            "n": 4,
+            "duration_ms": 100.0
+          }
+        ]
+      }
+    ],
+    "finalFreeze": 4
+  }
+]

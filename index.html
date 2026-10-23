@@ -7,50 +7,52 @@
   <title>Carousel Motion Lab</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css?v=662d2b80d1b6">
-  <link rel="stylesheet" href="material.css?v=709ac7ab76ff">
-  <link rel="stylesheet" href="styles.css?v=b02db3ee40e1">
-  <script src="recorder.js?v=d94dd32a1dd4" defer></script>
-  <script src="app.js?v=1c1de3950e04" defer></script>
-  <script src="timeline.js?v=aed211053a2b" defer></script>
-  <script src="fields.js?v=5b4ad1185ecc" defer></script>
+  <link rel="stylesheet" href="material.css?v=439eda67833b">
+  <link rel="stylesheet" href="styles.css?v=0a65250144d4">
+  <script src="motion.js?v=5f688add56d7" defer></script>
+  <script src="buttons.js?v=f835a0cf3a98" defer></script>
+  <script src="recorder.js?v=c8a8d2ee223d" defer></script>
+  <script src="app.js?v=904c83c401a3" defer></script>
+  <script src="timeline.js?v=21231398e08b" defer></script>
+  <script src="fields.js?v=d16f69ab628c" defer></script>
 </head>
 <body>
-<a class="skip" href="#playground">Skip to experiments</a>
+<a class="skip" href="#playground">Skip to playground</a>
 <header class="masthead">
   <a class="wordmark" href="./">Carousel Motion Lab</a>
-  <nav aria-label="Page"><a href="#playground">Experiments</a><a href="#evidence">Evidence</a><a href="#contribute">Contribute</a><a href="https://github.com/sojupie/carousel-motion-lab">Source</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></nav>
+  <nav aria-label="Page"><a href="#playground">Playground</a><a href="#evidence">Evidence</a><a href="#contribute">Contribute</a><a href="https://github.com/sojupie/carousel-motion-lab">Source</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></nav>
 </header>
 <main>
   <section class="intro" aria-labelledby="title">
     <h1 id="title">Carousel motion</h1>
-    <p class="lead">Help fix carousel stutter and overscroll.</p>
-    <p>The <a href="https://tokencatalog.dev/md3/components/carousel">Token Catalog carousel</a> can pause or step as it settles after a drag. Some implementations overshoot excessively before correcting their position.</p>
+    <p class="lead">Help fix carousel stutter and overscroll!</p>
+    <p>Some carousel implementations pause or step as they settle after a drag. Some also overshoot excessively before correcting their position. The current baseline is smooth on PC. I need your help fixing the remaining iOS issues.</p>
+    <aside class="catalog-context" aria-labelledby="catalog-context-title"><div><h2 id="catalog-context-title">Token Catalog</h2><p>View, download, and explore Material Design 3 tokens and components in an interactive playground.<br>This lab aims to fix the current issues with the carousel implementation.</p></div><a class="md-button md-tonal-button" data-size="small" href="https://tokencatalog.dev/md3/">Explore Token Catalog</a></aside>
     <figure class="evidence-figure"><a href="assets/settling-edge.webp"><img src="assets/settling-edge.webp" width="1080" height="612" alt="Three close-ups of the card’s right edge at 0.450, 0.500 and 0.550 seconds. The first two edges align; the third moves three recording pixels to the right." loading="lazy"></a><figcaption>The edge holds for 50 ms, then advances three recording pixels.</figcaption></figure>
   </section>
 
   <section id="playground" aria-labelledby="experiment-title">
-    <div class="section-heading"><h2 id="experiment-title">Experiments</h2></div>
-    <p>Compare slow drags, release, and arrow-button navigation with the same settings. Watch the card edges and artwork as motion slows.</p>
+    <div class="section-heading"><h2 id="experiment-title">Playground</h2></div>
+    <p>Try scrolling, dragging slowly, and releasing the carousel. Record an interaction below to download its motion data as JSON.</p>
     <form id="controls">
       <label class="version-field">Implementation<select name="version" id="version">
         <optgroup label="Implementation history">
-          <option value="original">Original · native smooth scrolling</option>
-          <option value="first-token">Token clock · first implementation</option>
-          <option value="handoff">One visual clock · explicit artwork positioning</option>
-          <option value="isolation">Overscroll clamp · layout hints</option>
-          <option value="baseline">Current baseline</option>
+          <option value="original">V1 · Original native scrolling</option>
+          <option value="first-token">V2 · MD3-timed settling</option>
+          <option value="handoff">V3 · Synchronized visual settling</option>
+          <option value="isolation">V4 · Boundary clamping</option>
+          <option value="baseline">V5 · Current baseline</option>
         </optgroup>
         <optgroup label="Diagnostic experiments">
-          <option value="diagnostic">Fixed masks · diagnostic</option>
-          <option value="native">1 · Native scrolling</option>
-          <option value="rounded">2 · Rounded clock</option>
-          <option value="touch-handoff">3 · Touch handoff</option>
+          <option value="diagnostic">V6 · Fixed masks</option>
+          <option value="native">V7 · Native-flow control</option>
+          <option value="rounded">V8 · Whole-pixel settling</option>
+          <option value="touch-handoff">V9 · Custom touch settling</option>
         </optgroup>
       </select></label>
       <label>Layout<select name="variant"><option value="uncontained">Uncontained</option><option value="hero">Hero</option><option value="multi-browse">Multi-browse</option><option value="full-screen">Full-screen</option></select></label>
       <label>Card size<select name="size"><option value="large">Large</option><option value="default">Medium</option><option value="small">Small</option></select></label>
       <label>Maximum width<select name="width"><option>640</option><option>384</option><option>280</option><option>900</option></select></label>
-      <label>Direction<select name="direction"><option value="ltr">Left to right</option><option value="rtl">Right to left</option></select></label>
     </form>
     <p id="mode-note" class="mode-note">Loading experiment…</p>
     <button class="md-button md-tonal-button" id="reload" type="button" hidden>Reload</button>
@@ -61,22 +63,22 @@
       <div><h3 id="record-title">Recording</h3><p>Stop after the carousel settles.</p></div>
       <div class="record-actions"><button id="start" type="button" class="md-button md-filled-button" disabled>Start recording</button><button class="md-button md-tonal-button" id="stop" type="button" disabled>Stop recording</button><button class="md-button md-tonal-button" id="download" type="button" disabled>Download JSON</button><button class="md-button md-outlined-button" id="clear" type="button" disabled>Clear recordings</button></div>
       <p id="capture-status" role="status">Loading recorder…</p>
-      <p class="small">The last five recordings stay in tab memory. Download before reloading or changing settings. Recording stops when the page is hidden or the 60-second limit is reached.</p>
-      <details><summary>Recording data</summary><p>Browser and display settings, input events, frame timestamps, native scroll offsets, and assigned CSS values. Data stays in tab memory until downloaded.</p><p>Pair the JSON with a screen recording to compare CSS values with rendered motion. Repeat without recording to check instrumentation overhead.</p></details>
+      <p class="small">The last five recordings stay in this tab when you change playground settings. Download them before reloading or closing the tab. Recording stops when the page is hidden or after 60 seconds.</p>
+      <details><summary>What’s recorded?</summary><p>The tool records browser and display settings, input events, frame timestamps, native scroll offsets, and assigned CSS values. Recordings stay local to this tab; nothing is uploaded.</p><p>Pair the JSON with a screen recording to compare CSS values with rendered motion!</p></details>
     </section>
   </section>
 
   <section id="versions" aria-labelledby="versions-title"><div class="md-card md-outlined-card history-card"><h2 id="versions-title">Implementation history</h2>
     <div class="table-scroll"><table><thead><tr><th>Version</th><th>Change</th><th>Observed result</th></tr></thead><tbody>
-      <tr><td>Original</td><td>Native smooth scrolling with queued geometry updates.</td><td>Stutter on desktop and iOS.</td></tr>
-      <tr><td>Token clock</td><td>MD3-timed settling, transform positioning, and native scroll writes on each frame.</td><td>Remaining roughness during settling.</td></tr>
-      <tr><td>One visual clock</td><td>Fractional settling and artwork offsets with native synchronization at completion.</td><td>Smoother desktop motion with remaining touch jitter and stutter.</td></tr>
-      <tr><td>Overscroll clamp + hints</td><td>Boundary clamping with layout containment and compositor hints.</td><td>Reduced directional jitter with remaining settling stutter.</td></tr>
-      <tr><td>Current baseline</td><td>Sticky track and boundary clamping without layout hints.</td><td>Smoother desktop motion with remaining touch settling steps.</td></tr>
-      <tr><td>Fixed masks</td><td>Fixed mask widths and artwork offsets with scroll-driven positions.</td><td>Remaining stutter, gaps, and overlaps.</td></tr>
-      <tr><td>1 · Native scrolling</td><td>Fixed-width cards in normal flow.</td><td>Smoother initial phone tests; desktop scroll-wheel settling still steps.</td></tr>
-      <tr><td>2 · Rounded clock</td><td>Whole-pixel positions during custom settling.</td><td>Smooth mouse-release settling in the latest desktop test.</td></tr>
-      <tr><td>3 · Touch handoff</td><td>Native dragging followed by fractional custom settling.</td><td>Smoother initial settling with late corrections and boundary overscroll.</td></tr>
+      <tr><td>V1 · Original native scrolling</td><td>Native smooth scrolling with queued geometry updates.</td><td>Stutter on desktop and iOS.</td></tr>
+      <tr><td>V2 · MD3-timed settling</td><td>MD3-timed settling, transform positioning, and native scroll writes on each frame.</td><td>Remaining roughness during settling.</td></tr>
+      <tr><td>V3 · Synchronized visual settling</td><td>Fractional settling and artwork offsets with native synchronization at completion.</td><td>Smoother desktop motion with remaining touch jitter and stutter.</td></tr>
+      <tr><td>V4 · Boundary clamping</td><td>Boundary clamping with layout containment and compositor hints.</td><td>Reduced directional jitter with remaining settling stutter.</td></tr>
+      <tr><td>V5 · Current baseline</td><td>Sticky track and boundary clamping without layout hints.</td><td>Smoother desktop motion with remaining touch settling steps.</td></tr>
+      <tr><td>V6 · Fixed masks</td><td>Fixed mask widths and artwork offsets with scroll-driven positions.</td><td>Remaining stutter, gaps, and overlaps.</td></tr>
+      <tr><td>V7 · Native-flow control</td><td>Fixed-width cards in normal flow.</td><td>Smoother initial phone tests; desktop scroll-wheel settling still steps.</td></tr>
+      <tr><td>V8 · Whole-pixel settling</td><td>Whole-pixel positions during custom settling.</td><td>Smooth mouse-release settling in the latest desktop test.</td></tr>
+      <tr><td>V9 · Custom touch settling</td><td>Native dragging followed by fractional custom settling.</td><td>Smoother initial settling with late corrections and boundary overscroll.</td></tr>
     </tbody></table></div></div>
   </section>
 
@@ -85,23 +87,51 @@
 
 
     <section id="release-timeline" class="md-card md-outlined-card release-timeline" aria-labelledby="timeline-title">
-      <h3 id="timeline-title">iOS release traces</h3>
-      <p>Distance from the target in CSS pixels. Bars below each trace mark repeated sampled positions. These traces use recorded scroll offsets and assigned CSS positions.</p>
-      <label class="trace-zoom"><input id="trace-zoom" type="checkbox" checked>Magnify final 10 CSS px</label>
-      <div class="trace-legend"><span class="legend-css">CSS position</span><span class="legend-native">Scroll offset</span></div>
-      <label for="release-time">Time after release</label><input id="release-time" type="range" min="0" max="800" value="320" step="1" disabled><output for="release-time">Loading traces…</output>
-      <div class="trace-ticks" aria-hidden="true"></div><div class="trace-rows"></div>
+      <h3 id="timeline-title">Release traces</h3>
+      <p>Zero is the recorded input event: touchend on iOS, mouse pointerup on PC, or the arrow-button event for the Native PC capture. The reference curve uses 300 ms MD3 standard easing from the sampled position at that event.</p>
+      <div class="trace-legend"><span class="legend-target">Target · 300 ms MD3</span><span class="legend-css">CSS position</span><span class="legend-native">Scroll offset</span></div>
+      <div class="trace-mode-actions"><button id="trace-show-recorded" type="button" class="md-button md-tonal-button" aria-pressed="true">Recorded comparisons</button><button id="trace-load-json" type="button" class="md-button md-outlined-button" aria-controls="trace-upload">Load your JSON</button></div>
+      <div id="trace-recorded">
+      <label for="trace-platform">Device</label><select id="trace-platform"><option value="all">iOS and PC</option><option value="ios" selected>iOS</option><option value="pc">PC</option></select>
+      <label for="trace-action">Gesture</label><select id="trace-action"><option value="return">Return to starting position</option><option value="forward">Forward swipe</option><option value="backward">Backward swipe</option><option value="experiments">V7–V9 · Additional touch captures</option><option value="button">Arrow button</option></select>
+      <div class="trace-rows"></div>
+      </div>
+      <div id="trace-upload" hidden>
+        <p>Load a playground JSON recording. Choose a release event or set time zero yourself. The file stays in this tab.</p>
+        <label for="trace-file">Recording JSON</label><input id="trace-file" type="file" accept=".json,application/json">
+        <div id="trace-align" hidden>
+          <div class="trace-import-controls">
+            <label>Capture<select id="trace-capture"></select></label>
+            <label>Release event<select id="trace-event"></select></label>
+            <label>Time zero in recording (ms)<input id="trace-release" type="number" step="0.1"></label>
+            <label>Native scroll target (CSS px)<input id="trace-target" type="number" step="any"></label>
+            <label>CSS edge<select id="trace-item"></select></label>
+            <label>Time after release (ms)<input id="trace-duration" type="number" min="100" max="60000" value="1000" step="100"></label>
+          </div>
+          <p>The last frame supplies the CSS edge target. Adjust the native scroll target if the recording ends before settling.</p>
+        </div>
+        <p id="trace-import-status" role="status"></p>
+        <div class="trace-import-rows"></div>
+      </div>
     </section>
     <div class="recording-grid">
-      <figure class="recording-card"><h3>Desktop target · Rounded</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/rounded-poster.webp" aria-label="Rounded clock · desktop annotated recording"><source src="assets/recordings/rounded.mp4" type="video/mp4"></video><figcaption>Rounded looks comparable to the current baseline in these desktop tests. The brief two-frame hold is acceptable. This is the settling quality to match on iOS. <a href="assets/recordings/rounded-summary.webp">View hold summary</a></figcaption></figure>
-      <figure class="recording-card"><h3>Settling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-release-poster.webp" aria-label="Settling · iOS annotated recording"><source src="assets/recordings/ios-release.mp4" type="video/mp4"></video><figcaption>The edge advances three recording pixels at a time, with holds of up to 117 ms. <a href="assets/recordings/ios-release-summary.webp">View hold summary</a></figcaption></figure>
-      <figure class="recording-card"><h3>Overscroll after touch · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-overscroll-poster.webp" aria-label="Overscroll after touch · iOS annotated recording"><source src="assets/recordings/ios-overscroll.mp4" type="video/mp4"></video><figcaption>The card layer moves past its resting left edge, leaves a blank area, and returns. <a href="assets/recordings/ios-overscroll-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V8 · Whole-pixel settling · desktop target</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/rounded-poster.webp" aria-label="Rounded clock · desktop annotated recording"><source src="assets/recordings/rounded.mp4" type="video/mp4"></video><figcaption>Rounded looks comparable to the current baseline in these desktop tests. The brief two-frame hold is acceptable. This is the settling quality to match on iOS. <a href="assets/recordings/rounded-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V1 · Original native scrolling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-original-poster.webp" aria-label="Original · iOS annotated recording"><source src="assets/recordings/ios-original.mp4" type="video/mp4"></video><figcaption>Return, forward swipe, and backward swipe. Measured settling holds reach 117 ms. <a href="assets/recordings/ios-original-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V5 · Current baseline · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-baseline-poster.webp" aria-label="Baseline · iOS annotated recording"><source src="assets/recordings/ios-baseline.mp4" type="video/mp4"></video><figcaption>The same fixture with the current baseline. The slow tail still contains holds up to 117 ms. <a href="assets/recordings/ios-baseline-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V9 · Custom touch settling · small correction</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-touch-correction-poster.webp" aria-label="V9 custom touch settling: small correction on iOS"><source src="assets/recordings/ios-touch-correction.mp4" type="video/mp4"></video><figcaption>After reaching item 3, the tracked edge shifts 16 recording pixels and returns. This is separate from the full-item rollback in the JSON trace. <a href="assets/recordings/ios-touch-correction-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V9 · Custom touch settling · boundary overscroll</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-overscroll-poster.webp" aria-label="V9 custom touch settling: boundary overscroll on iOS"><source src="assets/recordings/ios-overscroll.mp4" type="video/mp4"></video><figcaption>The card layer moves past its resting left edge, leaves a blank area, and returns. <a href="assets/recordings/ios-overscroll-summary.webp">View hold summary</a></figcaption></figure>
     <figure class="evidence-figure"><a href="assets/overscroll-annotated.webp"><img src="assets/overscroll-annotated.webp" width="1860" height="492" alt="Touch handoff: cards before release, shifted far right leaving blank space, and back at the resting left edge." loading="lazy"></a><figcaption>A slight touch produces a large displacement to the right before the cards return.</figcaption></figure>
     </div>
+    <details><summary>V7–V9 · Additional iOS recordings</summary><div class="recording-grid">
+      <figure class="recording-card"><h3>V7 · Native-flow control · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-native-poster.webp" aria-label="Native · iOS annotated recording"><source src="assets/recordings/ios-native.mp4" type="video/mp4"></video><figcaption>Fixed-width cards in normal flow. The tracked edge continues in smaller increments during the tail. <a href="assets/recordings/ios-native-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V8 · Whole-pixel settling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-rounded-poster.webp" aria-label="Rounded · iOS annotated recording"><source src="assets/recordings/ios-rounded.mp4" type="video/mp4"></video><figcaption>Touch release uses native settling. Edge holds reach 117 ms. <a href="assets/recordings/ios-rounded-summary.webp">View hold summary</a></figcaption></figure>
+      <figure class="recording-card"><h3>V9 · Custom touch settling · iOS</h3><video controls muted playsinline preload="none" width="1280" height="720" poster="assets/recordings/ios-touch-return-poster.webp" aria-label="Touch handoff · return annotated recording"><source src="assets/recordings/ios-touch-return.mp4" type="video/mp4"></video><figcaption>The smooth return meets the target. The pause and dragging before release are excluded. <a href="assets/recordings/ios-touch-return-summary.webp">View hold summary</a></figcaption></figure>
+    </div></details>
     <details><summary>Device results</summary><p>Earlier versions stuttered on PC. Later desktop tests showed smoother motion. Touch stutter remained on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation). Tests included Safari, Chrome, Firefox, and Brave on iOS. The later MacBook Air M4 test showed no stutter.</p><p>Native scrolling and Touch handoff felt smoother in initial phone tests. Further handoff tests exposed the overscroll regression. Desktop mouse release and baseline touch release use different settling paths.</p></details>
   </section>
-  <section id="contribute" class="contribute" aria-labelledby="contribute-title"><h2 id="contribute-title">Help fix the stutter</h2><p>Have a fix or a smaller reproduction? Open a pull request with the change, the implementation tested, and a before-and-after recording. Include the browser, device, and input method.</p><p>Keep changing card masks, vertical page scrolling, keyboard navigation, right-to-left layout, and reduced motion working.</p><div class="contribution-actions"><a class="md-button md-filled-button" href="https://github.com/sojupie/carousel-motion-lab/compare">Open a pull request</a><a class="md-button md-tonal-button" href="https://github.com/sojupie/carousel-motion-lab/issues/new">Report a finding</a></div></section>
-  <section aria-labelledby="method-title"><h2 id="method-title">Rendering and timing</h2><p>Masked versions update a sticky visual track from logical scroll positions. The Native control uses normal flow. Rounded clock quantizes custom settling to whole pixels. Touch handoff starts custom settling at release.</p><p>The fixture uses inline SVG artwork, static colors, an 8 px gap, and 28 px corners. Custom settling uses Material Design 3 (MD3) standard easing over 300 ms.</p><p>Browser scrolling and DOM rendering may limit further improvements. The aim is to bring iOS settling up to the desktop target.</p></section>
+  <section aria-labelledby="method-title"><h2 id="method-title">How the versions differ</h2><p>The carousel uses HTML cards with inline SVG artwork. Most versions change the visible card widths as the scroll position changes, while keeping the artwork at a fixed size.</p><p>V5 · Current baseline positions the cards in a sticky track. V7 · Native-flow control uses fixed-width cards in normal document flow to show how the browser scrolls without that masking logic.</p><p>The later versions use MD3 standard easing over 300 ms for mouse-release and arrow-button animations. iOS swipes usually settle through native browser scrolling. V9 · Custom touch settling switches to JavaScript animation when the finger lifts.</p></section>
+  <section id="contribute" class="contribute" aria-labelledby="contribute-title"><h2 id="contribute-title">Help fix the iOS release</h2><p>Have a fix or a smaller reproduction? Open a pull request with the change, the implementation tested, and a before-and-after recording. Include the browser, device, and input method.</p><p>Keep changing card masks, vertical page scrolling, keyboard navigation, and reduced motion working.</p><div class="contribution-actions"><a class="md-button md-filled-button" href="https://github.com/sojupie/carousel-motion-lab/compare">Open a pull request</a><a class="md-button md-tonal-button" href="https://github.com/sojupie/carousel-motion-lab/issues/new">Report a finding</a></div></section>
+
 </main>
 <footer><a href="https://github.com/sojupie/carousel-motion-lab">Source and findings</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></footer>
 </body>

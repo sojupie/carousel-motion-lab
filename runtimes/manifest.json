@@ -1,62 +1,62 @@
 {
   "baseline": {
-    "label": "Current baseline",
+    "label": "V5 · Current baseline",
     "note": "Sticky track and boundary clamping without layout hints. Smoother desktop motion with remaining touch settling steps.",
     "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
   },
   "native": {
-    "label": "1 · Native scrolling",
+    "label": "V7 · Native-flow control",
     "note": "Fixed-width cards in normal flow for touch, trackpad, and scroll-wheel input. Desktop scroll-wheel settling still steps.",
     "jsSHA256": "cff5f1db11e6b58fa2d56d355ec76dc638abc2406c86d8e5553d7c1823b4f367",
     "cssSHA256": "e61e6db5dc0b8437b4f381bbb965eafe6289f896fe966b27dbc10f2af98e70aa",
     "baseRevision": "c13bc6a"
   },
   "rounded": {
-    "label": "2 · Rounded clock",
+    "label": "V8 · Whole-pixel settling",
     "note": "Whole-pixel positions during custom settling. Smooth mouse-release settling in the latest desktop test.",
     "jsSHA256": "5eac75c0cbdb9286ca3412745d9ad8f59ae9cfa891518213767991166ed326de",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
   },
   "touch-handoff": {
-    "label": "3 · Touch handoff",
+    "label": "V9 · Custom touch settling",
     "note": "Native dragging followed by fractional custom settling. Smoother initial motion with late corrections and boundary overscroll.",
     "jsSHA256": "defc75da3880b3c75e47ab21f746fd247efb8f0343c761e5205649e2ae742a9d",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
     "baseRevision": "c13bc6a"
   },
   "original": {
-    "label": "Original · native smooth scrolling",
+    "label": "V1 · Original native scrolling",
     "baseRevision": "96600ee",
     "note": "Queued geometry updates from native scroll events. Stutter on desktop and iOS.",
     "jsSHA256": "5034a7b506cdb1d8a087ba5acb45c8d200d1c99743aab607378a4820b56c891c",
     "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
   },
   "first-token": {
-    "label": "Token clock · first implementation",
+    "label": "V2 · MD3-timed settling",
     "baseRevision": "eab1d19",
     "note": "MD3-timed settling with native scroll writes on each frame. Remaining roughness during settling.",
     "jsSHA256": "ab1f42b3094fb2a2b7abf380f5fad88dbf8cde32887a3727a55032dc4bbff8c4",
     "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
   },
   "handoff": {
-    "label": "One visual clock · explicit artwork positioning",
+    "label": "V3 · Synchronized visual settling",
     "baseRevision": "4263d47",
     "note": "Fractional settling and artwork offsets with native synchronization at completion. Smoother desktop motion with remaining touch jitter and stutter.",
     "jsSHA256": "f05d471f12fe22f2a8e09cbd095a2704b17d7310107d5312e0ac76f3ef9ca679",
     "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255"
   },
   "isolation": {
-    "label": "Overscroll clamp · layout hints",
+    "label": "V4 · Boundary clamping",
     "baseRevision": "890dc78",
     "note": "Boundary clamping with layout containment and compositor hints. Reduced directional jitter with remaining settling stutter.",
     "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
     "cssSHA256": "de60457214248d75a6714ef93e6bba5588d33735f7f74f19f576b822df41bae1"
   },
   "diagnostic": {
-    "label": "Fixed masks · diagnostic",
+    "label": "V6 · Fixed masks",
     "baseRevision": "512e9f1",
     "note": "Fixed mask widths and artwork offsets with scroll-driven positions. Remaining stutter, gaps, and overlaps.",
     "jsSHA256": "fd9d056ce5258770c59eebcc9ae3d04da30ee3d084bcdbb0fac88a1793eb203d",
