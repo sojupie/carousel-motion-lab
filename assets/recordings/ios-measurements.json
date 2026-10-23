@@ -111,7 +111,7 @@
         ]
       }
     ],
-    "finalFreeze": 4
+    "finalFreeze": 1
   },
   {
     "name": "ios-baseline",
@@ -225,7 +225,7 @@
         ]
       }
     ],
-    "finalFreeze": 4
+    "finalFreeze": 1
   },
   {
     "name": "ios-native",
@@ -289,7 +289,7 @@
         ]
       }
     ],
-    "finalFreeze": 4
+    "finalFreeze": 1
   },
   {
     "name": "ios-rounded",
@@ -335,7 +335,7 @@
         ]
       }
     ],
-    "finalFreeze": 4
+    "finalFreeze": 1
   },
   {
     "name": "ios-touch-return",
@@ -402,6 +402,6 @@
         ]
       }
     ],
-    "finalFreeze": 4
+    "finalFreeze": 1
   }
 ]
