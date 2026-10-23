@@ -7,13 +7,13 @@
   <title>Carousel Motion Lab</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css?v=662d2b80d1b6">
-  <link rel="stylesheet" href="material.css?v=439eda67833b">
-  <link rel="stylesheet" href="styles.css?v=0a65250144d4">
+  <link rel="stylesheet" href="material.css?v=7eb430471cde">
+  <link rel="stylesheet" href="styles.css?v=7c17697889fe">
   <script src="motion.js?v=5f688add56d7" defer></script>
   <script src="buttons.js?v=f835a0cf3a98" defer></script>
   <script src="recorder.js?v=c8a8d2ee223d" defer></script>
   <script src="app.js?v=904c83c401a3" defer></script>
-  <script src="timeline.js?v=21231398e08b" defer></script>
+  <script src="timeline.js?v=c3a2e9b8421d" defer></script>
   <script src="fields.js?v=d16f69ab628c" defer></script>
 </head>
 <body>
@@ -90,7 +90,7 @@
       <h3 id="timeline-title">Release traces</h3>
       <p>Zero is the recorded input event: touchend on iOS, mouse pointerup on PC, or the arrow-button event for the Native PC capture. The reference curve uses 300 ms MD3 standard easing from the sampled position at that event.</p>
       <div class="trace-legend"><span class="legend-target">Target · 300 ms MD3</span><span class="legend-css">CSS position</span><span class="legend-native">Scroll offset</span></div>
-      <div class="trace-mode-actions"><button id="trace-show-recorded" type="button" class="md-button md-tonal-button" aria-pressed="true">Recorded comparisons</button><button id="trace-load-json" type="button" class="md-button md-outlined-button" aria-controls="trace-upload">Load your JSON</button></div>
+      <div class="md-button-group trace-mode-selector" data-control="connected" data-size="small" data-shape="single" role="group" aria-label="Trace source"><button id="trace-show-recorded" type="button" class="md-button md-tonal-button" aria-pressed="true" aria-controls="trace-recorded">Recorded traces</button><button id="trace-load-json" type="button" class="md-button md-tonal-button" aria-pressed="false" aria-controls="trace-upload">Your recording</button></div>
       <div id="trace-recorded">
       <label for="trace-platform">Device</label><select id="trace-platform"><option value="all">iOS and PC</option><option value="ios" selected>iOS</option><option value="pc">PC</option></select>
       <label for="trace-action">Gesture</label><select id="trace-action"><option value="return">Return to starting position</option><option value="forward">Forward swipe</option><option value="backward">Backward swipe</option><option value="experiments">V7–V9 · Additional touch captures</option><option value="button">Arrow button</option></select>
@@ -98,7 +98,7 @@
       </div>
       <div id="trace-upload" hidden>
         <p>Load a playground JSON recording. Choose a release event or set time zero yourself. The file stays in this tab.</p>
-        <label for="trace-file">Recording JSON</label><input id="trace-file" type="file" accept=".json,application/json">
+        <div class="trace-file-actions"><button id="trace-choose-file" type="button" class="md-button md-outlined-button">Choose JSON</button><span id="trace-filename"></span><input id="trace-file" type="file" aria-label="Recording JSON" accept=".json,application/json" hidden></div>
         <div id="trace-align" hidden>
           <div class="trace-import-controls">
             <label>Capture<select id="trace-capture"></select></label>
@@ -130,7 +130,7 @@
     <details><summary>Device results</summary><p>Earlier versions stuttered on PC. Later desktop tests showed smoother motion. Touch stutter remained on iPhone 15, iPhone 13 Pro Max, and iPad Air (5th generation). Tests included Safari, Chrome, Firefox, and Brave on iOS. The later MacBook Air M4 test showed no stutter.</p><p>Native scrolling and Touch handoff felt smoother in initial phone tests. Further handoff tests exposed the overscroll regression. Desktop mouse release and baseline touch release use different settling paths.</p></details>
   </section>
   <section aria-labelledby="method-title"><h2 id="method-title">How the versions differ</h2><p>The carousel uses HTML cards with inline SVG artwork. Most versions change the visible card widths as the scroll position changes, while keeping the artwork at a fixed size.</p><p>V5 · Current baseline positions the cards in a sticky track. V7 · Native-flow control uses fixed-width cards in normal document flow to show how the browser scrolls without that masking logic.</p><p>The later versions use MD3 standard easing over 300 ms for mouse-release and arrow-button animations. iOS swipes usually settle through native browser scrolling. V9 · Custom touch settling switches to JavaScript animation when the finger lifts.</p></section>
-  <section id="contribute" class="contribute" aria-labelledby="contribute-title"><h2 id="contribute-title">Help fix the iOS release</h2><p>Have a fix or a smaller reproduction? Open a pull request with the change, the implementation tested, and a before-and-after recording. Include the browser, device, and input method.</p><p>Keep changing card masks, vertical page scrolling, keyboard navigation, and reduced motion working.</p><div class="contribution-actions"><a class="md-button md-filled-button" href="https://github.com/sojupie/carousel-motion-lab/compare">Open a pull request</a><a class="md-button md-tonal-button" href="https://github.com/sojupie/carousel-motion-lab/issues/new">Report a finding</a></div></section>
+  <section id="contribute" class="contribute" aria-labelledby="contribute-title"><h2 id="contribute-title">Help fix the iOS release</h2><p>Have a fix or a smaller reproduction? Open a pull request with the change, the implementation tested, and a before-and-after recording. Include the browser, device, and input method.</p><p>Keep the cards’ changing widths and the artwork’s proportions. Preserve vertical page scrolling, keyboard navigation, and reduced motion.</p><div class="contribution-actions"><a class="md-button md-filled-button" href="https://github.com/sojupie/carousel-motion-lab/compare">Open a pull request</a><a class="md-button md-tonal-button" href="https://github.com/sojupie/carousel-motion-lab/issues/new">Report a finding</a></div></section>
 
 </main>
 <footer><a href="https://github.com/sojupie/carousel-motion-lab">Source and findings</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></footer>

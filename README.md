@@ -40,13 +40,13 @@ The JSON contains browser and display settings, runtime hashes, input events, fr
 
 Nothing is uploaded. The last five recordings survive playground settings changes. Download them before reloading or closing the tab. Recording stops when the page is hidden or after 60 seconds.
 
-The release traces plot these positions against time after the recorded input event. The 300 ms MD3 curve is a reference for custom settling. Native browser scrolling uses its own timing. Choose **Load your JSON** to load a JSON export, select a capture, and align time zero to a release event or a timestamp. The native target and tracked card edge are adjustable.
+The release traces plot these positions against time after the recorded input event. The 300 ms MD3 curve is a reference for custom settling. Native browser scrolling uses its own timing. Select **Your recording**, then **Choose JSON** to load a JSON export, select a capture, and align time zero to a release event or a timestamp. The native target and tracked card edge are adjustable.
 
 ## Contribute
 
 [Open a pull request](https://github.com/sojupie/carousel-motion-lab/compare) with a fix or smaller reproduction. Include the version, browser, device, input method, and a before-and-after recording. [Open an issue](https://github.com/sojupie/carousel-motion-lab/issues/new) for reproduction steps or measurements.
 
-Keep changing card masks, artwork proportions, vertical page scrolling, pinch zoom, keyboard navigation, and reduced motion working. Check slow dragging, release, and interruption.
+Keep the cards’ changing widths and the artwork’s proportions. Preserve vertical page scrolling, pinch zoom, keyboard navigation, and reduced motion. Check slow dragging, release, and interruption.
 
 ## Run locally
 
