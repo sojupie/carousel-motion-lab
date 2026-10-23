@@ -19,20 +19,21 @@ const history={
  isolation:{label:'Overscroll clamp · layout hints',baseRevision:'890dc78',note:'Boundary clamping with layout containment and compositor hints. Reduced directional jitter with remaining settling stutter.'},
  diagnostic:{label:'Fixed masks · diagnostic',baseRevision:'512e9f1',note:'Fixed mask widths and artwork offsets with scroll-driven positions. Remaining stutter, gaps, and overlaps.'},
 };
+const versionNames={"original":"V1 \u00b7 Original native scrolling","first-token":"V2 \u00b7 MD3-timed settling","handoff":"V3 \u00b7 Synchronized visual settling","isolation":"V4 \u00b7 Boundary clamping","baseline":"V5 \u00b7 Current baseline","diagnostic":"V6 \u00b7 Fixed masks","native":"V7 \u00b7 Native-flow control","rounded":"V8 \u00b7 Whole-pixel settling","touch-handoff":"V9 \u00b7 Custom touch settling"};
 for(const [key,info] of Object.entries(history))entries[key]={...info,js:await read('src/history/'+key+'.js'),css:await read('src/history/'+key+'.css')};
 await mkdir(new URL('site/runtimes/',root),{recursive:true});
 const manifest={};
 for(const [key,{js,css,...info}] of Object.entries(entries)){
  const hash=content=>createHash('sha256').update(content).digest('hex');
- manifest[key]={...info,jsSHA256:hash(js),cssSHA256:hash(css),baseRevision:info.baseRevision??'c13bc6a'};
+ manifest[key]={...info,label:versionNames[key],jsSHA256:hash(js),cssSHA256:hash(css),baseRevision:info.baseRevision??'c13bc6a'};
  await writeFile(new URL('site/runtimes/'+key+'.js',root),js);
  await writeFile(new URL('site/runtimes/'+key+'.css',root),css);
 }
 await writeFile(new URL('site/runtimes/manifest.json',root),JSON.stringify(manifest,null,2)+'\n');
 // Version the page assets too: an old app must not drive a new version selector.
 const pageAssets={};
-for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css','fields.js','timeline.js'])
+for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css','fields.js','timeline.js','motion.js','buttons.js'])
  pageAssets[file]=createHash('sha256').update(await read('site/'+file)).digest('hex').slice(0,12);
-const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js|motion\.js|buttons\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
 await writeFile(new URL('site/index.html',root),html);
 console.log('Built nine static implementation and diagnostic runtimes.');

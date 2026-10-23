@@ -10,7 +10,7 @@ const read=p=>readFile(path.join(source,p),'utf8');
 const buttons=postcss.parse(await read('forge/components/static/buttons.css'));
 const components=postcss.parse(await read('forge/components/static/components.css'));
 const themeCSS=postcss.parse(await readFile(theme,'utf8'));
-const allowed=new Set(['md-button','md-filled-button','md-tonal-button','md-outlined-button','md-icon-button','md-tonal-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider','md-card','md-elevated-card','md-outlined-card']);
+const allowed=new Set(['md-button','md-button-ripple','md-filled-button','md-tonal-button','md-outlined-button','md-icon-button','md-tonal-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider','md-card','md-elevated-card','md-outlined-card']);
 const output=postcss.root();
 for(const root of [buttons,components])root.walkRules(rule=>{
  if(root===buttons&&rule.selector.startsWith(':root:not([data-feedback-ready])')){
@@ -41,8 +41,16 @@ collect(await readFile('site/styles.css','utf8'));
 for(const key of needed){if(!defs.has(key))throw Error('Missing source token '+key);collect(defs.get(key));}
 const tokens=postcss.rule({selector:':root'});for(const key of [...needed].sort())tokens.append({prop:key,value:defs.get(key)});
 output.prepend(tokens);
-await writeFile('site/material.css','/* Material light/default token and component subset. See docs in README. Refresh with scripts/extract-material.mjs. */\n'+output.toString()+'\n');
+await writeFile('site/material.css','/* Material light/default token and component subset. Refresh with scripts/extract-material.mjs. */\n'+output.toString()+'\n');
 await mkdir('site/assets/fonts',{recursive:true});
 for(const file of ['roboto-latin.woff2','OFL.txt'])await copyFile(path.join(source,'catalog/web/static/fonts',file),path.join('site/assets/fonts',file));
 await copyFile(path.join(source,'forge/components/static/fields.js'),'site/fields.js');
+await copyFile(path.join(source,'forge/components/static/motion.cjs'),'site/motion.js');
+// Keep shared feedback off the frozen carousel implementations being measured.
+let feedback=await read('forge/components/static/buttons.js');
+const selector=feedback.match(/"\.md-button,\.md-icon-button,[^"]+"/g);
+if(selector?.length!==1)throw Error('Shared feedback selector changed.');
+feedback=feedback.replace(selector[0],JSON.stringify('.md-button,.md-icon-button,.md-filter-chip,.md-menu-item'));
+await writeFile('site/buttons.js',feedback);
+
 console.log(`Material subset: ${needed.size} tokens, ${output.nodes.length-1} rules, ${Buffer.byteLength(output.toString())} bytes.`);
