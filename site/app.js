@@ -1,7 +1,8 @@
 (async()=>{
   const form=document.querySelector('#controls'),q=new URLSearchParams(location.search);
-  const allowed={version:['original','baseline','first-token','handoff','isolation','diagnostic','native','rounded','touch-handoff'],variant:['uncontained','hero','multi-browse','full-screen'],size:['large','default','small'],width:['640','384','280','900'],direction:['ltr','rtl']};
+  const allowed={version:['original','baseline','first-token','handoff','isolation','diagnostic','native','rounded','touch-handoff'],variant:['uncontained','hero','multi-browse','full-screen'],size:['large','default','small'],width:['640','384','280','900']};
   for(const [name,values] of Object.entries(allowed))form.elements[name].value=values.includes(q.get(name))?q.get(name):values[0];
+  if(q.has('direction')){q.delete('direction');history.replaceState(null,'',location.pathname+(q.size?'?'+q.toString():'')+location.hash);}
   // Same filter-pill anatomy and fields runtime as the component previews.
   for(const select of [...form.querySelectorAll('select')]){
     const label=select.parentElement.firstChild.textContent.trim(),id=select.name;
@@ -20,6 +21,7 @@
     const url=new URL(location.href);url.search='';url.hash='playground';
     for(const [name,value] of new FormData(form))url.searchParams.set(name,value);
     if(form.elements.version.value==='diagnostic')url.searchParams.set('carousel.masks','fixed');
+    try{recorder?.saveForNavigation(sessionStorage);}catch{status.textContent='Recordings could not be preserved. Download JSON before changing settings.';return;}
     location.href=url.href;
   };
   const status=document.querySelector('#capture-status');
@@ -29,7 +31,7 @@
     document.querySelector('#mode-note').textContent=source.note;
     const css=document.createElement('link');css.rel='stylesheet';
     await new Promise((resolve,reject)=>{css.onload=resolve;css.onerror=()=>reject(Error('Styles failed to load.'));css.href='runtimes/'+config.version+'.css?v='+source.cssSHA256;document.head.append(css);});
-    const root=document.createElement('section');root.className='md-carousel';root.dataset.variant=config.variant;root.dataset.size=config.size;root.dir=config.direction;root.style.inlineSize=config.width+'px';root.setAttribute('aria-label',source.label+' carousel');root.setAttribute('aria-roledescription','carousel');
+    const root=document.createElement('section');root.className='md-carousel';root.dataset.variant=config.variant;root.dataset.size=config.size;root.dir='ltr';root.style.inlineSize=config.width+'px';root.setAttribute('aria-label',source.label+' carousel');root.setAttribute('aria-roledescription','carousel');
     const snaps=Array.from({length:6},()=>'<span class="md-carousel-snap"></span>').join('');
     const items=Array.from({length:6},(_,i)=>`<li class="md-carousel-slot"><button type="button" class="md-carousel-item" data-carousel-index="${i}" aria-label="Item ${i+1} of 6"><span class="md-carousel-art" aria-hidden="true"><svg viewBox="0 0 240 192" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="240" height="192"></rect><circle cx="${60+i*20}" cy="58" r="35"></circle><path d="M0 192V142L76 62 142 142 190 95 240 145V192Z"></path><path d="M0 192V155L85 112 160 174 240 115V192Z"></path></svg></span><span class="md-carousel-number" aria-hidden="true">${i+1}</span></button></li>`).join('');
     // Google Material Symbols Outlined, 24px chevrons (Apache-2.0), embedded without a font.
@@ -37,7 +39,8 @@
     document.querySelector('#test-area').append(root);
     const viewport=root.querySelector('.md-carousel-viewport'),buttons=[...root.querySelectorAll('.md-carousel-item')];
     const start=document.querySelector('#start'),stop=document.querySelector('#stop'),download=document.querySelector('#download'),clear=document.querySelector('#clear');
-    recorder=new MotionRecorder({readFrame:()=>({scrollLeft:viewport.scrollLeft,index:root.dataset.carouselIndex,settled:root.dataset.carouselSettled,
+    let captures=[];try{captures=MotionRecorder.restore(sessionStorage);}catch(error){status.textContent=error.message;}
+    recorder=new MotionRecorder({captures,readFrame:()=>({scrollLeft:viewport.scrollLeft,index:root.dataset.carouselIndex,settled:root.dataset.carouselSettled,
       items:buttons.map(b=>({width:b.style.width,transform:b.style.transform,left:b.style.insetInlineStart,visibility:b.style.visibility,art:b.querySelector('.md-carousel-art').style.transform}))}),onChange:reason=>{
       const active=!!recorder.active,n=recorder.captures.length;
       start.disabled=active;stop.disabled=!active;download.disabled=active||!n;clear.disabled=active||!n;
@@ -47,7 +50,7 @@
       const stopped={'recording limit reached':'limit reached','page hidden':'page hidden'}[reason];
       status.textContent=active?'Recording.':stopped?`Recording stopped: ${stopped}. ${count}`:n?count:reason==='recordings cleared'?'Recordings cleared.':'Ready.';
     }});
-    start.onclick=()=>recorder.start({version:config.version,commit:source.baseRevision,runtimeSHA256:source.jsSHA256,cssSHA256:source.cssSHA256,config,
+    start.onclick=()=>recorder.start({version:config.version,versionLabel:source.label,commit:source.baseRevision,runtimeSHA256:source.jsSHA256,cssSHA256:source.cssSHA256,config,
       environment:{ua:navigator.userAgent,dpr:devicePixelRatio,visualViewportScale:window.visualViewport?.scale,innerWidth,innerHeight,viewportWidth:viewport.clientWidth,scrollWidth:viewport.scrollWidth,reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches}});
     stop.onclick=()=>recorder.stop();clear.onclick=()=>recorder.clear();
     download.onclick=()=>{

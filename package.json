@@ -3,6 +3,6 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node tests/touch-handoff.cjs && node --test tests/recorder.cjs tests/runtimes.cjs"
+    "test": "node tests/touch-handoff.cjs && node --test tests/recorder.cjs tests/runtimes.cjs tests/fields.cjs"
   }
 }

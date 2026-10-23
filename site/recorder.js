@@ -1,8 +1,18 @@
 // Capture browser-exposed values; this does not measure compositor presentation.
 class MotionRecorder {
-  constructor({readFrame,onChange=()=>{},now=()=>performance.now(),requestFrame=fn=>requestAnimationFrame(fn),cancelFrame=id=>cancelAnimationFrame(id)}) {
+  constructor({captures=[],readFrame,onChange=()=>{},now=()=>performance.now(),requestFrame=fn=>requestAnimationFrame(fn),cancelFrame=id=>cancelAnimationFrame(id)}) {
     Object.assign(this,{readFrame,onChange,now,requestFrame,cancelFrame});
-    this.captures=[];this.active=null;this.frame=0;
+    this.captures=captures.slice(-5);this.active=null;this.frame=0;
+  }
+  // Session storage bridges a settings navigation; recordings return to memory on load.
+  static restore(storage) {
+    const saved=storage.getItem('carousel-recordings');if(!saved)return [];
+    const report=JSON.parse(saved);
+    if(report.schema!==2||!Array.isArray(report.captures))throw Error('Invalid saved recordings.');
+    storage.removeItem('carousel-recordings');return report.captures;
+  }
+  saveForNavigation(storage) {
+    if(this.captures.length)storage.setItem('carousel-recordings',JSON.stringify(this.report()));
   }
   start(metadata) {
     if(this.active)return false;

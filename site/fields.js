@@ -57,7 +57,8 @@
  // Commit touch selection on release: Safari can blur the trigger before it
  // delivers a click on a non-focusable option. Keep focusout from hiding it first.
  document.addEventListener('pointerup',event=>{const state=touchState,touch=state?.touchOption;if(!touch||touch.id!==event.pointerId)return;touchState=null;state.touchOption=null;if(event.target.closest('[data-field-option]')===touch.option&&state.menu.matches(':popover-open')){event.preventDefault();state.touchCommitted=touch.option;choose(state,touch.option);}else close(state);});
- document.addEventListener('pointercancel',event=>{const state=touchState;if(state?.touchOption?.id===event.pointerId){touchState=null;state.touchOption=null;close(state);}});
+ // Native touch scrolling cancels the pointer; cancel the pending tap, keeping the menu open.
+ document.addEventListener('pointercancel',event=>{const state=touchState;if(state?.touchOption?.id===event.pointerId){touchState=null;state.touchOption=null;}});
  document.addEventListener('input',event=>{
   const root=rootFor(event.target);if(root)root.dataset.populated=String(event.target.value!=='');
   const state=stateFor(event.target);if(state&&event.target===state.input&&!state.readOnly&&!state.committing)open(state,state.input.value);
