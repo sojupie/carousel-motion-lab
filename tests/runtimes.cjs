@@ -17,7 +17,7 @@ test('page ships a self-contained Material subset and eight deferred 16:9 record
  for(const source of [css,read('site/styles.css').toString()])
   for(const [,token] of source.matchAll(/var\((--md-[\w-]+)/g))assert.ok(declared.has(token),'Missing Material token '+token);
  assert.ok(require('node:zlib').gzipSync(css).length<12500);
- assert.equal((html.match(/<video controls muted playsinline preload="none" width="1280" height="720"/g)||[]).length,8);
+ assert.equal((html.match(/<video controls muted playsinline preload="none" width="1920" height="1080"/g)||[]).length,8);
  assert.match(read('site/app.js').toString(),/viewBox="0 -960 960 960"/);
  assert.ok(!html.includes('theme.css'));
  assert.ok(html.includes('assets/settling-edge.webp'));

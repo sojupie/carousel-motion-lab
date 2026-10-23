@@ -34,6 +34,12 @@ await writeFile(new URL('site/runtimes/manifest.json',root),JSON.stringify(manif
 const pageAssets={};
 for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css','fields.js','timeline.js','motion.js','buttons.js'])
  pageAssets[file]=createHash('sha256').update(await read('site/'+file)).digest('hex').slice(0,12);
-const html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js|motion\.js|buttons\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+let html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js|motion\.js|buttons\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+// Video and poster replacements must also invalidate previously cached media.
+const mediaPattern=/(src|poster|href)="(assets\/recordings\/[^"?]+\.(?:mp4|webp))(?:\?v=[a-f0-9]+)?"/g;
+const mediaHashes=new Map();
+for(const [, ,file] of html.matchAll(mediaPattern))if(!mediaHashes.has(file))
+ mediaHashes.set(file,createHash('sha256').update(await readFile(new URL('site/'+file,root))).digest('hex').slice(0,12));
+html=html.replace(mediaPattern,(_,attribute,file)=>`${attribute}="${file}?v=${mediaHashes.get(file)}"`);
 await writeFile(new URL('site/index.html',root),html);
 console.log('Built nine static implementation and diagnostic runtimes.');
