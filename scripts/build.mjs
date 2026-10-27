@@ -33,9 +33,9 @@ for(const [key,{js,css,...info}] of Object.entries(entries)){
 await writeFile(new URL('site/runtimes/manifest.json',root),JSON.stringify(manifest,null,2)+'\n');
 // Version the page assets too: an old app must not drive a new version selector.
 const pageAssets={};
-for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css','fields.js','timeline.js','motion.js','buttons.js','site.css','site.js'])
+for(const file of ['app.js','recorder.js','styles.css','fixture.css','material.css','fields.js','timeline.js','motion.js','buttons.js','site.css','site.js','utils.js','navigation.js'])
  pageAssets[file]=createHash('sha256').update(await read('site/'+file)).digest('hex').slice(0,12);
-let html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js|motion\.js|buttons\.js|site\.css|site\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
+let html=(await read('site/index.html')).replace(/(href|src)="(app\.js|recorder\.js|styles\.css|fixture\.css|material\.css|fields\.js|timeline\.js|motion\.js|buttons\.js|site\.css|site\.js|utils\.js|navigation\.js)(?:\?v=[a-f0-9]+)?"/g,(_,attribute,file)=>`${attribute}="${file}?v=${pageAssets[file]}"`);
 // Video and poster replacements must also invalidate previously cached media.
 const mediaPattern=/(src|poster|href)="(assets\/recordings\/[^"?]+\.(?:mp4|webp))(?:\?v=[a-f0-9]+)?"/g;
 const mediaHashes=new Map();

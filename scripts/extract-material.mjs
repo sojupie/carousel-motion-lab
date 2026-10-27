@@ -28,6 +28,9 @@ for(const root of [buttons,components])root.walkRules(rule=>{
  const clone=rule.clone({selector:selectors.join(', ')});
  if(rule.parent.type==='atrule')output.append(rule.parent.clone({nodes:[clone]}));else output.append(clone);
 });
+// Keep navigation anatomy, states and accessibility rules intact.
+const navigation=postcss.parse(await read('forge/components/static/bundles/navigation.css'));
+for(const node of navigation.nodes)output.append(node.clone());
 const defs=new Map();
 for(const root of [themeCSS,components])root.nodes.filter(n=>n.type==='rule'&&n.selector===':root').forEach(r=>r.walkDecls(d=>defs.set(d.prop,d.value)));
 const pageTokens=['color-primary','color-on-primary','color-primary-container','color-on-primary-container','color-secondary-container','color-on-secondary-container','color-on-surface','color-on-surface-variant','color-surface','color-surface-container','color-surface-container-low','color-surface-container-high','color-outline','color-outline-variant','color-error','shape-corner-extra-small','shape-corner-medium','shape-corner-large','shape-corner-extra-large','typescale-body-large','typescale-body-medium','typescale-body-small','typescale-label-large','typescale-title-large','typescale-title-medium','typescale-headline-medium','typescale-display-small','state-focus-indicator-thickness','state-focus-indicator-outer-offset'];
@@ -55,3 +58,6 @@ feedback=feedback.replace(selector[0],JSON.stringify('.md-button,.md-icon-button
 await writeFile('site/buttons.js',feedback);
 
 console.log(`Material subset: ${needed.size} tokens, ${output.nodes.length-1} rules, ${Buffer.byteLength(output.toString())} bytes.`);
+
+await copyFile(path.join(source,'forge/components/static/runtime/utils.js'),'site/utils.js');
+await copyFile(path.join(source,'forge/components/static/runtime/navigation.js'),'site/navigation.js');
