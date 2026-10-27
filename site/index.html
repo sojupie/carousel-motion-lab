@@ -7,21 +7,23 @@
   <title>Carousel Motion Lab</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="fixture.css?v=662d2b80d1b6">
-  <link rel="stylesheet" href="material.css?v=7eb430471cde">
-  <link rel="stylesheet" href="styles.css?v=7c17697889fe">
+  <link rel="stylesheet" href="material.css?v=0060ca15a3a4">
+  <link rel="stylesheet" href="styles.css?v=da58d1d62187">
   <script src="motion.js?v=5f688add56d7" defer></script>
-  <script src="buttons.js?v=f835a0cf3a98" defer></script>
+  <script src="buttons.js?v=7d00fb8167a6" defer></script>
   <script src="recorder.js?v=c8a8d2ee223d" defer></script>
   <script src="app.js?v=904c83c401a3" defer></script>
   <script src="timeline.js?v=c3a2e9b8421d" defer></script>
-  <script src="fields.js?v=d16f69ab628c" defer></script>
+  <script src="fields.js?v=5d210059ef17" defer></script>
+<link rel="stylesheet" href="site.css?v=50cc1a996f76">
+<script src="site.js?v=cb4bbf9fc1a3" defer></script>
 </head>
 <body>
 <a class="skip" href="#playground">Skip to playground</a>
-<header class="masthead">
-  <a class="wordmark" href="./">Carousel Motion Lab</a>
-  <nav aria-label="Page"><a href="#playground">Playground</a><a href="#evidence">Evidence</a><a href="#contribute">Contribute</a><a href="https://github.com/sojupie/carousel-motion-lab">Source</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></nav>
-</header>
+<!-- site-header:start -->
+<header class="tokens-site-header" id="tokens-site-header" hx-preserve><nav class="tokens-primary-nav" aria-label="Primary"><a class="tokens-brand md-typescale-headline-medium" href="https://tokencatalog.dev/md3/"><img class="tokens-brand-logo" src="site-logo.webp" alt="" width="40" height="40">Token Catalog</a> <button class="md-icon-button md-standard-icon-button tokens-nav-toggle" type="button" id="tokens-nav-toggle" popovertarget="tokens-site-menu" aria-label="Navigation" aria-expanded="false" aria-controls="tokens-site-menu" data-size="small" data-shape="round" data-width="default" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="currentColor"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg></button><div id="tokens-site-menu" class="tokens-navigation-content" data-variant="standard" data-orientation="vertical"><div class="tokens-nav-links"><a class="md-button md-text-button tokens-nav-link" data-size="small" data-shape="round" href="https://tokencatalog.dev/md3/components" aria-current="false">Components</a><a class="md-button md-text-button tokens-nav-link" data-size="small" data-shape="round" href="https://tokencatalog.dev/md3/styles" aria-current="false">Styles</a><a class="md-button md-text-button tokens-nav-link" data-size="small" data-shape="round" href="https://tokencatalog.dev/md3/changes" aria-current="false">Changes</a><a class="md-button md-text-button tokens-nav-link" data-size="small" data-shape="round" href="https://tokencatalog.dev/md3/tools" aria-current="page">Tools</a><a class="md-button md-text-button tokens-nav-link" data-size="small" data-shape="round" href="https://tokencatalog.dev/md3/for-agents" aria-current="false">For agents</a></div></div></nav></header>
+<!-- site-header:end -->
+<nav class="lab-sections" aria-label="Lab sections"><a href="#playground">Playground</a><a href="#evidence">Evidence</a><a href="#contribute">Contribute</a><a href="https://github.com/sojupie/carousel-motion-lab">Source</a></nav>
 <main>
   <section class="intro" aria-labelledby="title">
     <h1 id="title">Carousel motion</h1>
@@ -133,6 +135,8 @@
   <section id="contribute" class="contribute" aria-labelledby="contribute-title"><h2 id="contribute-title">Help fix the iOS release</h2><p>Have a fix or a smaller reproduction? Open a pull request with the change, the implementation tested, and a before-and-after recording. Include the browser, device, and input method.</p><p>Keep the cards’ changing widths and the artwork’s proportions. Preserve vertical page scrolling, keyboard navigation, and reduced motion.</p><div class="contribution-actions"><a class="md-button md-filled-button" href="https://github.com/sojupie/carousel-motion-lab/compare">Open a pull request</a><a class="md-button md-tonal-button" href="https://github.com/sojupie/carousel-motion-lab/issues/new">Report a finding</a></div></section>
 
 </main>
-<footer><a href="https://github.com/sojupie/carousel-motion-lab">Source and findings</a><a href="https://tokencatalog.dev/md3/">Token Catalog</a></footer>
+<!-- site-footer:start -->
+<footer class="tokens-site-footer" data-component-assets><div class="tokens-footer-content"><div><p class="md-typescale-title-medium">Token Catalog</p><p class="md-typescale-body-medium">Browse Material Design 3 tokens and track their changes.</p><p class="md-typescale-body-medium">Independent project. Not affiliated with Google.</p></div><div><p class="md-typescale-title-medium">For humans</p><a class="tokens-link md-typescale-body-medium" href="https://github.com/sojupie/tokens">GitHub</a> <a class="tokens-link md-typescale-body-medium" href="https://tokencatalog.dev/md3/components">Browse components</a> <a class="tokens-link md-typescale-body-medium" href="https://tokencatalog.dev/md3/for-agents">Give this to your agent</a></div><div><p class="md-typescale-title-medium">For agents</p><a class="tokens-link md-typescale-body-medium" href="https://tokencatalog.dev/md3/llms-full.txt">API and data reference</a></div><div hx-boost="false"><p class="md-typescale-title-medium">Tools</p><a class="tokens-link md-typescale-body-medium" href="https://tokencatalog.dev/tools/motion/">Video motion analysis</a><a class="tokens-link md-typescale-body-medium" href="https://tokencatalog.dev/tools/motion-lab/">Carousel motion lab</a></div><div><p class="md-typescale-title-medium">About</p><p class="md-typescale-body-medium">Made by Olle Marmenlind</p><a class="tokens-link md-typescale-body-medium" href="https://marmenlind.com">marmenlind.com</a></div></div></footer>
+<!-- site-footer:end -->
 </body>
 </html>

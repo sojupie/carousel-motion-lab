@@ -50,7 +50,7 @@ Keep the cards’ changing widths and the artwork’s proportions. Preserve vert
 
 ## Run locally
 
-Requires Node.js and Python. No package dependencies.
+Requires Node.js, Go 1.26+ and a sibling Token Catalog checkout at `../tokens` to build the shared navigation and footer. Python is used only to serve the static output locally. The published site needs no Go server.
 
 ```sh
 npm run build

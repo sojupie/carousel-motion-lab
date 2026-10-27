@@ -30,7 +30,7 @@ for(const root of [buttons,components])root.walkRules(rule=>{
 });
 const defs=new Map();
 for(const root of [themeCSS,components])root.nodes.filter(n=>n.type==='rule'&&n.selector===':root').forEach(r=>r.walkDecls(d=>defs.set(d.prop,d.value)));
-const pageTokens=['color-primary','color-on-primary','color-primary-container','color-on-primary-container','color-secondary-container','color-on-secondary-container','color-on-surface','color-on-surface-variant','color-surface','color-surface-container','color-surface-container-low','color-surface-container-high','color-outline','color-outline-variant','color-error','shape-corner-extra-small','shape-corner-medium','shape-corner-large','shape-corner-extra-large','typescale-body-large','typescale-body-medium','typescale-body-small','typescale-label-large','typescale-title-large','typescale-headline-medium','typescale-display-small','state-focus-indicator-thickness','state-focus-indicator-outer-offset'];
+const pageTokens=['color-primary','color-on-primary','color-primary-container','color-on-primary-container','color-secondary-container','color-on-secondary-container','color-on-surface','color-on-surface-variant','color-surface','color-surface-container','color-surface-container-low','color-surface-container-high','color-outline','color-outline-variant','color-error','shape-corner-extra-small','shape-corner-medium','shape-corner-large','shape-corner-extra-large','typescale-body-large','typescale-body-medium','typescale-body-small','typescale-label-large','typescale-title-large','typescale-title-medium','typescale-headline-medium','typescale-display-small','state-focus-indicator-thickness','state-focus-indicator-outer-offset'];
 for(const t of pageTokens.filter(t=>t.startsWith('typescale-'))){
  const key='--md-sys-'+t;if(!defs.has(key))defs.set(key,`var(${key}-weight) var(${key}-size)/var(${key}-line-height) var(${key}-font)`);
 }
@@ -38,6 +38,7 @@ const needed=new Set(pageTokens.map(t=>'--md-sys-'+t));
 const collect=text=>{for(const m of text.matchAll(/var\((--[\w-]+)/g))if(defs.has(m[1]))needed.add(m[1]);};
 collect(output.toString());
 collect(await readFile('site/styles.css','utf8'));
+collect(await read("forge/site/site.css"));
 for(const key of needed){if(!defs.has(key))throw Error('Missing source token '+key);collect(defs.get(key));}
 const tokens=postcss.rule({selector:':root'});for(const key of [...needed].sort())tokens.append({prop:key,value:defs.get(key)});
 output.prepend(tokens);
