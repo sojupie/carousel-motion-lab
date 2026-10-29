@@ -15,5 +15,5 @@ try {
   html=html.replace(marker,`<!-- site-${region}:start -->\n${fragment}\n<!-- site-${region}:end -->`);
  }
  await writeFile(path.join(root,'site/index.html'),html);
- for(const file of ['site.css','site.js','site-logo.webp'])await copyFile(path.join(out,file),path.join(root,'site',file));
+ for(const file of ['site.css','site.js','site-logo.svg','site-logo.png','site-logo.webp'])await copyFile(path.join(out,file),path.join(root,'site',file));
 } finally { await rm(out,{recursive:true,force:true}); }
