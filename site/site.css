@@ -1,7 +1,7 @@
 .tokens-site-header { position:sticky; top:0; z-index:10; background:var(--md-sys-color-surface-container-low); }
 .tokens-primary-nav { display:flex; align-items:center; gap:var(--md-sys-measurement-space150); padding:var(--md-sys-measurement-space100) var(--md-sys-measurement-space200); }
 .tokens-brand { display:inline-flex; align-items:center; gap:var(--md-sys-measurement-space150); color:var(--md-sys-color-on-surface); text-decoration:none; font:var(--md-sys-typescale-title-large); }
-.tokens-brand-logo { fill:var(--md-sys-color-tertiary); inline-size:var(--md-sys-measurement-space500); block-size:var(--md-sys-measurement-space500); object-fit:contain; flex:none; }
+.tokens-brand-logo { inline-size:var(--md-sys-measurement-space500); block-size:var(--md-sys-measurement-space500); object-fit:contain; flex:none; }
 .tokens-drawer-appearance { padding:var(--md-sys-measurement-space200); border-block-start:var(--md-comp-divider-thickness) solid var(--md-sys-color-outline-variant); }
 .tokens-drawer-appearance:empty { display:none; }
 .tokens-theme-controls { display:flex; align-items:center; justify-content:space-between; gap:var(--md-sys-measurement-space150); }
