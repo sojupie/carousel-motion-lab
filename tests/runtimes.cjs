@@ -13,8 +13,9 @@ test('all nine versions are published, hashed and syntactically valid',()=>{
 });
 test('page ships a self-contained Material subset and eight deferred 16:9 recordings',()=>{
  const css=read('site/material.css').toString(),html=read('site/index.html').toString();
- const declared=new Set([...css.matchAll(/(--[\w-]+)\s*:/g)].map(m=>m[1]));
- for(const source of [css,read('site/styles.css').toString(),read('site/site.css').toString()])
+ const fixture=read('site/fixture.css').toString();
+ const declared=new Set([...(css+'\n'+fixture).matchAll(/(--[\w-]+)\s*:/g)].map(m=>m[1]));
+ for(const source of [css,fixture,read('site/styles.css').toString(),read('site/site.css').toString()])
   for(const [,token] of source.matchAll(/var\((--md-[\w-]+)/g))assert.ok(declared.has(token),'Missing Material token '+token);
  assert.ok(require('node:zlib').gzipSync(css).length<20000);
  assert.equal((html.match(/<video controls muted playsinline preload="none" width="1920" height="1080"/g)||[]).length,8);
