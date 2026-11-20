@@ -4,12 +4,12 @@ import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import path from 'node:path';
 const [source,theme]=process.argv.slice(2);
-if(!source||!theme)throw Error('Provide the source repository and its generated theme.css.');
+if(!source)throw Error('Provide the source repository (and optionally its generated theme.css).');
 const require=createRequire(path.resolve(source,'package.json')),postcss=require('postcss');
 const read=p=>readFile(path.join(source,p),'utf8');
-const buttons=postcss.parse(await read('forge/components/static/buttons.css'));
-const components=postcss.parse(await read('forge/components/static/components.css'));
-const themeCSS=postcss.parse(await readFile(theme,'utf8'));
+const buttons=postcss.parse(await read('forge/components/generated/buttons.css'));
+const components=postcss.parse(await read('forge/components/generated/components.css'));
+const themeCSS=postcss.parse(await readFile(theme||'site/material.css','utf8'));
 const allowed=new Set(['md-button-group','md-group-check','md-button','md-button-ripple','md-filled-button','md-tonal-button','md-outlined-button','md-icon-button','md-tonal-icon-button','md-filter-chip','md-menu','md-menu-item','md-field-menu','md-field-empty','md-field-menu-divider','md-card','md-elevated-card','md-outlined-card']);
 const output=postcss.root();
 for(const root of [buttons,components])root.walkRules(rule=>{
@@ -29,7 +29,7 @@ for(const root of [buttons,components])root.walkRules(rule=>{
  if(rule.parent.type==='atrule')output.append(rule.parent.clone({nodes:[clone]}));else output.append(clone);
 });
 // Keep navigation anatomy, states and accessibility rules intact.
-const navigation=postcss.parse(await read('forge/components/static/bundles/navigation.css'));
+const navigation=postcss.parse(await read('forge/components/generated/bundles/navigation.css'));
 for(const node of navigation.nodes)output.append(node.clone());
 const defs=new Map();
 for(const root of [themeCSS,components])root.nodes.filter(n=>n.type==='rule'&&n.selector===':root').forEach(r=>r.walkDecls(d=>defs.set(d.prop,d.value)));
@@ -47,11 +47,11 @@ const tokens=postcss.rule({selector:':root'});for(const key of [...needed].sort(
 output.prepend(tokens);
 await writeFile('site/material.css','/* Material light/default token and component subset. Refresh with scripts/extract-material.mjs. */\n'+output.toString()+'\n');
 await mkdir('site/assets/fonts',{recursive:true});
-for(const file of ['roboto-latin.woff2','OFL.txt'])await copyFile(path.join(source,'catalog/web/static/fonts',file),path.join('site/assets/fonts',file));
-await copyFile(path.join(source,'forge/components/static/fields.js'),'site/fields.js');
-await copyFile(path.join(source,'forge/components/static/motion.cjs'),'site/motion.js');
+for(const file of ['roboto-latin.woff2','OFL.txt'])await copyFile(path.join(source,'catalog/web/assets/fonts',file),path.join('site/assets/fonts',file));
+await copyFile(path.join(source,'forge/components/generated/fields.js'),'site/fields.js');
+await copyFile(path.join(source,'forge/components/generated/motion.cjs'),'site/motion.js');
 // Keep shared feedback off the frozen carousel implementations being measured.
-let feedback=await read('forge/components/static/buttons.js');
+let feedback=await read('forge/components/generated/buttons.js');
 const selector=feedback.match(/"\.md-button,\.md-icon-button,[^"]+"/g);
 if(selector?.length!==1)throw Error('Shared feedback selector changed.');
 feedback=feedback.replace(selector[0],JSON.stringify('.md-button,.md-icon-button,.md-filter-chip,.md-menu-item'));
@@ -59,5 +59,5 @@ await writeFile('site/buttons.js',feedback);
 
 console.log(`Material subset: ${needed.size} tokens, ${output.nodes.length-1} rules, ${Buffer.byteLength(output.toString())} bytes.`);
 
-await copyFile(path.join(source,'forge/components/static/runtime/utils.js'),'site/utils.js');
-await copyFile(path.join(source,'forge/components/static/runtime/navigation.js'),'site/navigation.js');
+await copyFile(path.join(source,'forge/components/generated/runtime/utils.js'),'site/utils.js');
+await copyFile(path.join(source,'forge/components/generated/runtime/navigation.js'),'site/navigation.js');

@@ -6,9 +6,9 @@ test('select typeahead searches prefixes and cycles repeated letters',()=>{asser
 test('readonly inputs and pill buttons toggle and survive native light-dismiss',()=>{
  for(const useButton of [false,true]) {
  const listeners={},attrs={},positions={},empty={hidden:true};let shown=false,focused=0,prevented=0;
- const options=['One','Two'].map((name,index)=>({id:`option-${index}`,hidden:false,dataset:{fieldOption:name},classList:{contains:c=>c==='md-menu-item'},setAttribute(){},scrollIntoView(){}}));
- const menu={dataset:{},scrollHeight:2000,offsetHeight:120,style:{setProperty:(name,value)=>positions[name]=value},matches:()=>shown,showPopover(){shown=true;},hidePopover(){shown=false;},addEventListener(){},querySelectorAll:()=>options,querySelector:s=>s==='.md-field-empty'?empty:null};
- const root={dataset:{},getBoundingClientRect:()=>({left:20,top:300,bottom:356,width:200}),querySelector:s=>s==='.md-field-menu'?menu:null};
+ const options=['One','Two'].map((name,index)=>({id:`option-${index}`,hidden:false,dataset:{fieldOption:name},classList:{contains:c=>c==='md-menu-item'},getAttribute(){return null;},setAttribute(){},scrollIntoView(){}}));
+ const menu={dataset:{},scrollHeight:2000,offsetHeight:120,style:{setProperty:(name,value)=>positions[name]=value},matches:()=>shown,showPopover(){shown=true;},hidePopover(){shown=false;},addEventListener(){},querySelectorAll:s=>s==='[data-field-option]'?options:[],querySelector:s=>s==='.md-field-empty'?empty:null};
+ const root={dataset:{},hasAttribute:()=>false,getBoundingClientRect:()=>({left:20,top:300,bottom:356,width:200}),querySelector:s=>s==='.md-field-menu'?menu:null};
  const input={readOnly:!useButton,hasAttribute:name=>useButton&&name==='data-field-select',value:'One',closest:s=>s==='[data-field-example]'?root:null,focus(){focused++;},setAttribute(k,v){attrs[k]=v;},removeAttribute(k){delete attrs[k];}};
  runInNewContext(readFileSync(`${__dirname}/../site/fields.js`,'utf8'),{
   document:{readyState:'complete',documentElement:{clientWidth:800},querySelectorAll:s=>s==='[data-field-combo]'?[input]:[],addEventListener:(name,fn)=>listeners[name]=fn},
