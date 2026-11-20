@@ -1,65 +1,65 @@
 {
   "baseline": {
     "label": "V5 · Current baseline",
-    "note": "Sticky track and boundary clamping without layout hints. Smoother desktop motion with remaining touch settling steps.",
-    "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
-    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "note": "Sticky track and boundary clamping without layout hints. Smooth on desktop; touch settling still steps on iOS.",
+    "jsSHA256": "841e7ed29912c140e58e1234e26e475077e8c45041fce0fb50a3975e832ceae2",
+    "cssSHA256": "24e7b6f1208a311ebf29044b6032687297cd81ddad668706ba1d8ed4ba2575be",
     "baseRevision": "c13bc6a"
   },
   "native": {
     "label": "V7 · Native-flow control",
-    "note": "Fixed-width cards in normal flow for touch, trackpad, and scroll-wheel input. Desktop scroll-wheel settling still steps.",
-    "jsSHA256": "cff5f1db11e6b58fa2d56d355ec76dc638abc2406c86d8e5553d7c1823b4f367",
-    "cssSHA256": "e61e6db5dc0b8437b4f381bbb965eafe6289f896fe966b27dbc10f2af98e70aa",
+    "note": "Fixed-width cards in normal flow. Smoother on iOS; desktop scroll-wheel settling still steps.",
+    "jsSHA256": "8ae45f1147851e46fd4bef87154e3f8a8b36b98f50392c45d069d21923024932",
+    "cssSHA256": "0eaa8495b8021bac474cd0a5791f3ae3dc0042e61ced62e18d984efbc4266d58",
     "baseRevision": "c13bc6a"
   },
   "rounded": {
     "label": "V8 · Whole-pixel settling",
-    "note": "Whole-pixel positions during custom settling. Smooth mouse-release settling in the latest desktop test.",
-    "jsSHA256": "5eac75c0cbdb9286ca3412745d9ad8f59ae9cfa891518213767991166ed326de",
-    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "note": "Rounds positions to whole pixels during custom settling. Smooth mouse release on desktop.",
+    "jsSHA256": "c513fe04600b65bd442587e094ee6bbec6bce25606cf15e9d89256f65bed9c82",
+    "cssSHA256": "24e7b6f1208a311ebf29044b6032687297cd81ddad668706ba1d8ed4ba2575be",
     "baseRevision": "c13bc6a"
   },
   "touch-handoff": {
     "label": "V9 · Custom touch settling",
-    "note": "Native dragging followed by fractional custom settling. Smoother initial motion with late corrections and boundary overscroll.",
-    "jsSHA256": "defc75da3880b3c75e47ab21f746fd247efb8f0343c761e5205649e2ae742a9d",
-    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255",
+    "note": "Native dragging followed by fractional custom settling at release. Smoother initial motion, but triggers late corrections and boundary overscroll.",
+    "jsSHA256": "b2baf539faec2e2dd536f1cbb770c3c44181c61a2e85fac6ddcefe4f28703f42",
+    "cssSHA256": "24e7b6f1208a311ebf29044b6032687297cd81ddad668706ba1d8ed4ba2575be",
     "baseRevision": "c13bc6a"
   },
   "original": {
     "label": "V1 · Original native scrolling",
     "baseRevision": "96600ee",
-    "note": "Queued geometry updates from native scroll events. Stutter on desktop and iOS.",
-    "jsSHA256": "5034a7b506cdb1d8a087ba5acb45c8d200d1c99743aab607378a4820b56c891c",
-    "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
+    "note": "Native smooth scrolling with queued geometry updates. Stutters on desktop and iOS.",
+    "jsSHA256": "94511b80c0a3d4eb72edba2e89c222a2bfe99b1b063b0762f97d899504797944",
+    "cssSHA256": "ee3c73367ff1b9d2fd420b5a4f94dc10ae04ac2d231a0c65dfb09f748cdef69f"
   },
   "first-token": {
     "label": "V2 · MD3-timed settling",
     "baseRevision": "eab1d19",
-    "note": "MD3-timed settling with native scroll writes on each frame. Remaining roughness during settling.",
-    "jsSHA256": "ab1f42b3094fb2a2b7abf380f5fad88dbf8cde32887a3727a55032dc4bbff8c4",
-    "cssSHA256": "50e056bce34383be3246e6da03b00818bccc85d156a7b0504aad38a8808b83c1"
+    "note": "MD3-timed settling with native scroll writes each frame. Still rough while settling.",
+    "jsSHA256": "60a895e8944cd19e1ae23f61bb190038f7e8cc267d187aece23500b5a9c84ae5",
+    "cssSHA256": "ee3c73367ff1b9d2fd420b5a4f94dc10ae04ac2d231a0c65dfb09f748cdef69f"
   },
   "handoff": {
     "label": "V3 · Synchronized visual settling",
     "baseRevision": "4263d47",
-    "note": "Fractional settling and artwork offsets with native synchronization at completion. Smoother desktop motion with remaining touch jitter and stutter.",
-    "jsSHA256": "f05d471f12fe22f2a8e09cbd095a2704b17d7310107d5312e0ac76f3ef9ca679",
-    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255"
+    "note": "Fractional settling and artwork offsets; syncs native scroll on completion. Smoother on desktop; touch still jitters and stutters.",
+    "jsSHA256": "aaf588b09e11d904db020c7ee7ffd1bc1197995dd4d48d4438111759d7a26eb9",
+    "cssSHA256": "24e7b6f1208a311ebf29044b6032687297cd81ddad668706ba1d8ed4ba2575be"
   },
   "isolation": {
     "label": "V4 · Boundary clamping",
     "baseRevision": "890dc78",
-    "note": "Boundary clamping with layout containment and compositor hints. Reduced directional jitter with remaining settling stutter.",
-    "jsSHA256": "7513f3ef12f965c02232afa0bb961640a061b645d1f50cc96d581a57ac71889b",
-    "cssSHA256": "de60457214248d75a6714ef93e6bba5588d33735f7f74f19f576b822df41bae1"
+    "note": "Boundary clamping with layout containment and compositor hints. Less directional jitter; settling still stutters.",
+    "jsSHA256": "841e7ed29912c140e58e1234e26e475077e8c45041fce0fb50a3975e832ceae2",
+    "cssSHA256": "d78c15cefb6511a6f1ed30caaad13ff42aca04190c9b80125d888f00ecbbbe51"
   },
   "diagnostic": {
     "label": "V6 · Fixed masks",
     "baseRevision": "512e9f1",
-    "note": "Fixed mask widths and artwork offsets with scroll-driven positions. Remaining stutter, gaps, and overlaps.",
-    "jsSHA256": "fd9d056ce5258770c59eebcc9ae3d04da30ee3d084bcdbb0fac88a1793eb203d",
-    "cssSHA256": "895d0da4d99861a97af736f21ae31c4ec22c4679966bd5721ea5a2d0b14bc255"
+    "note": "Fixed mask widths and artwork offsets driven by scroll position. Stutters, with visible gaps and overlaps.",
+    "jsSHA256": "7886ed632d06d168218f2b58b3b21ccd494b306695b1feaddb067acb64832037",
+    "cssSHA256": "24e7b6f1208a311ebf29044b6032687297cd81ddad668706ba1d8ed4ba2575be"
   }
 }

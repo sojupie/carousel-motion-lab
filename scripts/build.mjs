@@ -8,17 +8,17 @@ function replaceOnce(source,before,after){
  return source.replace(before,after);
 }
 const entries={
- baseline:{label:'Current baseline',note:'Sticky track and boundary clamping without layout hints. Smoother desktop motion with remaining touch settling steps.',js:baseline,css},
- native:{label:'1 · Native scrolling',note:'Fixed-width cards in normal flow for touch, trackpad, and scroll-wheel input. Desktop scroll-wheel settling still steps.',js:await read('src/native.js'),css:css+'\n'+await read('src/native.css')},
- rounded:{label:'2 · Rounded clock',note:'Whole-pixel positions during custom settling. Smooth mouse-release settling in the latest desktop test.',js:replaceOnce(baseline,'paint(state,motion.position);','paint(state,Math.round(motion.position));'),css},
- 'touch-handoff':{label:'3 · Touch handoff',note:'Native dragging followed by fractional custom settling. Smoother initial motion with late corrections and boundary overscroll.',js:replaceOnce(baseline,'  let drag;',await read('src/touch-handoff.js')+'\n  installTouchHandoff({roots,cancelMotion,offset,go});\n  let drag;'),css},
+ baseline:{label:'Current baseline',note:'Sticky track and boundary clamping without layout hints. Smooth on desktop; touch settling still steps on iOS.',js:baseline,css},
+ native:{label:'1 · Native scrolling',note:'Fixed-width cards in normal flow. Smoother on iOS; desktop scroll-wheel settling still steps.',js:await read('src/native.js'),css:css+'\n'+await read('src/native.css')},
+ rounded:{label:'2 · Rounded clock',note:'Rounds positions to whole pixels during custom settling. Smooth mouse release on desktop.',js:replaceOnce(baseline,'paint(state,motion.position);','paint(state,Math.round(motion.position));'),css},
+ 'touch-handoff':{label:'3 · Touch handoff',note:'Native dragging followed by fractional custom settling at release. Smoother initial motion, but triggers late corrections and boundary overscroll.',js:replaceOnce(baseline,'  let drag;',await read('src/touch-handoff.js')+'\n  installTouchHandoff({roots,cancelMotion,offset,go});\n  let drag;'),css},
 };
 const history={
- original:{label:'Original · native smooth scrolling',baseRevision:'96600ee',note:'Queued geometry updates from native scroll events. Stutter on desktop and iOS.'},
- 'first-token':{label:'Token clock · first implementation',baseRevision:'eab1d19',note:'MD3-timed settling with native scroll writes on each frame. Remaining roughness during settling.'},
- handoff:{label:'One visual clock · explicit artwork positioning',baseRevision:'4263d47',note:'Fractional settling and artwork offsets with native synchronization at completion. Smoother desktop motion with remaining touch jitter and stutter.'},
- isolation:{label:'Overscroll clamp · layout hints',baseRevision:'890dc78',note:'Boundary clamping with layout containment and compositor hints. Reduced directional jitter with remaining settling stutter.'},
- diagnostic:{label:'Fixed masks · diagnostic',baseRevision:'512e9f1',note:'Fixed mask widths and artwork offsets with scroll-driven positions. Remaining stutter, gaps, and overlaps.'},
+ original:{label:'Original · native smooth scrolling',baseRevision:'96600ee',note:'Native smooth scrolling with queued geometry updates. Stutters on desktop and iOS.'},
+ 'first-token':{label:'Token clock · first implementation',baseRevision:'eab1d19',note:'MD3-timed settling with native scroll writes each frame. Still rough while settling.'},
+ handoff:{label:'One visual clock · explicit artwork positioning',baseRevision:'4263d47',note:'Fractional settling and artwork offsets; syncs native scroll on completion. Smoother on desktop; touch still jitters and stutters.'},
+ isolation:{label:'Overscroll clamp · layout hints',baseRevision:'890dc78',note:'Boundary clamping with layout containment and compositor hints. Less directional jitter; settling still stutters.'},
+ diagnostic:{label:'Fixed masks · diagnostic',baseRevision:'512e9f1',note:'Fixed mask widths and artwork offsets driven by scroll position. Stutters, with visible gaps and overlaps.'},
 };
 const versionNames={"original":"V1 \u00b7 Original native scrolling","first-token":"V2 \u00b7 MD3-timed settling","handoff":"V3 \u00b7 Synchronized visual settling","isolation":"V4 \u00b7 Boundary clamping","baseline":"V5 \u00b7 Current baseline","diagnostic":"V6 \u00b7 Fixed masks","native":"V7 \u00b7 Native-flow control","rounded":"V8 \u00b7 Whole-pixel settling","touch-handoff":"V9 \u00b7 Custom touch settling"};
 for(const [key,info] of Object.entries(history))entries[key]={...info,js:await read('src/history/'+key+'.js'),css:await read('src/history/'+key+'.css')};
